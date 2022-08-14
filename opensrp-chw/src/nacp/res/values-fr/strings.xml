@@ -3,4 +3,6 @@
     <string name="app_name">Ministry of Health</string>
     <string name="login_title">Ministry of Health \n WAJA app</string>
     <string name="nav_logo">Ministry of Health Community App</string>
+    <string name="NEWMODULE">NEWMODULE</string>
+
 </resources>

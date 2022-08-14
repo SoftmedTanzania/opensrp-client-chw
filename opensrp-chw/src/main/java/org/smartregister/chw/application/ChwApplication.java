@@ -38,6 +38,7 @@ import org.smartregister.chw.activity.LTFURegisterActivity;
 import org.smartregister.chw.activity.LoginActivity;
 import org.smartregister.chw.activity.MalariaRegisterActivity;
 import org.smartregister.chw.activity.MotherChampionRegisterActivity;
+import org.smartregister.chw.activity.NewModuleActivity;
 import org.smartregister.chw.activity.PncRegisterActivity;
 import org.smartregister.chw.activity.ReferralRegisterActivity;
 import org.smartregister.chw.activity.UpdatesRegisterActivity;
@@ -352,8 +353,10 @@ public class ChwApplication extends CoreChwApplication {
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HIV_REGISTER_ACTIVITY, HivRegisterActivity.class);
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.HIV_INDEX_REGISTER_ACTIVITY, HivIndexContactsContactsRegisterActivity.class);
             registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.LTFU_REFERRALS_REGISTER_ACTIVITY, LTFURegisterActivity.class);
+            registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.NEW_MODULE_ACTIVITY, NewModuleActivity.class);
+
 //            TODO uncomment these when NACP is ready to test these modules
-//            registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.TB_REGISTER_ACTIVITY, TbRegisterActivity.class);
+       //  registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.NEW_MODULE_ACTIVITY, NewModuleActivity.class);
         }
 
         if (!BuildConfig.BUILD_FOR_BORESHA_AFYA_SOUTH) {

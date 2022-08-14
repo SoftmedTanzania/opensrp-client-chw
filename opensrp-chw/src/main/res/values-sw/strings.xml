@@ -121,6 +121,7 @@
     <string name="children_12_23_months_not_dewormed">Watoto (12&#8211;23 miezi) ambao hawakupata kinga tiba dhidi ya minyoo katika kipindi cha miezi 6 ya mwisho</string>
     <string name="children_6_23_months_received_vitamin_A">Watoto (6&#8211;23 miezi) ambao walipata Vitamin A katika kipindi cha miezi 6 ya mwisho</string>
     <string name="children_6_23_months_not_received_vitamin_A">Watoto (6&#8211;23 miezi) ambao hawakupata Vitamin A katika kipindi cha miezi 6 ya mwisho</string>
+    <string name="NEWMODULE">NEWMODULE</string>
 
 
 
@@ -434,4 +435,5 @@
     <string name="enrolled_clinic">Amesajiliwa Kliniki</string>
     <string name="referral_feedback_details">Taarifa Kutoka Kituoni</string>
     <string name="referred_by">Rufaa imetolewa na %s</string>
+    <string name="adeweb">adewe</string>
 </resources>

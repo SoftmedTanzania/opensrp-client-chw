@@ -72,5 +72,7 @@
     <string name="ltfu_clinic_pmtct">PMTCT</string>
     <string name="ltfu_clinic_tb">TB</string>
     <string name="referred_clinic">Referred Clinic</string>
+    <string name="NEWMODULE">NEWMODULE</string>
+
 
 </resources>
