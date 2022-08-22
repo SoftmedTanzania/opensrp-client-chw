@@ -797,6 +797,19 @@
           }
         }
       ]
+    },
+    {
+      "name": "new_module",
+      "columns": [
+        {
+          "column_name": "new_module",
+          "type": "ANC First Facility Visit",
+          "json_mapping": {
+            "field" : "surname"
+          }
+        }
+      ]
     }
+
   ]
 }

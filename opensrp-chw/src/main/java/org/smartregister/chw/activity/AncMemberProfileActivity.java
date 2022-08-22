@@ -186,6 +186,12 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
             PncRegisterActivity.startPncRegistrationActivity(AncMemberProfileActivity.this, memberObject.getBaseEntityId(), null, CoreConstants.JSON_FORM.getPregnancyOutcome(), AncLibrary.getInstance().getUniqueIdRepository().getNextUniqueId().getOpenmrsId(), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyName(), memberObject.getLastMenstrualPeriod());
             return true;
         }
+        else if (itemId == R.id.new_module){
+            Intent intent = new Intent(AncMemberProfileActivity.this,NewModuleActivity.class);
+            startActivity(intent);
+//            PncRegisterActivity.startPncRegistrationActivity(AncMemberProfileActivity.this, memberObject.getBaseEntityId(), null, CoreConstants.JSON_FORM.getPregnancyOutcome(), AncLibrary.getInstance().getUniqueIdRepository().getNextUniqueId().getOpenmrsId(), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyName(), memberObject.getLastMenstrualPeriod());
+          return true;
+        }
         if (itemId == R.id.action_cbhs_registration) {
             CommonRepository commonRepository = Utils.context().commonrepository(Utils.metadata().familyMemberRegister.tableName);
 
@@ -199,6 +205,7 @@ public class AncMemberProfileActivity extends CoreAncMemberProfileActivity imple
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.new_module).setVisible(true);
         menu.findItem(R.id.anc_danger_signs_outcome).setVisible(false);
         menu.findItem(R.id.action_malaria_diagnosis).setVisible(false);
         menu.findItem(R.id.action_pregnancy_out_come).setVisible(true);

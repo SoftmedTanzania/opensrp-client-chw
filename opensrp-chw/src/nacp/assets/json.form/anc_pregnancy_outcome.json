@@ -51,6 +51,7 @@
   "step1": {
     "title": "Pregnancy Outcome",
     "fields": [
+
       {
         "key": "relational_id",
         "openmrs_entity_parent": "",

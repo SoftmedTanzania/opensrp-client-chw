@@ -532,6 +532,19 @@
           }
         ]
       }
+    },
+    {
+      "name": "new_module",
+      "columns": [
+        {
+          "column_name": "mother",
+          "type": "event",
+          "json_mapping": {
+            "field": "eventType"
+          }
+        }
+      ]
     }
   ]
+
 }

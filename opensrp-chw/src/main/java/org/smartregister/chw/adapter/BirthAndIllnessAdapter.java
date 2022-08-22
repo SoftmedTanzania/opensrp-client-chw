@@ -49,7 +49,7 @@ public class BirthAndIllnessAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public ContentViewHolder(View view) {
             super(view);
-            vaccineName = view.findViewById(R.id.name_date_tv);
+            vaccineName = view.findViewById(R.id.btn_module);
             myView = view;
         }
 
