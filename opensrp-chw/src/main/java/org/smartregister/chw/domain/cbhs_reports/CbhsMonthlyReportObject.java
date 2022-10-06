@@ -1,6 +1,8 @@
 package org.smartregister.chw.domain.cbhs_reports;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -60,6 +62,8 @@ public class CbhsMonthlyReportObject extends ReportObject {
 
     private String getCbhsClientDetails(Map<String, String> chwRegistrationFollowupClient, String key) {
         String details = chwRegistrationFollowupClient.get(key);
+
+        Log.d("value ya detail",details);
         if (StringUtils.isNotBlank(details)) {
             switch (key) {
                 case "registration_reason":
@@ -71,6 +75,7 @@ public class CbhsMonthlyReportObject extends ReportObject {
                 default:
                     return details;
             }
+
         }
         return "-";
     }
@@ -87,12 +92,15 @@ public class CbhsMonthlyReportObject extends ReportObject {
                 }
                 sb.append(value).append(",");
             }
+            Log.d("sb value",sb.toString());
             return sb.toString();
+
         }
         int humanReadableValueId = context.getResources().getIdentifier(resourceKey + receivedVal, "string", context.getPackageName());
         if (humanReadableValueId != 0) {
             return context.getString(humanReadableValueId);
         }
+        Log.d("receivable value",receivedVal);
         return receivedVal;
     }
 
