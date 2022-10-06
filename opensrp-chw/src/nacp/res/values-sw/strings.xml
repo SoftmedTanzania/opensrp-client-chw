@@ -254,4 +254,9 @@
     <string name="referral_problem_Breast_engorgement">Kujaa au maumivu ya matiti, chuchu na kushindwa kunyonyesha</string>
     <string name="referral_problem_Blurred_vision">Kuona kwa shida</string>
     <string name="referral_referral_Perineum_tear">Kuchanika msamba</string>
+    <string name="condom_distribution_reports_subtitle">View Condom Distribution Report</string>
+    <string name="condom_distribution_reports">Condom Distribution Reports</string>
+    <string name="cdp_reports">CDP REPORTS</string>
+    <string name="cdp_issuing_report">CDP Issuing Report</string>
+    <string name="cdp_receiving_report">CDP Receiving Report</string>
 </resources>

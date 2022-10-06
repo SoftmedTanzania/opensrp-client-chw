@@ -21,3 +21,4 @@ function loadData() {
   const reportPeriod = document.getElementById("report_period");
   reportPeriod.innerHTML = Android.getDataPeriod();
 }
+

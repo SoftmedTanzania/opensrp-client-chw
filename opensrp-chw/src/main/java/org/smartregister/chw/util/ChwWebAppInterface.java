@@ -2,6 +2,7 @@ package org.smartregister.chw.util;
 
 import android.content.Context;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 import static org.smartregister.util.Utils.getAllSharedPreferences;
 
@@ -29,6 +30,25 @@ public class ChwWebAppInterface {
 
         return "";
     }
+
+    @JavascriptInterface
+    public String getData(String key) {
+        Toast.makeText(mContext, "key : "+key, Toast.LENGTH_SHORT).show();
+        if (reportType.equalsIgnoreCase(Constants.ReportConstants.ReportTypes.CONDOM_DISTRIBUTION_REPORT)){
+            switch (key) {
+                case Constants.ReportConstants.CDPReportKeys.ISSUING_REPORTS:
+                    ReportUtils.setPrintJobName("CDP_issuing_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
+                    return ReportUtils.CDPReports.computeIssuingReports(ReportUtils.getReportDate());
+                case Constants.ReportConstants.CDPReportKeys.RECEIVING_REPORTS:
+                    ReportUtils.setPrintJobName("CDP_receiving_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
+                    return ReportUtils.CDPReports.computeReceivingReports(ReportUtils.getReportDate());
+                default:
+                    return "";
+            }
+        }
+        return "";
+    }
+
 
     @JavascriptInterface
     public String getDataPeriod() {
