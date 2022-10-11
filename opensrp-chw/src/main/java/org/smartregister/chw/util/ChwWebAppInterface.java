@@ -38,7 +38,7 @@ public class ChwWebAppInterface {
             switch (key) {
                 case Constants.ReportConstants.CDPReportKeys.ISSUING_REPORTS:
                     ReportUtils.setPrintJobName("CDP_issuing_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
-                    return ReportUtils.CDPReports.computeIssuingReports(ReportUtils.getReportDate());
+                    return ReportUtils.CDPReports.computeIssuingReports(ReportUtils.getReportDate(),mContext);
                 case Constants.ReportConstants.CDPReportKeys.RECEIVING_REPORTS:
                     ReportUtils.setPrintJobName("CDP_receiving_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
                     return ReportUtils.CDPReports.computeReceivingReports(ReportUtils.getReportDate());
