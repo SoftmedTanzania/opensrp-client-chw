@@ -28,6 +28,11 @@ public class ChwWebAppInterface {
             return ReportUtils.MotherChampionReport.computeReport(ReportUtils.getReportDate());
         }
 
+        if(reportType.equalsIgnoreCase(Constants.ReportConstants.ReportTypes.AGYW_REPORT)){
+            ReportUtils.setPrintJobName("AGYW-report-" + ReportUtils.getReportPeriod() + ".pdf");
+            return ReportUtils.AGYWReport.computeReport(ReportUtils.getReportDate());
+        }
+
         return "";
     }
 

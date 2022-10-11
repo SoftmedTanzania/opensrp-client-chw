@@ -25,6 +25,7 @@ public class InAppReportsActivity extends SecuredActivity implements View.OnClic
     protected ConstraintLayout cbhsReportsLayout;
     protected ConstraintLayout motherChampionReportsLayout;
     protected ConstraintLayout condomDistributionReports;
+    protected ConstraintLayout agyweports;
 
     @Override
     protected void onCreation() {
@@ -44,9 +45,11 @@ public class InAppReportsActivity extends SecuredActivity implements View.OnClic
         cbhsReportsLayout = findViewById(R.id.cbhs_summary);
         motherChampionReportsLayout = findViewById(R.id.mother_champion_reports);
         condomDistributionReports = findViewById(R.id.cdp_reports);
+        agyweports = findViewById(R.id.agyw_reports);
         motherChampionReportsLayout.setOnClickListener(this);
         condomDistributionReports.setOnClickListener(this);
         cbhsReportsLayout.setOnClickListener(this);
+        agyweports.setOnClickListener(this);
     }
 
     public void setUpToolbar() {
@@ -89,6 +92,10 @@ public class InAppReportsActivity extends SecuredActivity implements View.OnClic
         }
         if (id==R.id.cdp_reports){
             Intent intent = new Intent(this, CdpReportsActivity.class);
+            startActivity(intent);
+        }
+        if (id==R.id.agyw_reports){
+            Intent intent = new Intent(this, AGYWReportsActivity.class);
             startActivity(intent);
         }
     }
