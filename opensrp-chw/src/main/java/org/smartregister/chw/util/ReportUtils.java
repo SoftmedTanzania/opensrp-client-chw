@@ -156,14 +156,15 @@ public class ReportUtils {
             return "";
         }
 
-        public static String computeReceivingReports(Date startDate) {
-            CdpReceivingReportObject cdpReceivingReportObject = new CdpReceivingReportObject(startDate);
+        public static String computeReceivingReports(Date now, Context context) {
+            String report = "";
+            CdpReceivingReportObject cdpReceivingReportObject = new CdpReceivingReportObject(now, context);
             try {
-                return cdpReceivingReportObject.getIndicatorDataAsGson(cdpReceivingReportObject.getIndicatorData());
-            } catch (JSONException e) {
+                report = cdpReceivingReportObject.getIndicatorDataAsGson(cdpReceivingReportObject.getIndicatorData());
+            } catch (Exception e) {
                 Timber.e(e);
             }
-            return "";
+            return report;
         }
 
     }

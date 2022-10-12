@@ -356,6 +356,48 @@ public class ReportDao extends AbstractDao {
             return new ArrayList<>();
     }
 
+    public static List<Map<String, String>> getHfCdpStockLog(Date reportDate)
+    {
+        String sql = "SELECT location.name,ec_cdp_order_feedback.condom_brand,ec_cdp_order_feedback.quantity_response as number_male_condom, '-' as number_female_condom  FROM ec_cdp_order_feedback\n" +
+                "INNER JOIN task ON ec_cdp_order_feedback.request_reference = task.reason_reference\n" +
+                "INNER JOIN location ON task.group_id = location.uuid\n" +
+                "WHERE ec_cdp_order_feedback.condom_type='male_condom' AND\n" +
+                " date(substr(strftime('%Y-%m-%d', datetime(response_at / 1000, 'unixepoch', 'localtime')), 1, 4) || '-' ||\n" +
+                "                substr(strftime('%Y-%m-%d', datetime(response_at / 1000, 'unixepoch', 'localtime')), 6, 2) || '-' || '01') =\n" +
+                "                date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01'))\n" +
+                "UNION ALL\n" +
+                "SELECT location.name,ec_cdp_order_feedback.condom_brand, '-' as number_male_condom,ec_cdp_order_feedback.quantity_response as number_female_condom  FROM ec_cdp_order_feedback\n" +
+                "INNER JOIN task ON ec_cdp_order_feedback.request_reference = task.reason_reference\n" +
+                "INNER JOIN location ON task.group_id = location.uuid\n" +
+                "WHERE ec_cdp_order_feedback.condom_type='female_condom' AND\n" +
+                " date(substr(strftime('%Y-%m-%d', datetime(response_at / 1000, 'unixepoch', 'localtime')), 1, 4) || '-' ||\n" +
+                "                substr(strftime('%Y-%m-%d', datetime(response_at / 1000, 'unixepoch', 'localtime')), 6, 2) || '-' || '01') =\n" +
+                "                date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01'))";
+
+        String queryDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(reportDate);
+
+        sql = sql.contains("%s") ? sql.replaceAll("%s", queryDate) : sql;
+
+        DataMap<Map<String, String>> map = cursor -> {
+            Map<String, String> data = new HashMap<>();
+            data.put("number_female_condom", cursor.getString(cursor.getColumnIndex("number_female_condom")));
+            data.put("number_male_condom", cursor.getString(cursor.getColumnIndex("number_male_condom")));
+            data.put("name", cursor.getString(cursor.getColumnIndex("name")));
+            data.put("condom_brand", cursor.getString(cursor.getColumnIndex("condom_brand")));
+
+            return data;
+        };
+
+        List<Map<String, String>> res = readData(sql, map);
+
+
+        if (res != null && res.size() > 0) {
+            return res;
+        } else
+            return new ArrayList<>();
+    }
+
+
     @NonNull
     public static List<EligibleChild> eligibleChildrenReport(ArrayList<String> communityIds, Date dueDate) {
         String _communityIds = "('" + StringUtils.join(communityIds, "','") + "')";

@@ -1,5 +1,9 @@
 package org.smartregister.chw.domain.cdp_reports;
 
+import android.content.Context;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.dao.ReportDao;
@@ -9,84 +13,50 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class CdpReceivingReportObject extends ReportObject {
-    DecimalFormat df = new DecimalFormat();
-    private List<String> indicatorCodes = new ArrayList<>();
+
+    private final Context context;
     private Date reportDate;
 
-    public CdpReceivingReportObject(Date reportDate) {
+    public CdpReceivingReportObject(Date reportDate, Context context) {
         super(reportDate);
         this.reportDate = reportDate;
-        setIndicatorCodes(indicatorCodes);
+        this.context = context;
     }
 
-    public void setIndicatorCodes(List<String> indicatorCodes) {
-        indicatorCodes.add("B3a");
-        indicatorCodes.add("B3b");
-        indicatorCodes.add("B3c");
-        indicatorCodes.add("B3d");
-        indicatorCodes.add("C3a");
-        indicatorCodes.add("C3b");
-        indicatorCodes.add("D3");
-        indicatorCodes.add("E3");
-        indicatorCodes.add("G3");
-        indicatorCodes.add("H3");
-        indicatorCodes.add("I3");
-        indicatorCodes.add("J3");
-    }
 
     @Override
     public JSONObject getIndicatorData() throws JSONException {
-        JSONObject indicatorDataObject = new JSONObject();
-        for (String indicatorCode : indicatorCodes) {
-            indicatorDataObject.put(indicatorCode, ReportDao.getReportPerIndicatorCode(indicatorCode, reportDate));
+        JSONArray dataArray = new JSONArray();
+        List<Map<String, String>> getHfCdpStockLogList = ReportDao.getHfCdpStockLog(reportDate);
+
+        int i = 0;
+        for (Map<String, String> getHfCdpStockLog : getHfCdpStockLogList) {
+            JSONObject reportJsonObject = new JSONObject();
+            reportJsonObject.put("id", ++i);
+
+            reportJsonObject.put("source", getCbhsClientDetails(getHfCdpStockLog, "name"));
+            reportJsonObject.put("condom-brand", getCbhsClientDetails(getHfCdpStockLog, "condom_brand"));
+            reportJsonObject.put("number-of-male-condom", getCbhsClientDetails(getHfCdpStockLog, "number_male_condom"));
+            reportJsonObject.put("number-of-female-condom", getCbhsClientDetails(getHfCdpStockLog, "number_female_condom"));
+            dataArray.put(reportJsonObject);
         }
-        df.setMaximumFractionDigits(2);
-        //F3 = A3 + D3 - E3
-        indicatorDataObject.put("F3", getIndicatorA3() + getIndicatorD3() - getIndicatorE3());
-        indicatorDataObject.put("K3", df.format(getIndicatorK3()) + "%");
-        return indicatorDataObject;
+
+        JSONObject resultJsonObject = new JSONObject();
+        resultJsonObject.put("reportData", dataArray);
+
+        return resultJsonObject;
     }
 
-    private int getIndicatorA3() {
-        // A3 = B3a + B3b + B3c + B3d
-        return ReportDao.getReportPerIndicatorCode("B3a", reportDate)
-                + ReportDao.getReportPerIndicatorCode("B3b", reportDate)
-                + ReportDao.getReportPerIndicatorCode("B3c", reportDate)
-                + ReportDao.getReportPerIndicatorCode("B3d", reportDate);
-    }
-
-    private int getIndicatorD3() {
-        return ReportDao.getReportPerIndicatorCode("D3", reportDate);
-    }
-
-    private int getIndicatorE3() {
-        return ReportDao.getReportPerIndicatorCode("E3", reportDate);
-    }
-
-    private float getIndicatorK3() {
-        //if F3 - J3 < 0 return 0
-        //else K3 = G3 /(F3 - J3) * 100 to 2 decimal places
-        int denominator = getIndicatorF3() - getIndicatorJ3();
-        float numerator = getIndicatorG3() * 1f;
-        if (denominator > 0) {
-            return ((numerator) / (denominator)) * 100;
+    private String getCbhsClientDetails(Map<String, String> chwRegistrationFollowupClient, String key) {
+        String details = chwRegistrationFollowupClient.get(key);
+        if (StringUtils.isNotBlank(details)) {
+            return details;
         }
-        return 0;
-
+        return "-";
     }
 
-    private int getIndicatorF3() {
-        return getIndicatorA3() + getIndicatorD3() - getIndicatorE3();
-    }
-
-    private int getIndicatorJ3() {
-        return ReportDao.getReportPerIndicatorCode("J3", reportDate);
-    }
-
-    private int getIndicatorG3() {
-        return ReportDao.getReportPerIndicatorCode("G3", reportDate);
-    }
 
 }
