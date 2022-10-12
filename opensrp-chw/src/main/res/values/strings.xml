@@ -440,5 +440,9 @@
     <string name="cdp_reports">CDP REPORTS</string>
     <string name="cdp_issuing_report">CDP Issuing Report</string>
     <string name="cdp_receiving_report">CDP Receiving Report</string>
+    <string name="sti_referral">STI Services</string>
+    <string name="agyw_reports">AGYW Reports</string>
+    <string name="agyw_reports_subtitle">View AGYW Report</string>
+
 
 </resources>

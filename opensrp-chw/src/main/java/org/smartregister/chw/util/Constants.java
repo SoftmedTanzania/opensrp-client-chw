@@ -146,6 +146,7 @@ public class Constants extends CoreConstants {
            String CBHS_REPORT = "cbhs_report";
            String MOTHER_CHAMPION_REPORT = "mother_champion_report";
            String CONDOM_DISTRIBUTION_REPORT = "condom_distribution_report";
+           String AGYW_REPORT = "agyw_report";
         }
 
         public interface CDPReportKeys {

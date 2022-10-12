@@ -6,12 +6,12 @@ import android.os.Build;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
+import org.smartregister.chw.domain.AGYW_reports.AGYWReportObject;
 import org.smartregister.chw.domain.cbhs_reports.CbhsMonthlyReportObject;
 import org.smartregister.chw.domain.cdp_reports.CdpIssuingReportObject;
 import org.smartregister.chw.domain.cdp_reports.CdpReceivingReportObject;
@@ -147,7 +147,7 @@ public class ReportUtils {
 
     public static class CDPReports {
         public static String computeIssuingReports(Date startDate,Context context) {
-            CdpIssuingReportObject cdpIssuingReportObject = new CdpIssuingReportObject(startDate);
+            CdpIssuingReportObject cdpIssuingReportObject = new CdpIssuingReportObject(startDate,context);
             try {
                 return cdpIssuingReportObject.getIndicatorDataAsGson(cdpIssuingReportObject.getIndicatorData());
             } catch (JSONException e) {
@@ -166,6 +166,18 @@ public class ReportUtils {
             }
             return report;
         }
+    }
 
+    public static class AGYWReport {
+        public static String computeReport(Date now) {
+            String report = "";
+            AGYWReportObject agywReportObject = new AGYWReportObject(now);
+            try {
+                report = agywReportObject.getIndicatorDataAsGson(agywReportObject.getIndicatorData());
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            return report;
+        }
     }
 }
