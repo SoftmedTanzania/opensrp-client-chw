@@ -146,7 +146,7 @@ public class ReportUtils {
     }
 
     public static class CDPReports {
-        public static String computeIssuingReports(Date startDate) {
+        public static String computeIssuingReports(Date startDate,Context context) {
             CdpIssuingReportObject cdpIssuingReportObject = new CdpIssuingReportObject(startDate);
             try {
                 return cdpIssuingReportObject.getIndicatorDataAsGson(cdpIssuingReportObject.getIndicatorData());
