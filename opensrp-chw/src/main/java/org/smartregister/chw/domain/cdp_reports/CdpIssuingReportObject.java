@@ -1,6 +1,7 @@
 package org.smartregister.chw.domain.cdp_reports;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -31,17 +32,44 @@ public class CdpIssuingReportObject extends ReportObject {
         JSONArray dataArray = new JSONArray();
         List<Map<String, String>> getHfCdpStockLogList = ReportDao.getHfIssuingCdpStockLog(reportDate);
 
-        int i = 0;
+
+//        data.put("outlet_name", cursor.getString(cursor.getColumnIndex("outlet_name")));
+//        data.put("visit_key", cursor.getString(cursor.getColumnIndex("visit_key")));
+//        data.put("details", cursor.getString(cursor.getColumnIndex("details")));
+
+        int i = 0,flag_count_female=0,flag_count_male=0;
         for (Map<String, String> getHfCdpStockLog : getHfCdpStockLogList) {
             JSONObject reportJsonObject = new JSONObject();
             reportJsonObject.put("id", ++i);
 
-            reportJsonObject.put("male-condoms", getCdpClientDetails(getHfCdpStockLog, "male_condoms"));
-            reportJsonObject.put("female-condoms", getCdpClientDetails(getHfCdpStockLog, "female_condoms"));
-            reportJsonObject.put("point-of-service", getCdpClientDetails(getHfCdpStockLog, "point_of_service"));
-            reportJsonObject.put("other-pos", getCdpClientDetails(getHfCdpStockLog, "other_pos"));
+            Log.d("hukuuuu",""+getHfCdpStockLog);
+            if (getCdpClientDetails(getHfCdpStockLog, "visit_key").equals("restocked_male_condoms")){
+                reportJsonObject.put("outlet-name", getCdpClientDetails(getHfCdpStockLog, "outlet_name"));
+                reportJsonObject.put("male-condoms-offset", getCdpClientDetails(getHfCdpStockLog, "details"));
+                reportJsonObject.put("female-condoms-offset", getCdpClientDetails(getHfCdpStockLog, "0"));
+                flag_count_male+=Integer.parseInt(getCdpClientDetails(getHfCdpStockLog, "details"));
+            }
+
+            if(getCdpClientDetails(getHfCdpStockLog, "visit_key").equals("restocked_female_condoms")){
+                reportJsonObject.put("outlet-name", getCdpClientDetails(getHfCdpStockLog, "outlet_name"));
+                reportJsonObject.put("male-condoms-offset", getCdpClientDetails(getHfCdpStockLog, "0"));
+                reportJsonObject.put("female-condoms-offset", getCdpClientDetails(getHfCdpStockLog, "details"));
+                flag_count_female+=Integer.parseInt(getCdpClientDetails(getHfCdpStockLog, "details"));
+            }
+
             dataArray.put(reportJsonObject);
         }
+
+        //finally go display total of all
+        if (flag_count_male > 0 || flag_count_female > 0 ){
+            JSONObject reportJsonObject = new JSONObject();
+            reportJsonObject.put("total-id",i+1);
+            reportJsonObject.put("total","TOTAL NUMBER OF CONDOMS ISSUED");
+            reportJsonObject.put("total-male-condoms",flag_count_male);
+            reportJsonObject.put("total-female-condoms",flag_count_female);
+            dataArray.put(reportJsonObject);
+        }
+
 
         JSONObject resultJsonObject = new JSONObject();
         resultJsonObject.put("reportData", dataArray);
@@ -54,7 +82,14 @@ public class CdpIssuingReportObject extends ReportObject {
         if (StringUtils.isNotBlank(details)) {
             return details;
         }
-        return "-";
+        else {
+            if (key.equals("0")){
+                return "0";
+            }else {
+                return "-";
+            }
+        }
+
     }
 
 }

@@ -232,13 +232,17 @@ public class ReportDao extends AbstractDao {
 
     public static List<Map<String, String>> getHfIssuingCdpStockLog(Date reportDate)
     {
-        String sql = "SELECT female_condoms,male_condoms,point_of_service,other_pos\n" +
-                " FROM ec_cdp_issuing_hf\n" +
-                " WHERE point_of_service='CTC' OR point_of_service='RCH Clinic' OR point_of_service='OPD' OR point_of_service='RCH Clinic' " +
-                " OR point_of_service='TB Clinic' OR point_of_service='Outreach'  OR point_of_service='Other (Specify)' AND\n" +
-                " date(substr(strftime('%Y-%m-%d', datetime(date_updated / 1000, 'unixepoch', 'localtime')), 1, 4) || '-' ||\n" +
-                "                substr(strftime('%Y-%m-%d', datetime(date_updated / 1000, 'unixepoch', 'localtime')), 6, 2) || '-' || '01') =\n" +
-                "                date((substr('2022-10-10', 1, 4) || '-' || substr('2022-10-10', 6, 2) || '-' || '01'))";
+        String sql = "SELECT outlet_name,visit_key,vd.details as details FROM ec_cdp_outlet as eco\n" +
+                "    INNER JOIN visits ON visits.base_entity_id = eco.base_entity_id\n" +
+                "INNER JOIN visit_details as vd ON visits.visit_id = vd.visit_id\n" +
+                "WHERE (visit_key = 'restocked_male_condoms' \n" +
+                "OR visit_key = 'restocked_female_condoms' )\n" +
+                "AND visit_type = 'CDP Restock'\n" +
+                "AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =\n" +
+                "                               date(substr(strftime('%Y-%m-%d', datetime(visit_date / 1000, 'unixepoch', 'localtime')), 1, 4) ||\n" +
+                "                                   '-' ||\n" +
+                "                                   substr(strftime('%Y-%m-%d', datetime(visit_date / 1000, 'unixepoch', 'localtime')), 6, 2) ||\n" +
+                "                                   '-' || '01')";
 
         String queryDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(reportDate);
 
@@ -246,9 +250,9 @@ public class ReportDao extends AbstractDao {
 
         DataMap<Map<String, String>> map = cursor -> {
             Map<String, String> data = new HashMap<>();
-            data.put("issuing_organization", cursor.getString(cursor.getColumnIndex("issuing_organization")));
-            data.put("male_condom_brand", cursor.getString(cursor.getColumnIndex("male_condom_brand")));
-            data.put("female_condom_brand", cursor.getString(cursor.getColumnIndex("female_condom_brand")));
+            data.put("outlet_name", cursor.getString(cursor.getColumnIndex("outlet_name")));
+            data.put("visit_key", cursor.getString(cursor.getColumnIndex("visit_key")));
+            data.put("details", cursor.getString(cursor.getColumnIndex("details")));
 
             return data;
         };
