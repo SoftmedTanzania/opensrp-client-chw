@@ -4976,6 +4976,102 @@
           }
         },
         {
+          "column_name": "birth_before_18",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "birth_before_18"
+          }
+        },
+        {
+          "column_name": "sex_for_money",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "sex_for_money"
+          }
+        },
+        {
+          "column_name": "more_than_two_partner",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "more_than_two_partner"
+          }
+        },
+        {
+          "column_name": "intervention_screening",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "intervention_screening"
+          }
+        },
+        {
+          "column_name": "intervention_eligibility",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "intervention_eligibility"
+          }
+        },
+        {
+          "column_name": "enrollment_date",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "enrollment_date"
+          }
+        },
+        {
+          "column_name": "parity_status",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "parity_status"
+          }
+        },
+        {
+          "column_name": "ever_married",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "ever_married"
+          }
+        },
+        {
+          "column_name": "family_planning_service",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "family_planning_service"
+          }
+        },
+        {
+          "column_name": "unwillingly_touched",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "unwillingly_touched"
+          }
+        },
+        {
+          "column_name": "forced_for_sexual_activity",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "forced_for_sexual_activity"
+          }
+        },
+        {
+          "column_name": "scared_of_person",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "scared_of_person"
+          }
+        },
+        {
           "column_name": "last_interacted_with",
           "type": "Event",
           "json_mapping": {
