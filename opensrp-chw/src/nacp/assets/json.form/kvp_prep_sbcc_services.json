@@ -257,8 +257,8 @@
             }
           },
           {
-            "key": "counselling_on_need_of_health_servicers",
-            "text": "Counselling on the need of health Servicers",
+            "key": "counselling_on_need_of_health_services",
+            "text": "Counselling on the need of health Services",
             "openmrs_entity_id": "counselling_on_need_of_health_servicers",
             "openmrs_entity": "concept",
             "property": {

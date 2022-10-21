@@ -347,4 +347,6 @@
     <string name="cbhs_registered_in_tb_clinic">Amesajiliwa kwenye Kliniki ya Kifua Kikuu</string>
     <string name="cbhs_male">Me</string>
     <string name="cbhs_female">Ke</string>
+
+    <string name="agyw_visit">Matembeleo ya AGYW</string>
 </resources>
