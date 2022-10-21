@@ -21,6 +21,7 @@ import org.smartregister.chw.core.activity.DefaultAncMedicalHistoryActivityFlv;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,28 +46,41 @@ public class KvpPrEPMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryAc
 
         if (visits.size() > 0) {
             int days = 0;
-            List<Map<String, String>> hf_visits = new ArrayList<>();
+            List<LinkedHashMap<String, String>> hf_visits = new ArrayList<>();
 
             int x = 0;
             while (x < visits.size()) {
-
+                LinkedHashMap<String, String> visitDetails = new LinkedHashMap<>();
                 // the first object in this list is the days difference
                 if (x == 0) {
                     days = Days.daysBetween(new DateTime(visits.get(visits.size() - 1).getDate()), new DateTime()).getDays();
                 }
 
-                String[] visitParams = {"visit_type", "client_hiv_status", "structural_services_provided", "other_structural_services_provided", "condoms_given", "type_of_issued_condoms", "number_of_male_condoms_issued", "number_of_female_condoms_issued", "number_of_iec_distributed", "number_of_tubes_needles_distributed", "number_of_water_distributed", "number_of_alcohol_swabs_distributed", "number_of_disposable_safety_boxes_distributed","number_of_plasters_distributed","number_of_hivst_kits_distributed","number_of_index_coupons_distributed","referral_to_structural_services","other_referral_to_structural_services","referrals_completed_to_structural_services","other_referrals_completed_to_structural_services","sbcc_services_offered"};
-                extractVisitDetails(visits, visitParams, hf_visits, x, context);
+                String[] visitTypeParams = {"visit_type", "client_hiv_status"};
+                extractVisitDetails(visits, visitTypeParams, visitDetails, x, context);
+
+                String[] structuralServicesParams = {"structural_services_provided", "other_structural_services_provided"};
+                extractVisitDetails(visits, structuralServicesParams, visitDetails, x, context);
+
+                String[] protectiveServicesParams = {"condoms_given", "type_of_issued_condoms", "number_of_male_condoms_issued", "number_of_female_condoms_issued", "number_of_iec_distributed", "number_of_tubes_needles_distributed", "number_of_water_distributed", "number_of_alcohol_swabs_distributed", "number_of_disposable_safety_boxes_distributed", "number_of_plasters_distributed", "number_of_hivst_kits_distributed", "number_of_index_coupons_distributed"};
+                extractVisitDetails(visits, protectiveServicesParams, visitDetails, x, context);
+
+                String[] referralServicesParams = {"referral_to_structural_services", "other_referral_to_structural_services", "referrals_completed_to_structural_services", "other_referrals_completed_to_structural_services"};
+                extractVisitDetails(visits, referralServicesParams, visitDetails, x, context);
+
+                String[] sbccServicesParams = {"sbcc_services_offered"};
+                extractVisitDetails(visits, sbccServicesParams, visitDetails, x, context);
+                hf_visits.add(visitDetails);
 
                 x++;
             }
 
             processLastVisit(days, context);
-            processVisit(hf_visits, context,visits);
+            processVisit(hf_visits, context, visits);
         }
     }
 
-    private void extractVisitDetails(List<Visit> sourceVisits, String[] hf_params, List<Map<String, String>> hf_visits, int iteration, Context context) {
+    private void extractVisitDetails(List<Visit> sourceVisits, String[] hf_params, LinkedHashMap<String, String> visitDetailsMap, int iteration, Context context) {
         // get the hf details
         Map<String, String> map = new HashMap<>();
         for (String param : hf_params) {
@@ -78,7 +92,7 @@ public class KvpPrEPMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryAc
             }
 
         }
-        hf_visits.add(map);
+        visitDetailsMap.putAll(map);
     }
 
 
@@ -92,22 +106,22 @@ public class KvpPrEPMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryAc
     }
 
 
-    protected void processVisit(List<Map<String, String>> community_visits, Context context,List<Visit> visits) {
+    protected void processVisit(List<LinkedHashMap<String, String>> community_visits, Context context, List<Visit> visits) {
         if (community_visits != null && community_visits.size() > 0) {
             linearLayoutHealthFacilityVisit.setVisibility(View.VISIBLE);
 
             int x = 0;
-            for (Map<String, String> vals : community_visits) {
+            for (LinkedHashMap<String, String> vals : community_visits) {
                 View view = inflater.inflate(R.layout.medical_history_visit, null);
                 TextView tvTitle = view.findViewById(R.id.title);
                 TextView tvTypeOfService = view.findViewById(R.id.type_of_service);
                 LinearLayout visitDetailsLayout = view.findViewById(R.id.visit_details_layout);
 
                 evaluateTitle(context, x, vals, tvTitle);
-                tvTypeOfService.setText(visits.get(x).getVisitType()+" "+visits.get(x).getDate());
+                tvTypeOfService.setText(visits.get(x).getVisitType() + " " + visits.get(x).getDate());
 
 
-                for (Map.Entry<String, String> entry : vals.entrySet()) {
+                for (LinkedHashMap.Entry<String, String> entry : vals.entrySet()) {
                     TextView visitDetailTv = new TextView(context);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
                             ((int) LinearLayout.LayoutParams.MATCH_PARENT, (int) LinearLayout.LayoutParams.WRAP_CONTENT);
