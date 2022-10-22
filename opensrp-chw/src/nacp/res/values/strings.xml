@@ -438,7 +438,7 @@
     <string name="kvp_number_of_disposable_safety_boxes_distributed">Number of Disposable Safety Boxes Distributed:</string>
     <string name="kvp_number_of_plasters_distributed">Number of Plasters Distributed:</string>
     <string name="kvp_number_of_hivst_kits_distributed">Number of HIVST Kits Distributed:</string>
-    <string name="kvp_number_of_index_coupons_distributed">Number of HIVST Kits Distributed:</string>
+    <string name="kvp_number_of_index_coupons_distributed">Number of Index Coupons Distributed:</string>
     <string name="male_condoms">Male Condoms</string>
     <string name="female_condoms">Female Condoms</string>
     <string name="kvp_referral_to_structural_services">Structural referrals provided:</string>
