@@ -5079,6 +5079,191 @@
           }
         }
       ]
+    },
+    {
+      "name": "ec_agyw_behavioral_services",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "relational_id"
+          }
+        },
+        {
+          "column_name": "entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "sbcc_intervention_provided",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "sbcc_intervention_provided"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_agyw_bio_medical_services",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "relational_id"
+          }
+        },
+        {
+          "column_name": "entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "condom_provided",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "condom_provided"
+          }
+        },
+        {
+          "column_name": "provided_male_condoms",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "provided_male_condoms"
+          }
+        },
+        {
+          "column_name": "provided_female_condoms",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "provided_female_condoms"
+          }
+        },
+        {
+          "column_name": "hivst_kit_needed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "hivst_kit_needed"
+          }
+        },
+        {
+          "column_name": "family_planning_service",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "family_planning_service"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ec_agyw_structural_services",
+      "columns": [
+        {
+          "column_name": "base_entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "formSubmissionId"
+          }
+        },
+        {
+          "column_name": "relational_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "relational_id"
+          }
+        },
+        {
+          "column_name": "entity_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "baseEntityId"
+          }
+        },
+        {
+          "column_name": "economic_empowerment_education",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "economic_empowerment_education"
+          }
+        },
+        {
+          "column_name": "education_materials",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "education_materials"
+          }
+        },
+        {
+          "column_name": "entrepreneurial_tools",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "entrepreneurial_tools"
+          }
+        },
+        {
+          "column_name": "given_capital",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "given_capital"
+          }
+        },
+        {
+          "column_name": "distribute_sanitary_pads",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "distribute_sanitary_pads"
+          }
+        },
+        {
+          "column_name": "nurturing_and_upb_edu",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "nurturing_and_upb_edu"
+          }
+        },
+        {
+          "column_name": "nurturing_and_upb_edu_given",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "nurturing_and_upb_edu_given"
+          }
+        }
+      ]
     }
   ]
 }

@@ -212,6 +212,8 @@ indicators:
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
 					  WHERE chw_referral_service='Suspected HIV'
+					  AND (SELECT count( eabs.base_entity_id) FROM ec_agyw_behavioral_services eabs
+					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs.entity_id)>=4
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -224,6 +226,8 @@ indicators:
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
 					  WHERE chw_referral_service='Suspected HIV'
+					  AND (SELECT count( eabs.base_entity_id) FROM ec_agyw_behavioral_services eabs
+					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs.entity_id)>=4
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -236,6 +240,8 @@ indicators:
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
 					  WHERE chw_referral_service='Suspected HIV'
+					  AND (SELECT count( eabs.base_entity_id) FROM ec_agyw_behavioral_services eabs
+					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs.entity_id)>=4
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -248,7 +254,6 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
-					  WHERE chw_referral_service='Suspected HIV'
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -260,7 +265,6 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
-					  WHERE chw_referral_service='Suspected HIV'
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -272,7 +276,6 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
-					  WHERE chw_referral_service='Suspected HIV'
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
