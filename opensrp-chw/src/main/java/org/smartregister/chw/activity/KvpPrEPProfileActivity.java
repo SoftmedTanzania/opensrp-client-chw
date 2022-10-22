@@ -6,6 +6,7 @@ import static org.smartregister.chw.util.Utils.launchClientReferralActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.smartregister.chw.BuildConfig;
@@ -78,8 +79,8 @@ public class KvpPrEPProfileActivity extends CoreKvpProfileActivity {
         if (lastVisit != null) {
             rlLastVisit.setVisibility(View.VISIBLE);
             findViewById(R.id.view_notification_and_referral_row).setVisibility(View.VISIBLE);
-//            ((TextView) findViewById(R.id.vViewHistory)).setText(R.string.mother_champion_visits_history);
-//            ((TextView) findViewById(R.id.ivViewHistoryArrow)).setText(getString(R.string.view_visits_history));
+            ((TextView) findViewById(R.id.vViewHistory)).setText(R.string.visits_history_profile_title);
+            ((TextView) findViewById(R.id.ivViewHistoryArrow)).setText(getString(R.string.view_visits_history));
         } else {
             rlLastVisit.setVisibility(View.GONE);
         }
