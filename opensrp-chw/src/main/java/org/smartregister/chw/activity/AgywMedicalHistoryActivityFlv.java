@@ -17,7 +17,6 @@ import org.smartregister.chw.R;
 import org.smartregister.chw.anc.domain.Visit;
 import org.smartregister.chw.anc.domain.VisitDetail;
 import org.smartregister.chw.core.activity.DefaultAncMedicalHistoryActivityFlv;
-import org.smartregister.view.customcontrols.CustomFontTextView;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class AgywMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
             }
 
             processLastVisit(days, context);
-            processVisit(hf_visits, context,visits);
+            processVisit(hf_visits, context, visits);
         }
     }
 
@@ -94,7 +93,7 @@ public class AgywMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
     }
 
 
-    protected void processVisit(List<Map<String, String>> community_visits, Context context,List<Visit> visits) {
+    protected void processVisit(List<Map<String, String>> community_visits, Context context, List<Visit> visits) {
         if (community_visits != null && community_visits.size() > 0) {
             linearLayoutHealthFacilityVisit.setVisibility(View.VISIBLE);
 
@@ -106,7 +105,7 @@ public class AgywMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
                 LinearLayout visitDetailsLayout = view.findViewById(R.id.visit_details_layout);
 
                 evaluateTitle(context, x, vals, tvTitle);
-                tvTypeOfService.setText(visits.get(x).getVisitType()+" "+visits.get(x).getDate());
+                tvTypeOfService.setText(visits.get(x).getVisitType() + " " + visits.get(x).getDate());
 
 
                 for (Map.Entry<String, String> entry : vals.entrySet()) {
