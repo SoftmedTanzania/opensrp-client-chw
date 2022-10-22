@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <script src="./report-script.js"></script>
-
+    <script src="./cdp-report-script.js"></script>
     <style>
     *{
     box-sizing: border-box;
@@ -64,8 +63,6 @@ ul li > * {
 .bg-black {
   background: #000;
 }
-
-
     </style>
 </head>
 
@@ -78,7 +75,7 @@ ul li > * {
             <th colspan="16">
                 <div style="line-height: 0.001;">
                     <h5>FOMU YA RIPOTI YA VIJANANA RIKA YA BALEHE </h5>
-                    <h5>TAARIFA YA [MWEZI/MWAKA]: 09-2022 </h5>
+                    <h5>TAARIFA YA [MWEZI/MWAKA]: <span id="report_period"></span></h5>
                     <h5>KITUONI: Kitungwa </h5>
                 </div>
             </th>
@@ -210,7 +207,5 @@ ul li > * {
         <tbody>
     </table>
 </div>
-
-
 </body>
 </html>

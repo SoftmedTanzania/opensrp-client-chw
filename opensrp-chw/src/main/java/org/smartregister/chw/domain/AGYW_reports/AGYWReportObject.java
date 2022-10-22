@@ -1,5 +1,8 @@
 package org.smartregister.chw.domain.AGYW_reports;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.dao.ReportDao;
@@ -40,6 +43,9 @@ public class AGYWReportObject extends ReportObject {
 
     @Override
     public JSONObject getIndicatorData() throws JSONException {
+
+
+
         jsonObject = new JSONObject();
         for (String questionGroup : questionsGroups) {
                         jsonObject.put("agyw"+"-"+questionGroup,

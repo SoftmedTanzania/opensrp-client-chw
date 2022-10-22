@@ -1,0 +1,280 @@
+indicators:
+  #  Question 1
+  - key: "agyw-1-10-14"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliotathminiwa kwenye afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE intervention_screening = 'yes'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-1-15-19"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliotathminiwa kwenye afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE intervention_screening = 'yes'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-1-20-24"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliotathminiwa kwenye afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE intervention_screening = 'yes'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+
+    #  Question 2
+  - key: "agyw-2-10-14"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliokidhi vigezo kupata afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE intervention_eligibility = 'yes'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-2-15-19"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliokidhi vigezo kupata afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE intervention_eligibility = 'yes'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-2-20-24"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliokidhi vigezo kupata afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE intervention_eligibility = 'yes'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  #  Question 3
+  - key: "agyw-3-10-14"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliosajiliwa kupata afua za kuzuia maambukizi Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE enrollment_date IS NOT NULL
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-3-15-19"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliosajiliwa kupata afua za kuzuia maambukizi Umri 15-19"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE enrollment_date IS NOT NULL
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-3-20-24"
+    description: "Idadi ya wasichana balehe na wanawake vijana waliosajiliwa kupata afua za kuzuia maambukizi Umri 20-24"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE enrollment_date IS NOT NULL
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  #  Question 4
+  - key: "agyw-4-10-14"
+    description: "Idadi ya wasichana balehe wajawazito au waliowahi/kuwa na mtoto Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE parity_status = 'pregnant' OR parity_status='Gave birth'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-4-15-19"
+    description: "Idadi ya wasichana balehe wajawazito au waliowahi/kuwa na mtoto Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE parity_status = 'pregnant' OR parity_status='Gave birth'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-4-20-24"
+    description: "Idadi ya wasichana balehe wajawazito au waliowahi/kuwa na mtoto Umri 10-14"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE parity_status = 'pregnant' OR parity_status='Gave birth'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  #  Question 5
+  - key: "agyw-5-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE marital_status = 'Married' OR parity_status='Cohabitation'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-5-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE marital_status = 'Married' OR parity_status='Cohabitation'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-5-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE marital_status = 'Married' OR parity_status='Cohabitation'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  #  Question 6
+  - key: "agyw-6-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE family_planning_service IS NOT NULL
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-6-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE family_planning_service IS NOT NULL
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-6-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  WHERE family_planning_service IS NOT NULL
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  #  Question 12
+  - key: "agyw-12-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  WHERE chw_referral_service='Suspected HIV'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-12-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  WHERE chw_referral_service='Suspected HIV'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-12-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  WHERE chw_referral_service='Suspected HIV'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  #  Question 13
+  - key: "agyw-13-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  WHERE chw_referral_service='Suspected HIV'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-13-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  WHERE chw_referral_service='Suspected HIV'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+  - key: "agyw-13-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  WHERE chw_referral_service='Suspected HIV'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+					  AND (efm.gender='Female')
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"

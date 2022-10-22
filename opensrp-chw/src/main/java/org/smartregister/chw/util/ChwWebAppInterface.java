@@ -28,17 +28,16 @@ public class ChwWebAppInterface {
             return ReportUtils.MotherChampionReport.computeReport(ReportUtils.getReportDate());
         }
 
-        if(reportType.equalsIgnoreCase(Constants.ReportConstants.ReportTypes.AGYW_REPORT)){
-            ReportUtils.setPrintJobName("AGYW-report-" + ReportUtils.getReportPeriod() + ".pdf");
-            return ReportUtils.AGYWReport.computeReport(ReportUtils.getReportDate());
-        }
 
         return "";
     }
 
     @JavascriptInterface
     public String getData(String key) {
-        Toast.makeText(mContext, "key : "+key, Toast.LENGTH_SHORT).show();
+        if (reportType.equalsIgnoreCase(Constants.ReportConstants.ReportTypes.AGYW_REPORT)){
+            ReportUtils.setPrintJobName("AGYW_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
+            return ReportUtils.AGYWReport.computeReport(ReportUtils.getReportDate());
+        }
         if (reportType.equalsIgnoreCase(Constants.ReportConstants.ReportTypes.CONDOM_DISTRIBUTION_REPORT)){
             switch (key) {
                 case Constants.ReportConstants.CDPReportKeys.ISSUING_REPORTS:
@@ -57,6 +56,11 @@ public class ChwWebAppInterface {
 
     @JavascriptInterface
     public String getDataPeriod() {
+        return ReportUtils.getReportPeriod();
+    }
+
+    @JavascriptInterface
+    public String getDataPeriod(String reportKey) {
         return ReportUtils.getReportPeriod();
     }
 

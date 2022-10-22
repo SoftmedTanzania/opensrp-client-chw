@@ -8,6 +8,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
