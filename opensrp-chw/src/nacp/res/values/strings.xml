@@ -343,9 +343,13 @@
     <string name="cbhs_registered_in_injection_drugs_users_clinic">Registered in Injection Drugs Users Clinic</string>
     <string name="cbhs_registered_in_tb_clinic">Registered in TB Clinic</string>
 
+    <string name="agyw_services">AGYW Services</string>
 
     <!--    AGYW Visit History-->
     <string name="agyw_visit">AGYW Visits</string>
+    <string name="agyw_structural_services">Structural Services</string>
+    <string name="agyw_behavioral_services">Behavioral Services</string>
+    <string name="agyw_bio_medical_services">Bio Medical Services</string>
     <string name="agyw_condom_provided">Client provided with condoms:</string>
     <string name="agyw_provided_male_condoms">Number of male condoms provided:</string>
     <string name="agyw_provided_female_condoms">Number of female condoms provided:</string>

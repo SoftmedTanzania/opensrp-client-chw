@@ -17,17 +17,21 @@ import org.smartregister.chw.R;
 import org.smartregister.chw.anc.domain.Visit;
 import org.smartregister.chw.anc.domain.VisitDetail;
 import org.smartregister.chw.core.activity.DefaultAncMedicalHistoryActivityFlv;
+import org.smartregister.chw.util.Constants;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
 
 public class AgywMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActivityFlv {
     private final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
 
     @Override
     protected void processAncCard(String has_card, Context context) {
@@ -105,7 +109,24 @@ public class AgywMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
                 LinearLayout visitDetailsLayout = view.findViewById(R.id.visit_details_layout);
 
                 evaluateTitle(context, x, vals, tvTitle);
-                tvTypeOfService.setText(visits.get(x).getVisitType() + " " + visits.get(x).getDate());
+
+                String visitType;
+
+                switch (visits.get(x).getVisitType()) {
+                    case Constants.Events.AGYW_STRUCTURAL_SERVICES:
+                        visitType = context.getString(R.string.agyw_structural_services);
+                        break;
+                    case Constants.Events.AGYW_BEHAVIORAL_SERVICES:
+                        visitType = context.getString(R.string.agyw_behavioral_services);
+                        break;
+                    case Constants.Events.AGYW_BIO_MEDICAL_SERVICES:
+                        visitType = context.getString(R.string.agyw_bio_medical_services);
+                        break;
+                    default:
+                        visitType = visits.get(x).getVisitType();
+
+                }
+                tvTypeOfService.setText(visitType + " - " + simpleDateFormat.format(visits.get(x).getDate()));
 
 
                 for (Map.Entry<String, String> entry : vals.entrySet()) {
