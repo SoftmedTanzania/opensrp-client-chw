@@ -515,6 +515,7 @@
 
     <!--    KVP Community-->
     <string name="kvp_visit_type">Aina ya hudhurio la mteja:</string>
+    <string name="kvp_prep_followup_visit">Hudhurio la marudio</string>
     <string name="kvp_client_hiv_status">Hali ya mteja ya maambukizi ya VVU:</string>
     <string name="new_visit">Mteja Mpya</string>
     <string name="followup">Anaendelea na Huduma</string>
@@ -561,8 +562,8 @@
     <string name="education_on_the_use_of_prep">Elimu ya matumizi ya dawa kinga</string>
     <string name="education_on_the_use_of_pep">Elimu ya matumizi ya dawa za PEP</string>
     <string name="reduction_of_effects_of_the_use_of_mat">Upunguzaji wa madhara yatokanayo na utumiaji wa dawa za kulevya</string>
-    <string name="education_on_paraphenalia_for_PWID">Education on Paraphernalia for PWID</string>
-    <string name="education_on_overdose_management">Elimu ya </string>
+    <string name="education_on_paraphenalia_for_PWID">Elimu juu ya vifaa vya wajidunga</string>
+    <string name="education_on_overdose_management">Elimu ya Overdose management </string>
     <string name="education_on_hepatitis_b">Elimu ya Homa ya Ini B</string>
     <string name="education_on_hepatitis_c">Elimu ya Homa ya Ini C</string>
     <string name="counselling_on_tb">Ushauri wa Kifua kikuu</string>

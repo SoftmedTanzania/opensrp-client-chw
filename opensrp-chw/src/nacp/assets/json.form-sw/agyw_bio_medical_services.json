@@ -168,7 +168,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "family_planning_service",
         "type": "native_radio",
-        "label": "Huduma za uzazi wa mpango",
+        "label": "Chagua huduma ya uzazi wa mpango iliyotolewa kwa mteja",
         "exclusive": [
           "none"
         ],

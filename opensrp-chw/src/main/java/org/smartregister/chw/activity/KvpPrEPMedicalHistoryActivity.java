@@ -24,12 +24,15 @@ import org.smartregister.chw.core.activity.CoreAncMedicalHistoryActivity;
 import org.smartregister.chw.core.activity.DefaultAncMedicalHistoryActivityFlv;
 import org.smartregister.chw.interactor.KvpPrEPMedicalHistoryInteractor;
 import org.smartregister.chw.kvp.domain.MemberObject;
+import org.smartregister.chw.util.Constants;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -158,6 +161,7 @@ public class KvpPrEPMedicalHistoryActivity extends CoreAncMedicalHistoryActivity
 
 
         protected void processVisit(List<LinkedHashMap<String, String>> community_visits, Context context, List<Visit> visits) {
+            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
             if (community_visits != null && community_visits.size() > 0) {
                 linearLayoutHealthFacilityVisit.setVisibility(View.VISIBLE);
 
@@ -168,8 +172,14 @@ public class KvpPrEPMedicalHistoryActivity extends CoreAncMedicalHistoryActivity
                     TextView tvTypeOfService = view.findViewById(R.id.type_of_service);
                     LinearLayout visitDetailsLayout = view.findViewById(R.id.visit_details_layout);
 
-                    evaluateTitle(context, x, vals, tvTitle);
-                    tvTypeOfService.setText(visits.get(x).getVisitType() + " " + visits.get(x).getDate());
+                    String visitType;
+
+                    if (Constants.Events.KVP_PREP_FOLLOWUP_VISIT.equals(visits.get(x).getVisitType())) {
+                        visitType = context.getString(R.string.kvp_prep_followup_visit);
+                    } else {
+                        visitType = visits.get(x).getVisitType();
+                    }
+                    tvTypeOfService.setText(visitType + " - " + simpleDateFormat.format(visits.get(x).getDate()));
 
 
                     for (LinkedHashMap.Entry<String, String> entry : vals.entrySet()) {

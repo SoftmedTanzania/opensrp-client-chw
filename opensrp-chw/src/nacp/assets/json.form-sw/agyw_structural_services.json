@@ -51,7 +51,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "economic_empowerment_education",
         "type": "check_box",
-        "label": "Elimu ya uwezeshaji wa kiuchumi",
+        "label": "Chagua elimu za uwezeshaji wa kiuchumi zilizotolewa",
         "combine_checkbox_option_values": "true",
         "label_text_style": "normal",
         "text_color": "#C0C0C0",
@@ -165,7 +165,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "education_materials",
-        "label": "Msaada wa vifaa vya elimu?",
+        "label": "Je, nyenzo za elimu zilitolewa?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -194,7 +194,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "entrepreneurial_tools",
-        "label": "Vifaa vya ujasiriamali?",
+        "label": "Je, Vifaa vya ujasiriamali vimetolewa?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -223,7 +223,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "given_capital",
-        "label": "Alipatiwa fedha ya mtaji?",
+        "label": "Je, Alipatiwa fedha ya mtaji?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -252,7 +252,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "distribute_sanitary_pads",
-        "label": "Ugawaji wa taulo za kike?",
+        "label": "Je, Amepatiwa taulo za kike?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -281,7 +281,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "nurturing_and_upb_edu",
-        "label": "Alipatiwa elimu ya malezi na makuzi?",
+        "label": "Je, Alipatiwa elimu ya malezi na makuzi?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -318,7 +318,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "nurturing_and_upb_edu_given",
         "type": "check_box",
-        "label": "Elimu malezi na makuzi",
+        "label": "Chagua elimu ya maleza na makuzi iliyotolewa.",
         "combine_checkbox_option_values": "true",
         "label_text_style": "normal",
         "text_color": "#C0C0C0",
