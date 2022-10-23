@@ -168,7 +168,6 @@ public class KvpPrEPMedicalHistoryActivity extends CoreAncMedicalHistoryActivity
                 int x = 0;
                 for (LinkedHashMap<String, String> vals : community_visits) {
                     View view = inflater.inflate(R.layout.medical_history_visit, null);
-                    TextView tvTitle = view.findViewById(R.id.title);
                     TextView tvTypeOfService = view.findViewById(R.id.type_of_service);
                     LinearLayout visitDetailsLayout = view.findViewById(R.id.visit_details_layout);
 
@@ -204,20 +203,6 @@ public class KvpPrEPMedicalHistoryActivity extends CoreAncMedicalHistoryActivity
                     linearLayoutHealthFacilityVisitDetails.addView(view, 0);
 
                     x++;
-                }
-            }
-        }
-
-
-        private void evaluateTitle(Context context, int x, Map<String, String> vals, TextView tvTitle) {
-            String visitDate = vals.get("followup_visit_date");
-            if (StringUtils.isBlank(visitDate)) {
-                tvTitle.setVisibility(View.GONE);
-            } else {
-                try {
-                    tvTitle.setText(MessageFormat.format(context.getString(R.string.kvp_visit_title), x + 1, visitDate));
-                } catch (Exception e) {
-                    Timber.e(e);
                 }
             }
         }
