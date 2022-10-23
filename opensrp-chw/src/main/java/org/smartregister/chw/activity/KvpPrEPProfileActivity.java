@@ -13,10 +13,10 @@ import org.smartregister.chw.BuildConfig;
 import org.smartregister.chw.R;
 import org.smartregister.chw.core.activity.CoreKvpProfileActivity;
 import org.smartregister.chw.core.utils.CoreConstants;
+import org.smartregister.chw.kvp.KvpLibrary;
+import org.smartregister.chw.kvp.domain.Visit;
 import org.smartregister.chw.kvp.util.Constants;
 import org.smartregister.chw.model.ReferralTypeModel;
-import org.smartregister.chw.pmtct.PmtctLibrary;
-import org.smartregister.chw.pmtct.domain.Visit;
 import org.smartregister.chw.util.KvpVisitUtils;
 
 import java.util.ArrayList;
@@ -92,6 +92,6 @@ public class KvpPrEPProfileActivity extends CoreKvpProfileActivity {
     }
 
     private Visit getVisit(String eventType) {
-        return PmtctLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
+        return KvpLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
     }
 }
