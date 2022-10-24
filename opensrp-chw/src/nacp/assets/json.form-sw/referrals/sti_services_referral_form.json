@@ -54,13 +54,13 @@
   },
   "steps": [
     {
-      "title": "STI Services Referral",
+      "title": "Rufaa za magonjwa ya ngono",
       "fields": [
         {
           "name": "problem",
           "type": "multi_choice_checkbox",
           "properties": {
-            "text": "Reasons for Referral"
+            "text": "Sababu za rufaa"
           },
           "meta_data": {
             "openmrs_entity_parent": "",
@@ -70,7 +70,7 @@
           "options": [
             {
               "name": "genital_ulcers",
-              "text": "Genital ulcers",
+              "text": "Michubuko/vidonda sehemu za siri",
               "meta_data": {
                 "openmrs_entity": "",
                 "openmrs_entity_id": "genital_ulcers",
@@ -79,7 +79,7 @@
             },
             {
               "name": "abnormal_vag_discharge",
-              "text": "Abnormal vaginal discharge(including anal discharge if practicing receptive anal sex)",
+              "text": "Kutokwa na maji maji yasiokuwa ya kawaida ukeni au kwenye njia ya haja kubwa",
               "meta_data": {
                 "openmrs_entity": "concept",
                 "openmrs_entity_id": "abnormal_vag_discharge",
@@ -88,7 +88,7 @@
             },
             {
               "name": "pain_during_sexual_act",
-              "text": "Pain during the sexual act",
+              "text": "Kupata maumivu wakati wa kufanya ngono",
               "meta_data": {
                 "openmrs_entity": "concept",
                 "openmrs_entity_id": "pain_during_sexual_act",
@@ -97,7 +97,7 @@
             },
             {
               "name": "low_abdominal_pain",
-              "text": "Low abdominal pain",
+              "text": "Maumivu ya tumbo chini ya kitovu",
               "meta_data": {
                 "openmrs_entity": "concept",
                 "openmrs_entity_id": "low_abdominal_pain",
@@ -106,7 +106,7 @@
             },
             {
               "name": "other",
-              "text": "Others (Specify)",
+              "text": "Nyinginezo",
               "meta_data": {
                 "openmrs_entity": "concept",
                 "openmrs_entity_id": "other",
@@ -114,7 +114,7 @@
               }
             }
           ],
-          "required_status": "yes:Please specify reason for STI services referral",
+          "required_status": "yes:Tafadhali chagua sababu za rufaa",
           "dependent_calculations": [
             "referral_date",
             "referral_time",
@@ -126,7 +126,7 @@
           "name": "problem_other",
           "type": "text_input_edit_text",
           "properties": {
-            "hint": "Other reasons",
+            "hint": "Sababu nyinginezo",
             "type": "name"
           },
           "meta_data": {
@@ -134,7 +134,7 @@
             "openmrs_entity_id": "problem_other",
             "openmrs_entity_parent": "problem"
           },
-          "required_status": "true:Please specify other reasons",
+          "required_status": "true:Tafadhali jaza sababu nyinginezo",
           "subjects": "problem:map"
         },
         {
@@ -146,17 +146,17 @@
             "openmrs_entity_parent": ""
           },
           "properties": {
-            "text": "Choose referral facility",
-            "searchable": "Choose referral facility"
+            "text": "Chagua kituo cha rufaa",
+            "searchable": "Chagua kituo cha rufaa"
           },
           "options": [],
-          "required_status": "yes:Please specify referral facility"
+          "required_status": "yes:Tafadhali chagua kituo cha rufaa"
         },
         {
           "name": "referral_appointment_date",
           "type": "datetime_picker",
           "properties": {
-            "hint": "Please select the appointment date",
+            "hint": "Tafadhali chagua tarehe ya miadi",
             "type": "date_picker",
             "display_format": "dd/MM/yyyy",
             "min_date": "today"
@@ -166,7 +166,7 @@
             "openmrs_entity_id": "referral_appointment_date",
             "openmrs_entity_parent": ""
           },
-          "required_status": "true:Please specify the appointment date"
+          "required_status": "true:PTafadhali chagua tarehe ya miadi"
         }
       ]
     }

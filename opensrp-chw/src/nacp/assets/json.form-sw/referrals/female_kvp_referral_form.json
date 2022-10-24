@@ -60,7 +60,7 @@
           "name": "problem",
           "type": "multi_choice_checkbox",
           "properties": {
-            "text": "Sababu ya rufaa"
+            "text": "Sababu za rufaa"
           },
           "meta_data": {
             "openmrs_entity_parent": "",
