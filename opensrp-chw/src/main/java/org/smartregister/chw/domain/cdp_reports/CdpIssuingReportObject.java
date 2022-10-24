@@ -1,6 +1,5 @@
 package org.smartregister.chw.domain.cdp_reports;
 
-import android.content.Context;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
