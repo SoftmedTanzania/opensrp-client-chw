@@ -257,6 +257,27 @@
     <string name="referral_problem_Breast_engorgement">Kujaa au maumivu ya matiti, chuchu na kushindwa kunyonyesha</string>
     <string name="referral_problem_Blurred_vision">Kuona kwa shida</string>
     <string name="referral_referral_Perineum_tear">Kuchanika msamba</string>
+    <string name="referral_problem_prep_and_pep">Dawa kinga PrEP and PEP</string>
+    <string name="referral_problem_harm_reduction">Kupunguza madhara yatokanayo na utumiaji wa dawa za kulevya</string>
+    <string name="referral_problem_hepatitis_b_and_c">Uchunguzi/upimaji na chanjo ya homa ya ini B na C</string>
+    <string name="referral_problem_sti_screening_and_management">Uchunguzi, upimaji na tiba ya magonjwa ya ngono na via vya uzazi</string>
+    <string name="referral_problem_cervical_cancer">Uchunguzi na upimaji wa kansa ya shingo ya kizazi</string>
+    <string name="referral_problem_reproductive_health_services">Huduma za mama na mtoto</string>
+    <string name="referral_problem_vmmc">TOHARA kwa wanaume</string>
+    <string name="referral_problem_mental_psychosocial_support">Afya ya akili na msaada wa kisaikolojia</string>
+
+    <string name="referral_problem_male_condom">Kondomu ya kiume</string>
+    <string name="referral_problem_female_condom">Kondomu ya kike</string>
+    <string name="referral_problem_coc">Vidonge vya COC</string>
+    <string name="referral_problem_pop">Vidonge vya POP</string>
+    <string name="referral_problem_standard_day_method">Shanga</string>
+    <string name="referral_problem_emergency_contraceptive">Vidonge vya dharura vya uzazi wa mpango</string>
+    <string name="referral_problem_injectable">Sindano</string>
+    <string name="referral_problem_iucd">Kitanzi</string>
+    <string name="referral_problem_implanon_nxt">Kipandikizi cha miaka 3</string>
+    <string name="referral_problem_jadelle">Kipandikizi cha miaka 5</string>
+    <string name="referral_problem_female_sterilization">Kufunga kizazi mwanamke</string>
+    <string name="referral_problem_male_sterilization_fp">Kufunga kizazi mwanaume</string>
 
     <!--    CBHS Visit History String Resources-->
     <string name="cbhs_registration_or_followup_status">Hali ya ufuatiliaji:</string>
