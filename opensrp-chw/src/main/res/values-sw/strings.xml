@@ -448,7 +448,6 @@
     <string name="cdp_receiving_report">CDP Receiving Report</string>
     <string name="agyw_reports">AGYW Reports</string>
     <string name="agyw_reports_subtitle">View AGYW Report</string>
-=======
 
     <string name="agyw_services">Rekodi Huduma za Msichana Rika Balehe na Mwanamke Kijana</string>
 
@@ -591,5 +590,4 @@
     <string name="education_on_addressing_gbv">Elimu ya ukatili wa kijinsia dhidi ya makundi maalum</string>
     <string name="provision_of_business_skills">Ujasiriamali na biashara</string>
 
->>>>>>> tanzania-ministry-of-health-nacp
 </resources>

@@ -26,11 +26,6 @@ public class CdpIssuingReportObject extends ReportObject {
         JSONArray dataArray = new JSONArray();
         List<Map<String, String>> getHfCdpStockLogList = ReportDao.getHfIssuingCdpStockLog(reportDate);
 
-
-//        data.put("outlet_name", cursor.getString(cursor.getColumnIndex("outlet_name")));
-//        data.put("visit_key", cursor.getString(cursor.getColumnIndex("visit_key")));
-//        data.put("details", cursor.getString(cursor.getColumnIndex("details")));
-
         int i = 0;
         int flag_count_female=0;
         int flag_count_male=0;
