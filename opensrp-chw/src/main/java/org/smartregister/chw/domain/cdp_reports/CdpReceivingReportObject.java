@@ -8,22 +8,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.dao.ReportDao;
 import org.smartregister.chw.domain.ReportObject;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class CdpReceivingReportObject extends ReportObject {
-
-    private final Context context;
     private Date reportDate;
 
-    public CdpReceivingReportObject(Date reportDate, Context context) {
+    public CdpReceivingReportObject(Date reportDate) {
         super(reportDate);
         this.reportDate = reportDate;
-        this.context = context;
     }
 
 

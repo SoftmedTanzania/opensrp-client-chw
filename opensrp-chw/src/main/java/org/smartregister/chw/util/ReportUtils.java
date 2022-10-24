@@ -8,11 +8,10 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
-import org.smartregister.chw.domain.AGYW_reports.AGYWReportObject;
+import org.smartregister.chw.domain.agyw_reports.AGYWReportObject;
 import org.smartregister.chw.domain.cbhs_reports.CbhsMonthlyReportObject;
 import org.smartregister.chw.domain.cdp_reports.CdpIssuingReportObject;
 import org.smartregister.chw.domain.cdp_reports.CdpReceivingReportObject;
@@ -147,8 +146,8 @@ public class ReportUtils {
     }
 
     public static class CDPReports {
-        public static String computeIssuingReports(Date startDate,Context context) {
-            CdpIssuingReportObject cdpIssuingReportObject = new CdpIssuingReportObject(startDate,context);
+        public static String computeIssuingReports(Date startDate) {
+            CdpIssuingReportObject cdpIssuingReportObject = new CdpIssuingReportObject(startDate);
             try {
                 return cdpIssuingReportObject.getIndicatorDataAsGson(cdpIssuingReportObject.getIndicatorData());
             } catch (JSONException e) {
@@ -157,9 +156,9 @@ public class ReportUtils {
             return "";
         }
 
-        public static String computeReceivingReports(Date now, Context context) {
+        public static String computeReceivingReports(Date now) {
             String report = "";
-            CdpReceivingReportObject cdpReceivingReportObject = new CdpReceivingReportObject(now, context);
+            CdpReceivingReportObject cdpReceivingReportObject = new CdpReceivingReportObject(now);
             try {
                 report = cdpReceivingReportObject.getIndicatorDataAsGson(cdpReceivingReportObject.getIndicatorData());
             } catch (Exception e) {

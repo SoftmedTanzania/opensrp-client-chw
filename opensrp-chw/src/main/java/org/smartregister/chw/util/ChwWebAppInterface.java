@@ -2,7 +2,6 @@ package org.smartregister.chw.util;
 
 import android.content.Context;
 import android.webkit.JavascriptInterface;
-import android.widget.Toast;
 
 import static org.smartregister.util.Utils.getAllSharedPreferences;
 
@@ -42,10 +41,10 @@ public class ChwWebAppInterface {
             switch (key) {
                 case Constants.ReportConstants.CDPReportKeys.ISSUING_REPORTS:
                     ReportUtils.setPrintJobName("CDP_issuing_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
-                    return ReportUtils.CDPReports.computeIssuingReports(ReportUtils.getReportDate(),mContext);
+                    return ReportUtils.CDPReports.computeIssuingReports(ReportUtils.getReportDate());
                 case Constants.ReportConstants.CDPReportKeys.RECEIVING_REPORTS:
                     ReportUtils.setPrintJobName("CDP_receiving_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
-                    return ReportUtils.CDPReports.computeReceivingReports(ReportUtils.getReportDate(),mContext);
+                    return ReportUtils.CDPReports.computeReceivingReports(ReportUtils.getReportDate());
                 default:
                     return "";
             }

@@ -1,4 +1,4 @@
-package org.smartregister.chw.domain.AGYW_reports;
+package org.smartregister.chw.domain.agyw_reports;
 
 import org.json.JSONException;
 import org.json.JSONObject;

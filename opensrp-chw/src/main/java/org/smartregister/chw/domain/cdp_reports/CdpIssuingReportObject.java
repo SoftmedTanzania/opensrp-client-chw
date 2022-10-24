@@ -9,21 +9,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.dao.ReportDao;
 import org.smartregister.chw.domain.ReportObject;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class CdpIssuingReportObject extends ReportObject {
-    private final Context context;
     private Date reportDate;
 
-    public CdpIssuingReportObject(Date reportDate, Context context) {
+    public CdpIssuingReportObject(Date reportDate) {
         super(reportDate);
         this.reportDate = reportDate;
-        this.context = context;
     }
 
 
@@ -37,7 +32,9 @@ public class CdpIssuingReportObject extends ReportObject {
 //        data.put("visit_key", cursor.getString(cursor.getColumnIndex("visit_key")));
 //        data.put("details", cursor.getString(cursor.getColumnIndex("details")));
 
-        int i = 0,flag_count_female=0,flag_count_male=0;
+        int i = 0;
+        int flag_count_female=0;
+        int flag_count_male=0;
         for (Map<String, String> getHfCdpStockLog : getHfCdpStockLogList) {
             JSONObject reportJsonObject = new JSONObject();
             reportJsonObject.put("id", ++i);
