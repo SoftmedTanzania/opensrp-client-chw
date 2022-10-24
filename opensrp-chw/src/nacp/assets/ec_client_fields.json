@@ -5093,6 +5093,13 @@
           "json_mapping": {
             "field": "version"
           }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
         }
       ]
     },
@@ -5127,6 +5134,12 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "sbcc_intervention_provided"
+          }
+        },  {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
           }
         }
       ]
@@ -5194,6 +5207,12 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "family_planning_service"
+          }
+        },  {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
           }
         }
       ]
@@ -5277,6 +5296,13 @@
           "json_mapping": {
             "field": "obs.fieldCode",
             "concept": "nurturing_and_upb_edu_given"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
           }
         }
       ]

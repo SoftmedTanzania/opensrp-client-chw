@@ -108,7 +108,7 @@ indicators:
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
-					  WHERE parity_status = 'pregnant' OR parity_status='Gave birth'
+					  WHERE (parity_status = 'pregnant' OR parity_status='Gave birth')
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -119,7 +119,7 @@ indicators:
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
-					  WHERE parity_status = 'pregnant' OR parity_status='Gave birth'
+					  WHERE (parity_status = 'pregnant' OR parity_status='Gave birth')
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -130,7 +130,7 @@ indicators:
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
-					  WHERE parity_status = 'pregnant' OR parity_status='Gave birth'
+					  WHERE (parity_status = 'pregnant' OR parity_status='Gave birth')
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -142,7 +142,7 @@ indicators:
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
-					  WHERE marital_status = 'Married' OR parity_status='Cohabitation'
+					  WHERE (marital_status = 'Married' OR marital_status='Cohabitation')
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -153,7 +153,7 @@ indicators:
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
-					  WHERE marital_status = 'Married' OR parity_status='Cohabitation'
+					  WHERE (marital_status = 'Married' OR marital_status='Cohabitation')
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -164,7 +164,7 @@ indicators:
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
-					  WHERE marital_status = 'Married' OR parity_status='Cohabitation'
+					  WHERE (marital_status = 'Married' OR marital_status='Cohabitation')
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -177,6 +177,7 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  WHERE family_planning_service IS NOT NULL
+					  AND family_planning_service != 'traditional'
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -188,6 +189,7 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  WHERE family_planning_service IS NOT NULL
+					  AND family_planning_service != 'traditional'
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
@@ -199,54 +201,869 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  WHERE family_planning_service IS NOT NULL
+					  AND family_planning_service != 'traditional'
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
                       date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
-  #  Question 12
+  #  Question 7
+  - key: "agyw-7-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+
+					  -- BIO MEdical  contains
+					  chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+
+					   -- SBCC Behavioral contains
+					  instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-7-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+
+					  -- BIO MEdical  contains
+					  chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+
+					   -- SBCC Behavioral contains
+					  instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-7-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+
+					  -- BIO MEdical  contains
+					  chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+
+					   -- SBCC Behavioral contains
+					  instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  #  Question 8
+  - key: "agyw-8-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-8-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-8-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  #  Question 9
+  - key: "agyw-9-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-9-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-9-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  #  Question 9
+  - key: "agyw-10-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-10-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  - key: "agyw-10-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND (date('now')-date(efm.dob))<=24
+					  AND
+					  CASE
+					  WHEN ((date(efm.dob, '+10 years') <= date('now'))AND (date(efm.dob, '+14 years') > date('now')))
+					  THEN (
+
+					  --primary packages
+					  --must be only dreams
+					  program_name='dreams'
+
+					  -- BIO MEdical  contains
+					  AND chw_referral_service='Suspected HIV'
+
+					  -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'prep_education')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  )
+					  ELSE (
+					  -- Secondary packages
+					  --can be for both drams and non drams
+					   (program_name='dreams' OR program_name != 'dreams')
+
+					   -- SBCC Behavioral contains
+					  AND instr(eabs1.sbcc_intervention_provided,'gender_based_violence')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'education_hiv_testing')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'sti_hiv_aids')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'reproductive_health')>0
+					  AND instr(eabs1.sbcc_intervention_provided,'good_relationships')>0
+
+					  -- Structural contains
+					  AND instr(eass1.education_materials,'yes')>0
+					  AND instr(eass1.given_capital,'yes')>0
+					  AND instr(eass1.nurturing_and_upb_edu,'yes')>0
+					  AND instr(eass1.economic_empowerment_education,'starting_a_business')>0
+					  AND instr(eass1.economic_empowerment_education,'financial_edu_and_investments')>0
+					  )
+					  END
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01') "
+  #  Question 11
+  - key: "agyw-11-10-14"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND program_name='dreams'
+					  AND (date(efm.dob, '+10 years') <= date('now'))
+                      AND (date(efm.dob, '+14 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01')"
+  - key: "agyw-11-15-19"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND program_name='dreams'
+					  AND (date(efm.dob, '+15 years') <= date('now'))
+                      AND (date(efm.dob, '+19 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01')"
+  - key: "agyw-11-20-24"
+    description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
+    indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
+                      FROM ec_agyw_register ear
+					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabms1 ON eabms1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_structural_services eass1 ON eass1.entity_id = ear.base_entity_id
+					  AND efm.gender='Female'
+					  AND program_name='dreams'
+					  AND (date(efm.dob, '+20 years') <= date('now'))
+                      AND (date(efm.dob, '+24 years') > date('now'))
+                      AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
+                              date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                  '-' ||
+                                  substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                  '-' || '01')"
+
+
+#  Question 12
   - key: "agyw-12-10-14"
     description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
 					  WHERE chw_referral_service='Suspected HIV'
-					  AND (SELECT count( eabs.base_entity_id) FROM ec_agyw_behavioral_services eabs
-					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs.entity_id)>=4
+					  AND (SELECT count( eabs2.base_entity_id) FROM ec_agyw_behavioral_services eabs2
+					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs2.entity_id)>=4
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
-                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+                               date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                   '-' ||
+                                   substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                   '-' || '01')"
   - key: "agyw-12-15-19"
     description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
 					  WHERE chw_referral_service='Suspected HIV'
-					  AND (SELECT count( eabs.base_entity_id) FROM ec_agyw_behavioral_services eabs
-					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs.entity_id)>=4
+					  AND (SELECT count( eabs2.base_entity_id) FROM ec_agyw_behavioral_services eabs2
+					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs2.entity_id)>=4
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
-                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+                               date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                   '-' ||
+                                   substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                   '-' || '01')"
   - key: "agyw-12-20-24"
     description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_behavioral_services eabs1 ON eabs1.entity_id = ear.base_entity_id
 					  WHERE chw_referral_service='Suspected HIV'
-					  AND (SELECT count( eabs.base_entity_id) FROM ec_agyw_behavioral_services eabs
-					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs.entity_id)>=4
+					  AND (SELECT count( eabs2.base_entity_id) FROM ec_agyw_behavioral_services eabs2
+					  INNER JOIN ec_agyw_register ear2 ON ear2.base_entity_id = eabs2.entity_id)>=4
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
-                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+                               date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                   '-' ||
+                                   substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                   '-' || '01')"
   #  Question 13
   - key: "agyw-13-10-14"
     description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
@@ -254,30 +1071,42 @@ indicators:
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabs1 ON eabs1.entity_id = ear.base_entity_id
 					  AND (date(efm.dob, '+10 years') <= date('now'))
                       AND (date(efm.dob, '+14 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
-                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+                               date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                   '-' ||
+                                   substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                   '-' || '01')"
   - key: "agyw-13-15-19"
     description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabs1 ON eabs1.entity_id = ear.base_entity_id
 					  AND (date(efm.dob, '+15 years') <= date('now'))
                       AND (date(efm.dob, '+19 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
-                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+                               date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                   '-' ||
+                                   substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                   '-' || '01')"
   - key: "agyw-13-20-24"
     description: "Idadi ya wasichana balehe waliolewa au wanaishi na mwanaume kama mke na mume"
     indicatorQuery: "SELECT count(DISTINCT efm.base_entity_id) as count
                       FROM ec_agyw_register ear
 					  INNER JOIN ec_family_member efm ON efm.base_entity_id = ear.base_entity_id
 					  INNER JOIN ec_referral er ON er.entity_id = ear.base_entity_id
+					  INNER JOIN ec_agyw_bio_medical_services eabs1 ON eabs1.entity_id = ear.base_entity_id
 					  AND (date(efm.dob, '+20 years') <= date('now'))
                       AND (date(efm.dob, '+24 years') > date('now'))
 					  AND (efm.gender='Female')
                       AND date((substr('%s', 1, 4) || '-' || substr('%s', 6, 2) || '-' || '01')) =
-                      date(substr(ear.enrollment_date, 7, 4) || '-' || substr(ear.enrollment_date, 4, 2) || '-' || '01')"
+                               date(substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 1, 4) ||
+                                   '-' ||
+                                   substr(strftime('%Y-%m-%d', datetime(eabs1.last_interacted_with / 1000, 'unixepoch', 'localtime')), 6, 2) ||
+                                   '-' || '01')"
