@@ -440,7 +440,7 @@
     <string name="callPhonePermissionRequestGrantButton">Ruhusu</string>
     <string name="callPhoneRequestTitle">Ruhusu Ukusanyaji wa Nambari ya Simu</string>
     <string name="callPhoneRequestMessage">Mtoa Huduma wa Afya ngazi ya Jamii hukusanya nambari za simu za wateja zitakazotumika kwa ufuatiliaji, tathmini na uchambuzi wa ziara zinazofanywa katika jamii.</string>
-<<<<<<< HEAD
+
     <string name="condom_distribution_reports_subtitle">View Condom Distribution Report</string>
     <string name="condom_distribution_reports">Condom Distribution Reports</string>
     <string name="cdp_reports">CDP REPORTS</string>
