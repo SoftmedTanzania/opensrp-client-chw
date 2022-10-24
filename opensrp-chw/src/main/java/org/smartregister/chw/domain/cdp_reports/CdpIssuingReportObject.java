@@ -74,7 +74,7 @@ public class CdpIssuingReportObject extends ReportObject {
     }
 
     private String getCdpClientDetails(Map<String, String> chwRegistrationFollowupClient, String key) {
-        String details = chwRegistrationFollowupClient.get(key);
+        String details = chwRegistrationFollowupClient.get(key);  //get all details
         if (StringUtils.isNotBlank(details)) {
             return details;
         }
