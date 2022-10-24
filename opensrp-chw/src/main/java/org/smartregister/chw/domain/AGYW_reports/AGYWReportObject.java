@@ -43,7 +43,7 @@ public class AGYWReportObject extends ReportObject {
             for (String ageGroup : agesGroups) {
                 finalTotal += ReportDao.getReportPerIndicatorCode("agyw"+"-"+question+"-"+ageGroup, reportDate);
             }
-            jsonObject.put("agyw"+"-"+question+"-JUMLA",finalTotal);  //display the total for specified gender
+            jsonObject.put("agyw"+"-"+question+"-JUMLA",finalTotal);  //display the total for specified question
             finalTotal=0;
         }
     }
