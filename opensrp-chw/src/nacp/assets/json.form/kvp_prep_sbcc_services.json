@@ -107,13 +107,13 @@
             }
           },
           {
-            "key": "education_on_hiv_aids_protection",
-            "text": "Education on HIV & AIDS Protection",
-            "openmrs_entity_id": "education_on_hiv_aids_protection",
+            "key": "education_on_hiv_prevention",
+            "text": "Education on HIV Prevention",
+            "openmrs_entity_id": "education_on_hiv_prevention",
             "openmrs_entity": "concept",
             "property": {
-              "presumed-id": "education_on_hiv_aids_protection",
-              "confirmed-id": "education_on_hiv_aids_protection"
+              "presumed-id": "education_on_hiv_prevention",
+              "confirmed-id": "education_on_hiv_prevention"
             }
           },
           {
@@ -127,23 +127,23 @@
             }
           },
           {
-            "key": "education_on_hiv_aids_self_test",
-            "text": "Education on HIV & AIDS Self Test",
-            "openmrs_entity_id": "education_on_hiv_aids_self_test",
+            "key": "demand_creation_for_hiv_self_testing",
+            "text": "Demand creation for HIV Self-testing",
+            "openmrs_entity_id": "demand_creation_for_hiv_self_testing",
             "openmrs_entity": "concept",
             "property": {
-              "presumed-id": "education_on_hiv_aids_self_test",
-              "confirmed-id": "education_on_hiv_aids_self_test"
+              "presumed-id": "demand_creation_for_hiv_self_testing",
+              "confirmed-id": "demand_creation_for_hiv_self_testing"
             }
           },
           {
-            "key": "education_on_the_use_of_prep",
-            "text": "Education on the use of PrEP",
-            "openmrs_entity_id": "education_on_the_use_of_prep",
+            "key": "demand_creation_for_prep",
+            "text": "Demand creation for PrEP",
+            "openmrs_entity_id": "demand_creation_for_prep",
             "openmrs_entity": "concept",
             "property": {
-              "presumed-id": "education_on_the_use_of_prep",
-              "confirmed-id": "education_on_the_use_of_prep"
+              "presumed-id": "demand_creation_for_prep",
+              "confirmed-id": "demand_creation_for_prep"
             }
           },
           {
@@ -157,13 +157,13 @@
             }
           },
           {
-            "key": "reduction_of_effects_of_the_use_of_mat",
-            "text": "Reduction of effects of the use of drug MAT",
-            "openmrs_entity_id": "reduction_of_effects_of_the_use_of_mat",
+            "key": "harm_reduction_for_pwud_pwid",
+            "text": "Harm reduction for PWUD/PWID",
+            "openmrs_entity_id": "harm_reduction_for_pwud_pwid",
             "openmrs_entity": "concept",
             "property": {
-              "presumed-id": "reduction_of_effects_of_the_use_of_mat",
-              "confirmed-id": "reduction_of_effects_of_the_use_of_mat"
+              "presumed-id": "harm_reduction_for_pwud_pwid",
+              "confirmed-id": "harm_reduction_for_pwud_pwid"
             }
           },
           {
