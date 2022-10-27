@@ -77,13 +77,13 @@
             }
           },
           {
-            "key": "influence_on_condom_usage",
+            "key": "demand_creation_on_condom_use",
             "text": "Ushawishi wa matumizi ya kondomu",
-            "openmrs_entity_id": "influence_on_condom_usage",
+            "openmrs_entity_id": "demand_creation_on_condom_use",
             "openmrs_entity": "concept",
             "property": {
-              "presumed-id": "influence_on_condom_usage",
-              "confirmed-id": "influence_on_condom_usage"
+              "presumed-id": "demand_creation_on_condom_use",
+              "confirmed-id": "demand_creation_on_condom_use"
             }
           },
           {
