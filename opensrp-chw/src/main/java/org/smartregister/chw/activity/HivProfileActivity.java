@@ -48,6 +48,7 @@ import org.smartregister.chw.dao.ChwCBHSDao;
 import org.smartregister.chw.hiv.activity.BaseHivFormsActivity;
 import org.smartregister.chw.hiv.dao.HivDao;
 import org.smartregister.chw.hiv.domain.HivMemberObject;
+import org.smartregister.chw.hiv.presenter.BaseHivProfilePresenter;
 import org.smartregister.chw.hiv.util.Constants;
 import org.smartregister.chw.hiv.util.DBConstants;
 import org.smartregister.chw.hiv.util.HivUtil;
@@ -343,6 +344,7 @@ public class HivProfileActivity extends CoreHivProfileActivity
         //Refreshing the hiv Member object with new data just in-case it was updated in the background
         setHivMemberObject(HivDao.getMember(getHivMemberObject().getBaseEntityId()));
         onMemberDetailsReloaded(getHivMemberObject());
+        setProfileViewDetails(HivDao.getMember(getHivMemberObject().getBaseEntityId()));
 
         try {
             CbhsUtils.removeDeceasedClients(getHivMemberObject(), getContext());
