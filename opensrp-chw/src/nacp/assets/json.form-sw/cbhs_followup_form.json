@@ -200,6 +200,40 @@
           "subjects": "registration_or_followup_status:text"
         },
         {
+          "name": "was_the_client_tested_for_tb",
+          "type": "spinner",
+          "meta_data": {
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "was_the_client_tested_for_tb",
+            "openmrs_entity_parent": ""
+          },
+          "properties": {
+            "text": "Je Mteja amepimwa Kifua Kikuu?"
+          },
+          "options": [
+            {
+              "name": "yes",
+              "text": "Ndio",
+              "meta_data": {
+                "openmrs_entity": "concept",
+                "openmrs_entity_id": "yes",
+                "openmrs_entity_parent": ""
+              }
+            },
+            {
+              "name": "no",
+              "text": "Hapana",
+              "meta_data": {
+                "openmrs_entity": "concept",
+                "openmrs_entity_id": "no",
+                "openmrs_entity_parent": ""
+              }
+            }
+          ],
+          "required_status": "yes:Tafadhali jaza jibu sahihi",
+          "subjects": "registration_or_followup_status:text"
+        },
+        {
           "name": "client_tb_status_after_testing",
           "type": "spinner",
           "meta_data": {
@@ -211,15 +245,6 @@
             "text": "Hali ya maambukizi ya Kifua Kikuu baada ya kipimo"
           },
           "options": [
-            {
-              "name": "na",
-              "text": "Haitambuliki",
-              "meta_data": {
-                "openmrs_entity": "concept",
-                "openmrs_entity_id": "na",
-                "openmrs_entity_parent": ""
-              }
-            },
             {
               "name": "unknown",
               "text": "Haijulikani",
@@ -249,7 +274,7 @@
             }
           ],
           "required_status": "yes:Tafadhali chagua moja",
-          "subjects": "registration_or_followup_status:text"
+          "subjects": "registration_or_followup_status:text, was_the_client_tested_for_tb:text"
         },
         {
           "name": "ctc_number",
@@ -454,7 +479,7 @@
           "properties": {
             "notification_type": "error",
             "dismissible": "no",
-            "text": "Mpatie mteja rufaa kwenda kituo cha afya kwa uchunguzi zaidi"
+            "text": "Mpatie rufaa kwenda kwenye kituo cha kutolea huduma za afya"
           },
           "subjects": "health_problem:map"
         },

@@ -48,7 +48,6 @@ import org.smartregister.chw.dao.ChwCBHSDao;
 import org.smartregister.chw.hiv.activity.BaseHivFormsActivity;
 import org.smartregister.chw.hiv.dao.HivDao;
 import org.smartregister.chw.hiv.domain.HivMemberObject;
-import org.smartregister.chw.hiv.presenter.BaseHivProfilePresenter;
 import org.smartregister.chw.hiv.util.Constants;
 import org.smartregister.chw.hiv.util.DBConstants;
 import org.smartregister.chw.hiv.util.HivUtil;
@@ -172,6 +171,7 @@ public class HivProfileActivity extends CoreHivProfileActivity
 
 
             if (ChwCBHSDao.tbStatusAfterTestingDone(baseEntityID)) {
+                removeField(fields, "was_the_client_tested_for_tb");
                 removeField(fields, "client_tb_status_after_testing");
             }
         }
