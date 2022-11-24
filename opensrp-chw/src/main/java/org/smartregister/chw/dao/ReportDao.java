@@ -232,7 +232,7 @@ public class ReportDao extends AbstractDao {
 
     public static List<Map<String, String>> getHfIssuingCdpStockLog(Date reportDate)
     {
-        String sql = "SELECT outlet_name,visit_key,vd.details as details,vd.visit_id as visit_ids FROM ec_cdp_outlet as eco\n" +
+        String sql = "SELECT outlet_name,visit_key,vd.details as details FROM ec_cdp_outlet as eco\n" +
                 "    INNER JOIN visits ON visits.base_entity_id = eco.base_entity_id\n" +
                 "INNER JOIN visit_details as vd ON visits.visit_id = vd.visit_id\n" +
                 "WHERE (visit_key = 'restocked_male_condoms' \n" +
@@ -253,7 +253,6 @@ public class ReportDao extends AbstractDao {
             data.put("outlet_name", cursor.getString(cursor.getColumnIndex("outlet_name")));
             data.put("visit_key", cursor.getString(cursor.getColumnIndex("visit_key")));
             data.put("details", cursor.getString(cursor.getColumnIndex("details")));
-            data.put("visit_ids", cursor.getString(cursor.getColumnIndex("visit_ids")));
 
             return data;
         };
