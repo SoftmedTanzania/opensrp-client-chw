@@ -1,9 +1,9 @@
 {
-  "form": "Referral form",
-  "encounter_type": "Referral Registration",
+  "form": "STI Services Referral",
+  "encounter_type": "STI Services Referral",
   "entity_id": "",
   "relational_id": "",
-  "rules_file": "rule/general_neat_referral_form_rules.yml",
+  "rules_file": "rule/sti_referral_form_rules.yml",
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -54,13 +54,13 @@
   },
   "steps": [
     {
-      "title": "HIV Testing Services Referral Form",
+      "title": "Rufaa za magonjwa ya ngono",
       "fields": [
         {
           "name": "problem",
           "type": "multi_choice_checkbox",
           "properties": {
-            "text": "Reasons for Referral"
+            "text": "Sababu za rufaa"
           },
           "meta_data": {
             "openmrs_entity_parent": "",
@@ -69,25 +69,73 @@
           },
           "options": [
             {
-              "name": "confirmation_self_test",
-              "text": "Confirmation for self test",
+              "name": "genital_ulcers",
+              "text": "Michubuko/vidonda sehemu za siri",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "confirmation_self_test",
+                "openmrs_entity_id": "genital_ulcers",
                 "openmrs_entity_parent": ""
-              },
-              "properties": {
-                "checked": true
+              }
+            },
+            {
+              "name": "abnormal_vag_discharge",
+              "text": "Kutokwa na maji maji yasiokuwa ya kawaida ukeni au kwenye njia ya haja kubwa",
+              "meta_data": {
+                "openmrs_entity": "concept",
+                "openmrs_entity_id": "abnormal_vag_discharge",
+                "openmrs_entity_parent": ""
+              }
+            },
+            {
+              "name": "pain_during_sexual_act",
+              "text": "Kupata maumivu wakati wa kufanya ngono",
+              "meta_data": {
+                "openmrs_entity": "concept",
+                "openmrs_entity_id": "pain_during_sexual_act",
+                "openmrs_entity_parent": ""
+              }
+            },
+            {
+              "name": "low_abdominal_pain",
+              "text": "Maumivu ya tumbo chini ya kitovu",
+              "meta_data": {
+                "openmrs_entity": "concept",
+                "openmrs_entity_id": "low_abdominal_pain",
+                "openmrs_entity_parent": ""
+              }
+            },
+            {
+              "name": "other",
+              "text": "Nyinginezo",
+              "meta_data": {
+                "openmrs_entity": "concept",
+                "openmrs_entity_id": "other",
+                "openmrs_entity_parent": ""
               }
             }
           ],
-          "required_status": "yes:Please specify reasons for referral",
+          "required_status": "yes:Tafadhali chagua sababu za rufaa",
           "dependent_calculations": [
             "referral_date",
             "referral_time",
             "referral_type",
             "referral_status"
           ]
+        },
+        {
+          "name": "problem_other",
+          "type": "text_input_edit_text",
+          "properties": {
+            "hint": "Sababu nyinginezo",
+            "type": "name"
+          },
+          "meta_data": {
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "problem_other",
+            "openmrs_entity_parent": "problem"
+          },
+          "required_status": "true:Tafadhali jaza sababu nyinginezo",
+          "subjects": "problem:map"
         },
         {
           "name": "chw_referral_hf",
@@ -98,17 +146,17 @@
             "openmrs_entity_parent": ""
           },
           "properties": {
-            "text": "Choose referral facility",
-            "searchable": "Choose referral facility"
+            "text": "Chagua kituo cha rufaa",
+            "searchable": "Chagua kituo cha rufaa"
           },
           "options": [],
-          "required_status": "yes:Please specify referral facility"
+          "required_status": "yes:Tafadhali chagua kituo cha rufaa"
         },
         {
           "name": "referral_appointment_date",
           "type": "datetime_picker",
           "properties": {
-            "hint": "Please select the appointment date",
+            "hint": "Tafadhali chagua tarehe ya miadi",
             "type": "date_picker",
             "display_format": "dd/MM/yyyy",
             "min_date": "today"
@@ -118,7 +166,7 @@
             "openmrs_entity_id": "referral_appointment_date",
             "openmrs_entity_parent": ""
           },
-          "required_status": "true:Please specify the appointment date"
+          "required_status": "true:PTafadhali chagua tarehe ya miadi"
         }
       ]
     }

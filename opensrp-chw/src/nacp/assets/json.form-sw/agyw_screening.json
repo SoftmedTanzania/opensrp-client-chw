@@ -124,6 +124,9 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "household_people",
         "openmrs_entity_parent": "",
+        "exclusive": [
+          "none"
+        ],
         "options": [
           {
             "key": "father",
@@ -142,6 +145,12 @@
             "text": "Mlezi",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "guardian"
+          },
+          {
+            "key": "none",
+            "text": "Anaishi mwenyewe",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "none"
           }
         ],
         "v_required": {
@@ -458,11 +467,11 @@
         }
       },
       {
-        "key": "sexual_intercourse_past_6_months",
+        "key": "sexual_intercourse_past_12_months",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "sexual_intercourse_past_6_months",
-        "label": "Je umefanya ngono ndani ya miezi 6 iliyopita?  ",
+        "openmrs_entity_id": "sexual_intercourse_past_12_months",
+        "label": "Je umefanya ngono ndani ya miezi 12 iliyopita?  ",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -497,7 +506,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "condom_usage",
-        "label": "Je ulitumia kondomu mara zote na mwenza/ mpenzi wako ndani ya miezi 6 ?",
+        "label": "Je ulitumia kondomu mara zote na mwenza/mpenzi wako ndani ya miezi 12 ?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -521,9 +530,10 @@
           "err": "Tafadhali chagua jibu"
         },
         "relevance": {
-          "step3:sexual_intercourse": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "agyw_screening_relevance.yml"
+            }
           }
         }
       },
@@ -673,7 +683,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "unwillingly_touched",
-        "label": "Je kuna mtu yoyote aliwahi kukushika sehemu zako za siri, kukushika matiti au kukubusu kwa nguvu bila ridhaa yako ? ",
+        "label": "Je kuna mtu yoyote aliwahi kukushika sehemu zako za siri, kukushika matiti au kukubusu kwa nguvu bila ridhaa yako ?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -702,7 +712,7 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "forced_for_sexual_activity",
-        "label": "Je kuna mtu yeyote amewahi kukulazimisha kufanya ngono kwa kukutisha, udanganyifu   au kushiriki kwenye vitendo vyovyote vya kingono kwa kukulewesha pombe au dawa za kulevya?  ",
+        "label": "Je kuna mtu yeyote amewahi kukulazimisha kufanya ngono kwa kukutisha, udanganyifu au kushiriki kwenye vitendo vyovyote vya kingono kwa kukulewesha pombe au dawa za kulevya?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
@@ -996,7 +1006,7 @@
       {
         "key": "total_score_prompt",
         "type": "toaster_notes",
-        "text": "Jumla ya alama alizopata baada ya kumtathimini ",
+        "text": "Jumla ya alama alizopata baada ya kumtathimini: {total_agyw_score} ",
         "openmrs_entity_id": "",
         "openmrs_entity": "",
         "openmrs_entity_parent": "",
@@ -1027,7 +1037,7 @@
       {
         "key": "percentage_score_prompt",
         "type": "toaster_notes",
-        "text": "Jumla ya asilimia alizopata ",
+        "text": "Jumla ya asilimia alizopata: {total_percentage_score}% ",
         "openmrs_entity_id": "",
         "openmrs_entity": "",
         "openmrs_entity_parent": "",
@@ -1323,6 +1333,41 @@
         }
       },
       {
+        "key": "intervention_enrolled",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "intervention_enrolled",
+        "label": "Je mteja amesajiliwa kwenye afua za kuzuia maambukizi?",
+        "text_color": "#000000",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Ndio",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "yes"
+          },
+          {
+            "key": "no",
+            "text": "Hapana",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "no"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select an answer"
+        },
+        "relevance": {
+          "step8:intervention_eligibility": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
         "key": "enrollment_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
@@ -1337,7 +1382,7 @@
           "err": "Tafadhali jibu swali hili"
         },
         "relevance": {
-          "step8:intervention_eligibility": {
+          "step8:intervention_enrolled": {
             "type": "string",
             "ex": "equalTo(., \"yes\")"
           }
@@ -1386,10 +1431,10 @@
         }
       },
       {
-        "key": "program_name",
+        "key": "program_name_with_dreams",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "program_name",
+        "openmrs_entity_id": "program_name_with_dreams",
         "label": "Jina la Mradi",
         "text_color": "#000000",
         "type": "native_radio",
@@ -1428,9 +1473,67 @@
           "err": "Tafadhali chagua jibu sahihi"
         },
         "relevance": {
-          "step8:beneficiary_of_a_program": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "agyw_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "program_name_without_dreams",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "program_name_without_dreams",
+        "label": "Jina la Mradi",
+        "text_color": "#000000",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "timiza_malengo",
+            "text": "Timiza Malengo",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "timiza_malengo"
+          },
+          {
+            "key": "priority_population",
+            "text": "Kundi la kipaumbele (PP)",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "priority_population"
+          },
+          {
+            "key": "other",
+            "text": "Nyinginezo",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "other"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select an answer"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "agyw_screening_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "program_name",
+        "type": "hidden",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "program_name",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "agyw_screening_calculation.yml"
+            }
           }
         }
       }

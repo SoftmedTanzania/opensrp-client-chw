@@ -47,7 +47,7 @@ public class AgywProfileActivity extends BaseAGYWProfileActivity {
                     org.smartregister.chw.util.Constants.JSON_FORM.getSTIServicesReferralForm(), CoreConstants.TASKS_FOCUS.STI_REFERRAL));
             referralTypeModels.addAll(Utils.getCommonReferralTypes(this, memberObject.getBaseEntityId()));
             referralTypeModels.add(new ReferralTypeModel(getString(R.string.kvp_friendly_services),
-                    CoreConstants.JSON_FORM.getKvpFriendlyServicesReferralForm(), CoreConstants.TASKS_FOCUS.KVP_FRIENDLY_SERVICES));
+                    CoreConstants.JSON_FORM.getFemaleKvpFriendlyServicesReferralForm(), CoreConstants.TASKS_FOCUS.KVP_FRIENDLY_SERVICES));
             referralTypeModels.add(new ReferralTypeModel(getString(R.string.family_planning_referral),
                     org.smartregister.chw.util.Constants.JSON_FORM.getFamilyPlanningUnifiedReferralForm(Gender.FEMALE.toString()), CoreConstants.TASKS_FOCUS.FP_SIDE_EFFECTS));
             referralTypeModels.add(new ReferralTypeModel(getString(R.string.tb_referral),
@@ -78,5 +78,12 @@ public class AgywProfileActivity extends BaseAGYWProfileActivity {
 
     private Visit getVisit(String eventType) {
         return PmtctLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshMedicalHistory(true);
     }
 }
