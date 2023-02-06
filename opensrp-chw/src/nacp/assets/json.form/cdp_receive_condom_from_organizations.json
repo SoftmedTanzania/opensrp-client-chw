@@ -513,7 +513,7 @@
         "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "cdp_receive_condom_msd_calculation.yml"
+              "rules-file": "cdp_receive_condom_calculation.yml"
             }
           }
         }

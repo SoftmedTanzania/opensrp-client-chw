@@ -213,7 +213,7 @@ android {
             buildConfigField "String", 'DEFAULT_LOCATION_DEBUG', '"Village"'
             buildConfigField "long", "MAPBOX_DOWNLOAD_TILE_LIMIT", "6001"
 
-            buildConfigField "int", "DATABASE_VERSION", '24'
+            buildConfigField "int", "DATABASE_VERSION", '25'
         }
         ba {
             dimension = 'baseDimension'
