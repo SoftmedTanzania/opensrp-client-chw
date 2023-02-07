@@ -41,10 +41,8 @@ public class CdpProfileActivity extends CoreCdpProfileActivity {
         activity.startActivity(intent);
     }
 
-    public static void disableOutlet(AllSharedPreferences allSharedPreferences, String baseEntityId, String eventType) {
+    public static void disableOrEnableOutlet(AllSharedPreferences allSharedPreferences, String baseEntityId, String eventType) {
         Event event = (Event) new Event().withBaseEntityId(baseEntityId).withEventDate(new Date()).withEventType(eventType).withLocationId(org.smartregister.chw.anc.util.JsonFormUtils.locationId(allSharedPreferences)).withProviderId(allSharedPreferences.fetchRegisteredANM()).withEntityType(Constants.TABLES.CDP_OUTLET).withFormSubmissionId(UUID.randomUUID().toString()).withDateCreated(new Date());
-
-
         try {
             NCUtils.processEvent(event.getBaseEntityId(), new JSONObject(org.smartregister.chw.anc.util.JsonFormUtils.gson.toJson(event)));
         } catch (Exception e) {
@@ -60,7 +58,7 @@ public class CdpProfileActivity extends CoreCdpProfileActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        setupViews();
         outletObject = CdpDao.getOutlet(outletObject.getBaseEntityId());
         initializePresenter();
         updateFollowupButton();
@@ -68,6 +66,14 @@ public class CdpProfileActivity extends CoreCdpProfileActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.cdp_outlet_profile_menu, menu);
+
+        if (outletObject.isClosed()) {
+            menu.findItem(R.id.action_disable_outlet).setVisible(false);
+            menu.findItem(R.id.action_enable_outlet).setVisible(true);
+        } else {
+            menu.findItem(R.id.action_disable_outlet).setVisible(true);
+            menu.findItem(R.id.action_enable_outlet).setVisible(false);
+        }
         return true;
     }
 
@@ -78,7 +84,15 @@ public class CdpProfileActivity extends CoreCdpProfileActivity {
             return true;
         } else if (itemId == R.id.action_disable_outlet) {
             AllSharedPreferences allSharedPreferences = org.smartregister.util.Utils.getAllSharedPreferences();
-            disableOutlet(allSharedPreferences, outletObject.getBaseEntityId(), Constants.EVENT_TYPE.DISABLE_CDP_OUTLET);
+            disableOrEnableOutlet(allSharedPreferences, outletObject.getBaseEntityId(), Constants.EVENT_TYPE.DISABLE_CDP_OUTLET);
+            onResume();
+            invalidateOptionsMenu();
+            return true;
+        } else if (itemId == R.id.action_enable_outlet) {
+            AllSharedPreferences allSharedPreferences = org.smartregister.util.Utils.getAllSharedPreferences();
+            disableOrEnableOutlet(allSharedPreferences, outletObject.getBaseEntityId(), Constants.EVENT_TYPE.ENABLE_CDP_OUTLET);
+            onResume();
+            invalidateOptionsMenu();
             return true;
         }
         return false;

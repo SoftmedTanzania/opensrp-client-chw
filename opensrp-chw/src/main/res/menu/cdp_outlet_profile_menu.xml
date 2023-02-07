@@ -13,5 +13,11 @@
         android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/disable_outlet"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_enable_outlet"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="@string/enable_outlet"
+        app:showAsAction="never"/>
 
 </menu>
