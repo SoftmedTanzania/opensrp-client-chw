@@ -69,8 +69,10 @@ public class CdpProfileActivity extends CoreCdpProfileActivity {
 
         if (outletObject.isClosed()) {
             menu.findItem(R.id.action_disable_outlet).setVisible(false);
+            menu.findItem(R.id.action_edit_outlet).setVisible(false);
             menu.findItem(R.id.action_enable_outlet).setVisible(true);
         } else {
+            menu.findItem(R.id.action_edit_outlet).setVisible(true);
             menu.findItem(R.id.action_disable_outlet).setVisible(true);
             menu.findItem(R.id.action_enable_outlet).setVisible(false);
         }
