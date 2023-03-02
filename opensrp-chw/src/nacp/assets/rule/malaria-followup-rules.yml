@@ -15,6 +15,6 @@ actions:
 name: visit_due
 description: "visit due"
 priority: 3
-condition: "malariaFollowUpRule.getDatesDiff() > 7 "
+condition: "malariaFollowUpRule.getDatesDiff() >= 7 "
 actions:
   - "malariaFollowUpRule.setButtonStatus('DUE')"
