@@ -174,7 +174,9 @@ public class AllClientsMemberProfileActivity extends CoreAllClientsMemberProfile
     @Override
     protected void startHivstRegistration() {
         String gender = org.smartregister.family.util.Utils.getValue(commonPersonObject.getColumnmaps(), DBConstants.KEY.GENDER, false);
-        HivstRegisterActivity.startHivstRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, gender);
+        String dob = org.smartregister.chw.core.utils.Utils.getValue(commonPersonObject.getColumnmaps(), DBConstants.KEY.DOB, false);
+        int age = org.smartregister.chw.core.utils.Utils.getAgeFromDate(dob);
+        HivstRegisterActivity.startHivstRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, gender,age);
     }
 
     @Override
