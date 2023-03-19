@@ -380,7 +380,7 @@
     <string name="routine_household_visit">Tembeleo la kawaida</string>
     <string name="sick_visits">Matembeleo ya ugonjwa</string>
     <string name="sick_visit">Tembeleo la ugonjwa</string>
-    <string name="reports">Ripoti</string>
+
 
     <string name="eligible_children">Watoto wanaostahili</string>
     <string name="doses_needed">Dozi inahitajika</string>
@@ -446,8 +446,9 @@
     <string name="cdp_reports">CDP REPORTS</string>
     <string name="cdp_issuing_report">CDP Issuing Report</string>
     <string name="cdp_receiving_report">CDP Receiving Report</string>
-    <string name="agyw_reports">AGYW Reports</string>
-    <string name="agyw_reports_subtitle">View AGYW Report</string>
+    <string name="reports">Ripoti</string>
+    <string name="agyw_reports">Ripoti za AGYW</string>
+    <string name="agyw_reports_subtitle">Tazama Ripoti AGYW</string>
 
     <string name="agyw_services">Rekodi Huduma za Msichana Rika Balehe na Mwanamke Kijana</string>
 
@@ -596,5 +597,7 @@
     <string name="provision_of_business_skills">Ujasiriamali na biashara</string>
     <string name="kvp_friendly_services">Huduma rafiki kwa makundi maalum</string>
     <string name="sti_referral">Magonjwa ya ngono</string>
+
+
 
 </resources>

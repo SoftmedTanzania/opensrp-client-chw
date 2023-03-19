@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agyw_reports">AGYW Reports</string>
-    <string name="agyw_reports_subtitle">View AGYW Report</string>
+    <string name="reports">Ripoti</string>
+    <string name="agyw_reports">Ripoti za AGYW</string>
+    <string name="agyw_reports_subtitle">Tazama Ripoti AGYW</string>
+
 </resources>
