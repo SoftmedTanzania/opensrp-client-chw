@@ -43,27 +43,27 @@
   },
   "global": {},
   "step1": {
-    "title": "Providing Self Test Kits",
+    "title": "Ugawaji wa Vitepe vya Jipime",
     "fields": [
       {
         "key": "pre_test_counselling_and_instructions",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "pre_test_counselling_and_instructions",
-        "label": "Je mteja amepata elimu na ushauri kabla ya kupima",
+        "label": "Has the client been offered pre-test counselling and instructions?",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
           {
             "key": "yes",
-            "text": "Ndio",
+            "text": "Yes",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "yes"
           },
           {
             "key": "no",
-            "text": "Hapana",
+            "text": "No",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "no"
@@ -71,7 +71,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "Tafadhali chagua jibu "
+          "err": "Please select an answer"
         }
       },
       {
@@ -102,6 +102,21 @@
           "value": "true",
           "err": "Tafadhali chagua jibu "
         },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "hivst_issue_kits_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "kit_code",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "kit_code",
+        "type": "edit_text",
+        "hint": "Msimbo wa kitepe",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
@@ -152,21 +167,6 @@
           "value": "true",
           "err": "Tafadhali chagua jibu "
         },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "hivst_issue_kits_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "kit_code",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "kit_code",
-        "type": "edit_text",
-        "hint": "Msimbo wa kitepe",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
