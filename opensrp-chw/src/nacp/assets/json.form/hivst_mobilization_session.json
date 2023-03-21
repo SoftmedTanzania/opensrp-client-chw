@@ -51,13 +51,13 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "mobilization_date",
         "type": "date_picker",
-        "hint": "Mobilization Date",
+        "hint": "Tarehe ya uhamasishaji",
         "expanded": false,
         "min_date": "today-6m",
         "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Please enter the mobilization date"
+          "err": "Tafadhali ingiza tarehe ya uhamasishaji"
         }
       },
       {
@@ -66,18 +66,18 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "female_clients_reached",
         "type": "edit_text",
-        "hint": "Number of Female clients reached",
+        "hint": "Idadi ya wateja wa kike waliofikiwa",
         "v_numeric": {
           "value": "true",
-          "err": "Please enter a valid number"
+          "err": "Tafadhali ingiza numbari sahihi"
         },
         "v_min": {
           "value": "0",
-          "err": "The number must be equal or greater than 0"
+          "err": "Tarakimu ulioingiza inatakiwa iwe sawa au kubuwa kuliko 0"
         },
         "v_required": {
           "value": true,
-          "err": "Please enter the number"
+          "err": "Tafadhali ingiza nambar"
         }
       },
       {
@@ -86,18 +86,18 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "male_clients_reached",
         "type": "edit_text",
-        "hint": "Number of Male clients reached",
+        "hint": "Idadi ya wateja wa kiume waliofikiwa",
         "v_numeric": {
           "value": "true",
-          "err": "Please enter a valid number"
+          "err": "Tafadhali ingiza numbari sahihi"
         },
         "v_min": {
           "value": "0",
-          "err": "The number must be equal or greater than 0"
+          "err": "Tarakimu ulioingiza inatakiwa iwe sawa au kubuwa kuliko 0"
         },
         "v_required": {
           "value": true,
-          "err": "Please enter the number"
+          "err": "Tafadhali ingiza nambar"
         }
       },
       {
@@ -114,18 +114,18 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "female_condoms_issued",
         "type": "edit_text",
-        "hint": "Female condoms issued",
+        "hint": "Idadi ya kondomu za kike zilizotolewa",
         "v_numeric": {
           "value": "true",
-          "err": "Please enter a valid number"
+          "err": "Tafadhali ingiza numbari sahihi"
         },
         "v_min": {
           "value": "0",
-          "err": "The number must be equal or greater than 0"
+          "err": "Tarakimu ulioingiza inatakiwa iwe sawa au kubuwa kuliko 0"
         },
         "v_required": {
           "value": true,
-          "err": "Please enter the number"
+          "err": "Tafadhali ingiza nambar"
         }
       },
       {
@@ -134,18 +134,18 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "male_condoms_issued",
         "type": "edit_text",
-        "hint": "Male condoms issued",
+        "hint": "Idadi ya kondomu za kiume zilizotolewa",
         "v_numeric": {
           "value": "true",
-          "err": "Please enter a valid number"
+          "err": "Tafadhali ingiza numbari sahihi"
         },
         "v_min": {
           "value": "0",
-          "err": "The number must be equal or greater than 0"
+          "err": "Tarakimu ulioingiza inatakiwa iwe sawa au kubuwa kuliko 0"
         },
         "v_required": {
           "value": true,
-          "err": "Please enter the number"
+          "err": "Tafadhali ingiza nambar"
         }
       },
       {
@@ -153,20 +153,20 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "kit_used_in_demonstration",
-        "label": "Was a kit used for demonstration in this session?",
+        "label": "Je kitepe kilitumika kwajili ya kufundishia",
         "text_color": "#000000",
         "type": "native_radio",
         "options": [
           {
             "key": "yes",
-            "text": "Yes",
+            "text": "Ndio",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "yes"
           },
           {
             "key": "no",
-            "text": "No",
+            "text": "Hapana",
             "openmrs_entity_parent": "",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "no"
@@ -174,7 +174,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "Please select an answer"
+          "err": "Tafadhali changuwa jibu "
         }
       },
       {
@@ -183,7 +183,7 @@
         "openmrs_entity": "concept",
         "openmrs_entity_id": "kit_code",
         "type": "edit_text",
-        "hint": "Kit code",
+        "hint": "Msimbo wa kitepe",
         "relevance": {
           "step1:kit_used_in_demonstration": {
             "type": "string",

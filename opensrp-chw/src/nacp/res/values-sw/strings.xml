@@ -373,11 +373,14 @@
     <string name="cbhs_registered_in_tb_clinic">Amesajiliwa kwenye Kliniki ya Kifua Kikuu</string>
     <string name="cbhs_male">Me</string>
     <string name="cbhs_female">Ke</string>
-    <string name="condom_distribution_reports_subtitle">View Condom Distribution Report</string>
-    <string name="condom_distribution_reports">Condom Distribution Reports</string>
-    <string name="cdp_reports">CDP REPORTS</string>
-    <string name="cdp_issuing_report">CDP Issuing Report</string>
-    <string name="cdp_receiving_report">CDP Receiving Report</string>
+    <string name="condom_distribution_reports_subtitle">Tazama Ripoti za Ugawaji Kondomu</string>
+    <string name="condom_distribution_reports">Ripoti za Ugawaji Kondomu</string>
+    <string name="cdp_reports">Ripoti za CDP</string>
+    <string name="cdp_issuing_report">Taarifa ya kondomu zilizotolewa</string>
+    <string name="cdp_receiving_report">Taarifa ya kondomu zilizopokelewa</string>
+    <string name="reports">Ripoti</string>
+    <string name="agyw_reports">Ripoti za AGYW</string>
+    <string name="agyw_reports_subtitle">Tazama Ripoti za AGYW</string>
     <string name="agyw_visit">Matembeleo ya Msichana Rika Balehe na Mwanamke Kijana</string>
 
 
