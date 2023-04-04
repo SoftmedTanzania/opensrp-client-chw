@@ -250,11 +250,11 @@
               }
             },
             {
-              "name": "homosexual",
+              "name": "msm",
               "text": "Wanaume wanaofanya mapenzi na wanaume",
               "meta_data": {
                 "openmrs_entity": "concept",
-                "openmrs_entity_id": "homosexual",
+                "openmrs_entity_id": "msm",
                 "openmrs_entity_parent": ""
               }
             },

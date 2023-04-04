@@ -281,7 +281,7 @@
           "type": "masked_edit_text",
           "properties": {
             "hint": "CTC Number",
-            "type": "Clinic of Treatment and Care registration number (CTC Number)",
+            "type": "Care and Treatment Clinic registration number (CTC Number)",
             "mask": "##-##-####-######",
             "mask_hint": "12345678912345",
             "input_type": "number",
@@ -608,15 +608,6 @@
             "openmrs_entity_parent": ""
           },
           "options": [
-            {
-              "name": "hiv_self_test_kits",
-              "text": "HIV Self Testing Kits",
-              "meta_data": {
-                "openmrs_entity": "concept",
-                "openmrs_entity_id": "hiv_self_test_kits",
-                "openmrs_entity_parent": ""
-              }
-            },
             {
               "name": "sanitizers",
               "text": "Sanitizers",

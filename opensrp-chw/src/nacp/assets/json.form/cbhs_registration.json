@@ -220,6 +220,20 @@
           "required_status": "yes:Please specify client's TB status during registration"
         },
         {
+          "name": "tb_number",
+          "type": "text_input_edit_text",
+          "properties": {
+            "hint": "TB ID",
+            "type": "TB Clinic ID"
+          },
+          "meta_data": {
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "tb_number",
+            "openmrs_entity_parent": ""
+          },
+          "subjects": "client_tb_status_during_registration:text"
+        },
+        {
           "name": "reasons_for_registration_male_15",
           "type": "radio_group",
           "properties": {
@@ -250,11 +264,11 @@
               }
             },
             {
-              "name": "homosexual",
-              "text": "Men who have sex with men",
+              "name": "msm",
+              "text": "High Risk Men",
               "meta_data": {
                 "openmrs_entity": "concept",
-                "openmrs_entity_id": "homosexual",
+                "openmrs_entity_id": "msm",
                 "openmrs_entity_parent": ""
               }
             },
@@ -628,20 +642,6 @@
           "dependent_calculations": [
             "reasons_for_registration"
           ]
-        },
-        {
-          "name": "tb_number",
-          "type": "text_input_edit_text",
-          "properties": {
-            "hint": "TB ID",
-            "type": "TB Clinic ID"
-          },
-          "meta_data": {
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "tb_number",
-            "openmrs_entity_parent": ""
-          },
-          "subjects": "client_tb_status_during_registration:text"
         },
         {
           "name": "rch_number",

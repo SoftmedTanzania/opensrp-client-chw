@@ -609,15 +609,6 @@
           },
           "options": [
             {
-              "name": "hiv_self_test_kits",
-              "text": "Vifaa vya kujipima VVU",
-              "meta_data": {
-                "openmrs_entity": "concept",
-                "openmrs_entity_id": "hiv_self_test_kits",
-                "openmrs_entity_parent": ""
-              }
-            },
-            {
               "name": "sanitizers",
               "text": "Vitakasa mikono",
               "meta_data": {
