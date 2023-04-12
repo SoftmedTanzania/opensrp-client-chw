@@ -175,7 +175,8 @@
               "message": "CTC Number should be of format (XX-XX-XXXX-XXXXXX)."
             }
           ],
-          "subjects": "client_hiv_status_during_registration:text"
+          "subjects": "client_hiv_status_during_registration:text",
+          "required_status": "yes:Please specify client's CTC Number"
         },
         {
           "name": "client_tb_status_during_registration",
@@ -645,17 +646,21 @@
         },
         {
           "name": "rch_number",
-          "type": "text_input_edit_text",
+          "type": "masked_edit_text",
           "properties": {
-            "hint": "RCH ID",
-            "type": "RCH Clinic ID"
+            "hint": "RCH ID e.g 2023/0001",
+            "type": "RCH Clinic ID e.g 2023/0001",
+            "mask": "202#/####",
+            "mask_hint": "345678",
+            "input_type": "number",
+            "allowed_chars": "0123456789"
           },
           "meta_data": {
             "openmrs_entity": "concept",
             "openmrs_entity_id": "rch_number",
             "openmrs_entity_parent": ""
           },
-          "subjects": "gender:text"
+          "subjects": "gender:text, reasons_for_registration_female_15:map, reasons_for_registration_female_10_to_14:map"
         },
         {
           "name": "mat_number",

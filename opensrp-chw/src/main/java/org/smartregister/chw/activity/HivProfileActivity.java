@@ -139,6 +139,7 @@ public class HivProfileActivity extends CoreHivProfileActivity implements Family
 
             if (StringUtils.isNotBlank(hivMemberObject.getCtcNumber())) {
                 removeField(fields, "client_hiv_status_after_testing");
+                removeField(fields, "was_the_client_tested_for_hiv");
                 JSONObject stateOfHivCareAndTreatment = getJsonObject(fields, "state_of_hiv_care_and_treatment");
                 removeField(stateOfHivCareAndTreatment.getJSONArray("options"), "na");
                 removeField(stateOfHivCareAndTreatment.getJSONArray("options"), "not_registered_in_ctc_clinic");

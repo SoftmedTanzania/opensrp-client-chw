@@ -9,17 +9,21 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
 import org.smartregister.chw.BuildConfig;
 import org.smartregister.chw.R;
 import org.smartregister.chw.core.activity.CoreKvpProfileActivity;
 import org.smartregister.chw.core.utils.CoreConstants;
+import org.smartregister.chw.dao.ChwKvpDao;
 import org.smartregister.chw.kvp.KvpLibrary;
+import org.smartregister.chw.kvp.dao.KvpDao;
 import org.smartregister.chw.kvp.domain.Visit;
 import org.smartregister.chw.kvp.util.Constants;
 import org.smartregister.chw.model.ReferralTypeModel;
 import org.smartregister.chw.util.KvpVisitUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import timber.log.Timber;
@@ -98,5 +102,24 @@ public class KvpPrEPProfileActivity extends CoreKvpProfileActivity {
 
     private Visit getVisit(String eventType) {
         return KvpLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
+    }
+
+    @Override
+    protected void showKvpGroups(String baseEntityId) {
+        if (!profileType.equalsIgnoreCase(Constants.PROFILE_TYPES.PrEP_PROFILE)) {
+            String dominantKVPGroup = ChwKvpDao.getDominantKVPGroup(baseEntityId);
+            if (StringUtils.isNotBlank(dominantKVPGroup)) {
+                textViewDominantKvpGroup.setVisibility(View.VISIBLE);
+                List<String> dominantKvpGroup = new ArrayList<>(Arrays.asList(dominantKVPGroup));
+                textViewDominantKvpGroup.setText(getString(org.smartregister.kvp.R.string.dominant_kvp_group, readStringResourcesWithPrefix(dominantKvpGroup, "kvp_")));
+            } else {
+                textViewDominantKvpGroup.setVisibility(View.GONE);
+            }
+            textViewOtherKvpGroups.setVisibility(View.GONE);
+        } else {
+            textViewDominantKvpGroup.setVisibility(View.GONE);
+            textViewOtherKvpGroups.setVisibility(View.GONE);
+        }
+
     }
 }
