@@ -19,7 +19,6 @@ import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.dao.ChwKvpDao;
 import org.smartregister.chw.hivst.dao.HivstDao;
 import org.smartregister.chw.kvp.KvpLibrary;
-import org.smartregister.chw.kvp.dao.KvpDao;
 import org.smartregister.chw.kvp.domain.Visit;
 import org.smartregister.chw.kvp.util.Constants;
 import org.smartregister.chw.model.ReferralTypeModel;
@@ -144,7 +143,7 @@ public class KvpPrEPProfileActivity extends CoreKvpProfileActivity {
 
     @Override
     public void startHivstRegistration() {
-        CommonRepository commonRepository = org.smartregister.family.util.Utils.context().commonrepository(org.smartregister.family.util.Utils.metadata().familyMemberRegister.tableName);
+        CommonRepository commonRepository = Utils.context().commonrepository(Utils.metadata().familyMemberRegister.tableName);
 
         final CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(memberObject.getBaseEntityId());
         final CommonPersonObjectClient client =
