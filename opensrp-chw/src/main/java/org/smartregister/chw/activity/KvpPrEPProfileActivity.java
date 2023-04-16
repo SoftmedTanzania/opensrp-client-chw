@@ -85,6 +85,7 @@ public class KvpPrEPProfileActivity extends CoreKvpProfileActivity {
             Timber.e(e);
         }
         super.setupViews();
+        textViewId.setVisibility(View.GONE);
     }
 
 
