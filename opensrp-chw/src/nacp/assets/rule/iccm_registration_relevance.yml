@@ -1,0 +1,56 @@
+---
+name: step2_prompt_for_respiratory_rate
+description: prompt_for_respiratory_rate relevance
+priority: 1
+condition: "(global_age < 1 && step2_respiratory_rate >= 50) || (global_age < 6 && step2_respiratory_rate >= 40)"
+actions:
+  - "isRelevant = true"
+---
+name: step2_dispensed_anti_pyretic
+description: household_people_for_18_and_above relevance
+priority: 1
+condition: "step2_temperature > 37.5"
+actions:
+  - "isRelevant = true"
+---
+name: step2_reasons_for_not_providing_anti_pyretic
+description: household_people_for_18_and_above relevance
+priority: 1
+condition: "step2_dispensed_anti_pyretic == 'no'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_other_reasons_for_not_providing_anti_pyretic
+description: other_reasons_for_not_providing_anti_pyretic relevance
+priority: 1
+condition: "step2_reasons_for_not_providing_anti_pyretic == 'others'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_administered_artesunate
+description: administered_artesunate relevance
+priority: 1
+condition: "step2_danger_signs != 'none'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_reasons_for_not_providing_artesunate
+description: reasons_for_not_providing_artesunate relevance
+priority: 1
+condition: "step2_administered_artesunate == 'no'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_other_reasons_for_not_providing_artesunate
+description: other_reasons_for_not_providing_artesunate relevance
+priority: 1
+condition: "step2_reasons_for_not_providing_artesunate == 'others'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_prompt_for_providing_referral
+description: prompt_for_providing_referral relevance
+priority: 1
+condition: "step2_danger_signs != 'none'"
+actions:
+  - "isRelevant = true"
