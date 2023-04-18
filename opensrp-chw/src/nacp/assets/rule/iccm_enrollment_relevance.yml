@@ -6,51 +6,51 @@ condition: "(global_age < 1 && step2_respiratory_rate >= 50) || (global_age < 6 
 actions:
   - "isRelevant = true"
 ---
-name: step2_dispensed_anti_pyretic
+name: step3_dispensed_anti_pyretic
 description: household_people_for_18_and_above relevance
 priority: 1
 condition: "step2_temperature > 37.5"
 actions:
   - "isRelevant = true"
 ---
-name: step2_reasons_for_not_providing_anti_pyretic
+name: step3_reasons_for_not_providing_anti_pyretic
 description: household_people_for_18_and_above relevance
 priority: 1
-condition: "step2_dispensed_anti_pyretic == 'no'"
+condition: "step3_dispensed_anti_pyretic == 'no'"
 actions:
   - "isRelevant = true"
 ---
-name: step2_other_reasons_for_not_providing_anti_pyretic
+name: step3_other_reasons_for_not_providing_anti_pyretic
 description: other_reasons_for_not_providing_anti_pyretic relevance
 priority: 1
-condition: "step2_reasons_for_not_providing_anti_pyretic == 'others'"
+condition: "step3_reasons_for_not_providing_anti_pyretic == 'others'"
 actions:
   - "isRelevant = true"
 ---
-name: step2_administered_artesunate
+name: step3_administered_artesunate
 description: administered_artesunate relevance
 priority: 1
-condition: "step2_danger_signs != 'none'"
+condition: "step3_danger_signs != '' && step3_danger_signs != 'none' && global_age < 6"
 actions:
   - "isRelevant = true"
 ---
-name: step2_reasons_for_not_providing_artesunate
+name: step3_reasons_for_not_providing_artesunate
 description: reasons_for_not_providing_artesunate relevance
 priority: 1
-condition: "step2_administered_artesunate == 'no'"
+condition: "step3_administered_artesunate == 'no'"
 actions:
   - "isRelevant = true"
 ---
-name: step2_other_reasons_for_not_providing_artesunate
+name: step3_other_reasons_for_not_providing_artesunate
 description: other_reasons_for_not_providing_artesunate relevance
 priority: 1
-condition: "step2_reasons_for_not_providing_artesunate == 'others'"
+condition: "step3_reasons_for_not_providing_artesunate == 'others'"
 actions:
   - "isRelevant = true"
 ---
-name: step2_prompt_for_providing_referral
+name: step3_prompt_for_providing_referral
 description: prompt_for_providing_referral relevance
 priority: 1
-condition: "step2_danger_signs != 'none'"
+condition: "step3_danger_signs != '' && step3_danger_signs != 'none'"
 actions:
   - "isRelevant = true"

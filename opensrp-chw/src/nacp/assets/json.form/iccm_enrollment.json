@@ -49,6 +49,7 @@
   "global": {},
   "step1": {
     "title": "Treatment History",
+    "next": "step2",
     "fields": [
       {
         "key": "client_testing_history",
@@ -83,7 +84,7 @@
   },
   "step2": {
     "title": "Vitals",
-    "next": "step2",
+    "next": "step3",
     "fields": [
       {
         "key": "temperature",
@@ -103,6 +104,10 @@
         "v_max": {
           "value": "50",
           "err": "Temperature must be equal or less than 50"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the clients temperature"
         }
       },
       {
@@ -114,7 +119,7 @@
         "openmrs_entity_parent": "",
         "toaster_type": "warning",
         "relevance": {
-          "step1:temperature": {
+          "step2:temperature": {
             "type": "numeric",
             "ex": "greaterThan(.,\"37.5\")"
           }
@@ -167,11 +172,11 @@
         "openmrs_entity_id": "prompt_for_respiratory_rate",
         "openmrs_entity": "concept",
         "openmrs_entity_parent": "",
-        "toaster_type": "problem",
+        "toaster_type": "warning",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -183,11 +188,7 @@
         "openmrs_entity_id": "weight",
         "openmrs_entity_parent": "",
         "edit_type": "number",
-        "hint": "Weight (kg)",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter weight"
-        }
+        "hint": "Weight (kg)"
       },
       {
         "key": "height",
@@ -196,11 +197,7 @@
         "openmrs_entity_id": "height",
         "openmrs_entity_parent": "",
         "edit_type": "number",
-        "hint": "Height (cm)",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter height"
-        }
+        "hint": "Height (cm)"
       }
     ]
   },
@@ -318,7 +315,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -361,7 +358,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -376,7 +373,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -412,7 +409,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -448,7 +445,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -463,7 +460,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
@@ -475,11 +472,11 @@
         "openmrs_entity_id": "prompt_for_providing_referral",
         "openmrs_entity": "concept",
         "openmrs_entity_parent": "",
-        "toaster_type": "warning",
+        "toaster_type": "problem",
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "iccm_registration_relevance.yml"
+              "rules-file": "iccm_enrollment_relevance.yml"
             }
           }
         }
