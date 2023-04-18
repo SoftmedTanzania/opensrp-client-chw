@@ -565,6 +565,8 @@ public class ChwApplication extends CoreChwApplication {
 
         boolean hasKvp();
 
+        boolean hasICCM();
+
         boolean hasAGYW();
 
         String[] getFTSTables();
