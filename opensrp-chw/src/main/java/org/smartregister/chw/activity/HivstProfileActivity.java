@@ -1,11 +1,17 @@
 package org.smartregister.chw.activity;
 
+import static org.smartregister.chw.core.utils.Utils.getCommonPersonObjectClient;
+import static org.smartregister.chw.util.Utils.getClientGender;
+import static org.smartregister.chw.util.Utils.updateAgeAndGender;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -29,12 +35,7 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.AlertStatus;
 import org.smartregister.family.util.DBConstants;
 
-import androidx.annotation.NonNull;
 import timber.log.Timber;
-
-import static org.smartregister.chw.core.utils.Utils.getCommonPersonObjectClient;
-import static org.smartregister.chw.util.Utils.getClientGender;
-import static org.smartregister.chw.util.Utils.updateAgeAndGender;
 
 
 public class HivstProfileActivity extends CoreHivstProfileActivity {

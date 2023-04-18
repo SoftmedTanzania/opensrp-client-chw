@@ -9,6 +9,9 @@ import android.print.PrintManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import androidx.annotation.RequiresApi;
+import androidx.webkit.WebViewAssetLoader;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.smartregister.chw.domain.agyw_reports.AGYWReportObject;
@@ -23,8 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.annotation.RequiresApi;
-import androidx.webkit.WebViewAssetLoader;
 import timber.log.Timber;
 
 public class ReportUtils {

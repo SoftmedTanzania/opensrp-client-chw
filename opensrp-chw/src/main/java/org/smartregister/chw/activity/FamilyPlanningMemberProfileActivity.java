@@ -1,5 +1,10 @@
 package org.smartregister.chw.activity;
 
+import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
+import static org.smartregister.chw.util.Constants.JSON_FORM;
+import static org.smartregister.chw.util.NotificationsUtil.handleNotificationRowClick;
+import static org.smartregister.chw.util.NotificationsUtil.handleReceivedNotifications;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -37,12 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
-
-import static org.smartregister.chw.core.utils.CoreConstants.JSON_FORM.getMalariaConfirmation;
-import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
-import static org.smartregister.chw.util.Constants.JSON_FORM;
-import static org.smartregister.chw.util.NotificationsUtil.handleNotificationRowClick;
-import static org.smartregister.chw.util.NotificationsUtil.handleReceivedNotifications;
 
 public class FamilyPlanningMemberProfileActivity extends CoreFamilyPlanningMemberProfileActivity
         implements FamilyProfileExtendedContract.PresenterCallBack, OnRetrieveNotifications {
@@ -148,7 +147,7 @@ public class FamilyPlanningMemberProfileActivity extends CoreFamilyPlanningMembe
 
     @Override
     protected void startMalariaRegister() {
-        MalariaRegisterActivity.startMalariaRegistrationActivity(this, fpMemberObject.getBaseEntityId(), fpMemberObject.getFamilyBaseEntityId(), getMalariaConfirmation());
+        MalariaRegisterActivity.startMalariaRegistrationActivity(this, fpMemberObject.getBaseEntityId(), fpMemberObject.getFamilyBaseEntityId());
     }
 
     @Override

@@ -1,9 +1,9 @@
 package org.smartregister.chw.util;
 
+import static org.smartregister.util.Utils.getAllSharedPreferences;
+
 import android.content.Context;
 import android.webkit.JavascriptInterface;
-
-import static org.smartregister.util.Utils.getAllSharedPreferences;
 
 public class ChwWebAppInterface {
     Context mContext;

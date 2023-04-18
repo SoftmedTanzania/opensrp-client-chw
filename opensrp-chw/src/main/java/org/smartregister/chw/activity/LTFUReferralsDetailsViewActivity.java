@@ -1,5 +1,7 @@
 package org.smartregister.chw.activity;
 
+import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,8 +26,6 @@ import org.smartregister.repository.LocationRepository;
 import org.smartregister.view.customcontrols.CustomFontTextView;
 
 import java.sql.Date;
-
-import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
 
 public class LTFUReferralsDetailsViewActivity extends BaseReferralTaskViewActivity implements View.OnClickListener {
 

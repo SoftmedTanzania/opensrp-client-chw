@@ -1,12 +1,12 @@
 package org.smartregister.chw.activity;
 
-import static org.smartregister.chw.core.utils.CoreConstants.JSON_FORM.getIccmEnrollment;
-import static org.smartregister.chw.core.utils.CoreConstants.JSON_FORM.getMalariaConfirmation;
 import static org.smartregister.chw.util.Utils.getClientGender;
 import static org.smartregister.chw.util.Utils.updateAgeAndGender;
 
 import android.content.Context;
 import android.view.Menu;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.vijay.jsonwizard.utils.FormUtils;
 
@@ -39,10 +39,7 @@ import org.smartregister.family.model.BaseFamilyOtherMemberProfileActivityModel;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.view.contract.BaseProfileContract;
 
-import androidx.viewpager.widget.ViewPager;
 import timber.log.Timber;
-
-import static org.smartregister.chw.util.Utils.updateAgeAndGender;
 
 public class AllClientsMemberProfileActivity extends CoreAllClientsMemberProfileActivity {
 
@@ -123,12 +120,12 @@ public class AllClientsMemberProfileActivity extends CoreAllClientsMemberProfile
 
     @Override
     protected void startMalariaRegister() {
-        MalariaRegisterActivity.startMalariaRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, familyBaseEntityId, getMalariaConfirmation());
+        MalariaRegisterActivity.startMalariaRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, familyBaseEntityId);
     }
 
     @Override
     protected void startIntegratedCommunityCaseManagementEnrollment() {
-        MalariaRegisterActivity.startMalariaRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, familyBaseEntityId, getIccmEnrollment());
+        ICCMRegisterActivity.startMalariaRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, familyBaseEntityId);
     }
 
     @Override
