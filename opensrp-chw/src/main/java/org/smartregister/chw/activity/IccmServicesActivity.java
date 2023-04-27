@@ -1,0 +1,97 @@
+package org.smartregister.chw.activity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
+
+import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
+
+import org.json.JSONObject;
+import org.smartregister.chw.R;
+import org.smartregister.chw.interactor.IccmServicesActivityInteractor;
+import org.smartregister.chw.ld.util.Constants;
+import org.smartregister.chw.malaria.activity.BaseIccmVisitActivity;
+import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
+import org.smartregister.chw.malaria.presenter.BaseIccmVisitPresenter;
+import org.smartregister.family.util.JsonFormUtils;
+import org.smartregister.family.util.Utils;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * Created by Ilakoze Jumanne on 2023-04-20
+ */
+public class IccmServicesActivity extends BaseIccmVisitActivity {
+
+    public static void startIccmServicesActivity(Activity activity, String baseEntityId, Boolean editMode) {
+        Intent intent = new Intent(activity, IccmServicesActivity.class);
+        intent.putExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityId);
+        intent.putExtra(Constants.ACTIVITY_PAYLOAD.EDIT_MODE, editMode);
+
+        activity.startActivityForResult(intent, org.smartregister.chw.anc.util.Constants.REQUEST_CODE_HOME_VISIT);
+    }
+
+    @Override
+    protected void registerPresenter() {
+        presenter = new BaseIccmVisitPresenter(memberObject, this, new IccmServicesActivityInteractor());
+    }
+
+    @Override
+    public void startFormActivity(JSONObject jsonForm) {
+        Form form = new Form();
+        form.setActionBarBackground(org.smartregister.chw.core.R.color.family_actionbar);
+        form.setWizard(false);
+
+        Intent intent = new Intent(this, Utils.metadata().familyMemberFormActivity);
+        intent.putExtra(org.smartregister.family.util.Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
+        intent.putExtra(org.smartregister.family.util.Constants.WizardFormActivity.EnableOnCloseDialog, false);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        startActivityForResult(intent, JsonFormUtils.REQUEST_CODE_GET_JSON);
+    }
+
+    @Override
+    public void initializeActions(LinkedHashMap<String, BaseIccmVisitAction> map) {
+        //Clearing the action List before recreation
+        actionList.clear();
+
+        //Rearranging the actions according to a specific arrangement
+        BaseIccmVisitAction medicalHistoryAction = map.get(getString(R.string.iccm_medical_history));
+        actionList.put(getString(R.string.iccm_medical_history), medicalHistoryAction);
+
+
+        BaseIccmVisitAction physicalExaminationAction = map.get(getString(R.string.iccm_physical_examination));
+        actionList.put(getString(R.string.iccm_physical_examination), physicalExaminationAction);
+
+
+        if (map.containsKey(getString(R.string.iccm_malaria))) {
+            BaseIccmVisitAction malariaAction = map.get(getString(R.string.iccm_malaria));
+            actionList.put(getString(R.string.iccm_malaria), malariaAction);
+        }
+
+        if (map.containsKey(getString(R.string.iccm_pneumonia))) {
+            BaseIccmVisitAction pneumoniaAction = map.get(getString(R.string.iccm_pneumonia));
+            actionList.put(getString(R.string.iccm_pneumonia), pneumoniaAction);
+        }
+
+        //====================End of Necessary evil ====================================
+
+
+        for (Map.Entry<String, BaseIccmVisitAction> entry : map.entrySet()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                actionList.putIfAbsent(entry.getKey(), entry.getValue());
+            } else {
+                actionList.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+        displayProgressBar(false);
+
+
+        super.initializeActions(map);
+    }
+}

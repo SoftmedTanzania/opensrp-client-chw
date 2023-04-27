@@ -2,7 +2,7 @@
 name: step2_prompt_for_respiratory_rate
 description: prompt_for_respiratory_rate relevance
 priority: 1
-condition: "(global_age < 1 && step2_respiratory_rate >= 50) || (global_age < 6 && step2_respiratory_rate >= 40)"
+condition: "(global_age < 1 && step2_respiratory_rate >= 50) || (global_age > 1 && global_age < 6 && step2_respiratory_rate >= 40)"
 actions:
   - "isRelevant = true"
 ---
@@ -30,7 +30,7 @@ actions:
 name: step3_administered_artesunate
 description: administered_artesunate relevance
 priority: 1
-condition: "step3_danger_signs != '' && step3_danger_signs != 'none' && global_age < 6"
+condition: "!step3_danger_signs.isEmpty() && !step3_danger_signs.contains('none') && global_age < 6"
 actions:
   - "isRelevant = true"
 ---
@@ -51,6 +51,6 @@ actions:
 name: step3_prompt_for_providing_referral
 description: prompt_for_providing_referral relevance
 priority: 1
-condition: "step3_danger_signs != '' && step3_danger_signs != 'none'"
+condition: "!step3_danger_signs.isEmpty() && !step3_danger_signs.contains('none')"
 actions:
   - "isRelevant = true"

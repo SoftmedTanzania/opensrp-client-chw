@@ -1,0 +1,12 @@
+---
+name: step1_mrdt_results
+description: mrdt_results calculation
+priority: 1
+condition: "true"
+actions:
+  - "calculation =
+    (step1_interpretation_for_mrdt.contains('control') && (step1_interpretation_for_mrdt.contains('pf') || step1_interpretation_for_mrdt.contains('pan')) ||
+    step1_interpretation_for_mrdt_two.contains('control') && (step1_interpretation_for_mrdt_two.contains('pf') || step1_interpretation_for_mrdt_two.contains('pan')))  ? 'Positive'
+    : (step1_interpretation_for_mrdt.contains('control') || step1_interpretation_for_mrdt_two.contains('control')) ? 'Negative'
+    : ((!step1_interpretation_for_mrdt.isEmpty() && !step1_interpretation_for_mrdt.contains('control') && !step1_interpretation_for_mrdt_two.isEmpty() && !step1_interpretation_for_mrdt_two.contains('control')) ? 'Invalid'
+    : 'Unknown')"

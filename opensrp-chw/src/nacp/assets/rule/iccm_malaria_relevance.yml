@@ -1,0 +1,49 @@
+---
+name: step1_prompt_for_mrdt_positive
+description: prompt_for_mrdt_positive relevance
+priority: 1
+condition: "step1_mrdt_results.contains('Positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_prompt_for_mrdt_negative
+description: prompt_for_mrdt_negative relevance
+priority: 1
+condition: "step1_mrdt_results.contains('Negative')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_prompt_for_invalid_mrdt_results
+description: prompt_for_invalid_mrdt_results relevance
+priority: 1
+condition: "!step1_interpretation_for_mrdt.isEmpty() && !step1_interpretation_for_mrdt.contains('control')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_interpretation_for_mrdt_two
+description: interpretation_for_mrdt_two relevance
+priority: 1
+condition: "!step1_interpretation_for_mrdt.isEmpty() && !step1_interpretation_for_mrdt.contains('control')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_prompt_for_invalid_mrdt_results_two
+description: prompt_for_invalid_mrdt_results_two relevance
+priority: 1
+condition: "!step1_interpretation_for_mrdt_two.isEmpty() && !step1_interpretation_for_mrdt_two.contains('control')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dispensed_alu_category
+description: dispensed_alu_category relevance
+priority: 1
+condition: "step1_mrdt_results.contains('Positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_number_of_tablets_dispensed
+description: number_of_tablets_dispensed relevance
+priority: 1
+condition: "step1_mrdt_results.contains('Positive')"
+actions:
+  - "isRelevant = true"

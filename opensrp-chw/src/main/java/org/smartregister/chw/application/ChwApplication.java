@@ -37,7 +37,7 @@ import org.smartregister.chw.activity.FpRegisterActivity;
 import org.smartregister.chw.activity.HivIndexContactsContactsRegisterActivity;
 import org.smartregister.chw.activity.HivRegisterActivity;
 import org.smartregister.chw.activity.HivstRegisterActivity;
-import org.smartregister.chw.activity.ICCMRegisterActivity;
+import org.smartregister.chw.activity.IccmRegisterActivity;
 import org.smartregister.chw.activity.KvpPrEPRegisterActivity;
 import org.smartregister.chw.activity.LTFURegisterActivity;
 import org.smartregister.chw.activity.LoginActivity;
@@ -377,7 +377,7 @@ public class ChwApplication extends CoreChwApplication {
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.CDP_REGISTER_ACTIVITY, CdpRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.KVP_PrEP_REGISTER_ACTIVITY, KvpPrEPRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MALARIA_REGISTER_ACTIVITY, MalariaRegisterActivity.class);
-        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.ICCM_REGISTER_ACTIVITY, ICCMRegisterActivity.class);
+        registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.ICCM_REGISTER_ACTIVITY, IccmRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.FP_REGISTER_ACTIVITY, FpRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.UPDATES_REGISTER_ACTIVITY, UpdatesRegisterActivity.class);
         registeredActivities.put(CoreConstants.REGISTERED_ACTIVITIES.MOTHER_CHAMPION_ACTIVITY, MotherChampionRegisterActivity.class);

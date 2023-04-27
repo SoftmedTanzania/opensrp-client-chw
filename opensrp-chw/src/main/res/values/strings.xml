@@ -446,4 +446,11 @@
     <string name="view_visit_history">View visit history</string>
 
 
+
+    <string name="menu_iccm">iCCM</string>
+    <string name="iccm_medical_history">Medical History</string>
+    <string name="iccm_physical_examination">Physical Examination</string>
+    <string name="iccm_malaria">Malaria</string>
+    <string name="iccm_pneumonia">Pneumonia</string>
+    <string name="iccm_diarrhea">Diarrhea</string>
 </resources>

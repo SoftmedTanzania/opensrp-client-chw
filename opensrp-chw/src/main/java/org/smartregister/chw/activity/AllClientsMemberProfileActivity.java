@@ -125,7 +125,7 @@ public class AllClientsMemberProfileActivity extends CoreAllClientsMemberProfile
 
     @Override
     protected void startIntegratedCommunityCaseManagementEnrollment() {
-        ICCMRegisterActivity.startMalariaRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, familyBaseEntityId);
+        IccmRegisterActivity.startIccmRegistrationActivity(AllClientsMemberProfileActivity.this, baseEntityId, familyBaseEntityId);
     }
 
     @Override

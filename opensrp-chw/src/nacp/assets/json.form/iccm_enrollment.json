@@ -1,6 +1,6 @@
 {
   "count": "3",
-  "encounter_type": "ICCM Registration",
+  "encounter_type": "ICCM Enrollment",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -113,7 +113,7 @@
       {
         "key": "prompt_for_providing_anti_pyretic",
         "type": "toaster_notes",
-        "text": "Anti-Pyretic should be dispensed to the client with high fever",
+        "text": "<b>The client has Fever</b><br>Anti-Pyretic should be dispensed to the client with high fever",
         "openmrs_entity_id": "notify_client_has_fever",
         "openmrs_entity": "concept",
         "openmrs_entity_parent": "",
@@ -168,7 +168,7 @@
       {
         "key": "prompt_for_respiratory_rate",
         "type": "toaster_notes",
-        "text": "The Client should undergo a diagnosis for pneumonia.",
+        "text": "<b>The client has symptoms for Pneumonia.</b><br>Diagnose the Client for pneumonia if the client has no other danger signs.",
         "openmrs_entity_id": "prompt_for_respiratory_rate",
         "openmrs_entity": "concept",
         "openmrs_entity_parent": "",
@@ -188,7 +188,11 @@
         "openmrs_entity_id": "weight",
         "openmrs_entity_parent": "",
         "edit_type": "number",
-        "hint": "Weight (kg)"
+        "hint": "Weight (Kg)",
+        "v_max": {
+          "value": "300",
+          "err": "The weight must be equal or less than 300 (KG)"
+        }
       },
       {
         "key": "height",
@@ -197,7 +201,11 @@
         "openmrs_entity_id": "height",
         "openmrs_entity_parent": "",
         "edit_type": "number",
-        "hint": "Height (cm)"
+        "hint": "Height (cm)",
+        "v_max": {
+          "value": "200",
+          "err": "The height must be equal or less than 200 (CM)"
+        }
       }
     ]
   },
@@ -480,7 +488,22 @@
             }
           }
         }
+      },
+      {
+        "key": "should_be_referred",
+        "type": "hidden",
+        "openmrs_entity_id": "should_be_referred",
+        "openmrs_entity": "concept",
+        "openmrs_entity_parent": "",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "iccm_enrollment_calculation.yml"
+            }
+          }
+        }
       }
+
     ]
   }
 }

@@ -1,0 +1,188 @@
+package org.smartregister.chw.actionhelper;
+
+import static com.vijay.jsonwizard.constants.JsonFormConstants.TYPE;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
+import static org.smartregister.chw.core.utils.Utils.getCommonPersonObjectClient;
+import static org.smartregister.chw.core.utils.Utils.isMemberOfReproductiveAge;
+import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_KEY.OPTIONS;
+
+import android.content.Context;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.smartregister.chw.R;
+import org.smartregister.chw.core.utils.CoreJsonFormUtils;
+import org.smartregister.chw.ld.util.AppExecutors;
+import org.smartregister.chw.malaria.contract.BaseIccmVisitContract;
+import org.smartregister.chw.malaria.dao.IccmDao;
+import org.smartregister.chw.malaria.domain.IccmMemberObject;
+import org.smartregister.chw.malaria.domain.VisitDetail;
+import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
+import org.smartregister.chw.referral.util.JsonFormConstants;
+import org.smartregister.chw.util.Constants;
+import org.smartregister.chw.util.Utils;
+import org.smartregister.family.util.DBConstants;
+import org.smartregister.util.JsonFormUtils;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import timber.log.Timber;
+
+public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmVisitActionHelper {
+    private String jsonPayload;
+    private final String baseEntityId;
+    private final Context context;
+    private final LinkedHashMap<String, BaseIccmVisitAction> actionList;
+    private final BaseIccmVisitContract.InteractorCallBack callBack;
+
+    private String medicalHistory;
+
+    private final boolean isEdit;
+    private final Map<String, List<VisitDetail>> details;
+
+    public IccmMedicalHistoryActionHelper(Context context, String baseEntityId, LinkedHashMap<String, BaseIccmVisitAction> actionList, Map<String, List<VisitDetail>> details, BaseIccmVisitContract.InteractorCallBack callBack, boolean isEdit) {
+        this.context = context;
+        this.baseEntityId = baseEntityId;
+        this.actionList = actionList;
+        this.isEdit = isEdit;
+        this.callBack = callBack;
+        this.details = details;
+    }
+
+    @Override
+    public void onJsonFormLoaded(String jsonPayload, Context context, Map<String, List<VisitDetail>> map) {
+        this.jsonPayload = jsonPayload;
+    }
+
+    @Override
+    public String getPreProcessed() {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonPayload);
+            JSONArray fields = jsonObject.getJSONObject(Constants.JsonFormConstants.STEP1).getJSONArray(JsonFormConstants.FIELDS);
+
+            IccmMemberObject memberObject = IccmDao.getMember(baseEntityId);
+
+            if (memberObject.getTemperature() > 37.5) {
+                JSONObject medicalHistory = JsonFormUtils.getFieldJSONObject(fields, "medical_history");
+                medicalHistory.getJSONArray(OPTIONS).getJSONObject(0).put(VALUE, true);
+            }
+
+
+            boolean isFemaleOfReproductiveAge = isMemberOfReproductiveAge(getCommonPersonObjectClient(baseEntityId), 10, 49) && org.smartregister.chw.util.Utils.getValue(getCommonPersonObjectClient(baseEntityId).getColumnmaps(), DBConstants.KEY.GENDER, false).equalsIgnoreCase("Female");
+            if (!isFemaleOfReproductiveAge) {
+                JSONObject isTheClientPregnant = JsonFormUtils.getFieldJSONObject(fields, "is_the_client_pregnant");
+                if (isTheClientPregnant != null) {
+                    isTheClientPregnant.put(TYPE, "hidden");
+                }
+            }
+
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public void onPayloadReceived(String jsonPayload) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonPayload);
+            medicalHistory = CoreJsonFormUtils.getValue(jsonObject, "medical_history");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public BaseIccmVisitAction.ScheduleStatus getPreProcessedStatus() {
+        return null;
+    }
+
+    @Override
+    public String getPreProcessedSubTitle() {
+        return null;
+    }
+
+    @Override
+    public String postProcess(String jsonPayload) {
+        JSONObject jsonObject = null;
+        String isMalariaSuspect = "false";
+        String isDiarrheaSuspect;
+        try {
+            jsonObject = new JSONObject(jsonPayload);
+            isMalariaSuspect = CoreJsonFormUtils.getValue(jsonObject, "is_malaria_suspect");
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+
+        if (actionList.containsKey(context.getString(R.string.iccm_physical_examination))) {
+            refreshPhysicalExamination(context, isMalariaSuspect.equalsIgnoreCase("true"));
+        }
+
+        isDiarrheaSuspect = CoreJsonFormUtils.getValue(jsonObject, "is_diarrhea_suspect");
+        if (isDiarrheaSuspect.equalsIgnoreCase("true") && Utils.getAgeFromDate(IccmDao.getMember(baseEntityId).getAge()) < 6) {
+            try {
+                String title = context.getString(R.string.iccm_diarrhea);
+                IccmDiarrheaActionHelper diarrheaActionHelper = new IccmDiarrheaActionHelper(context, baseEntityId, isEdit);
+                BaseIccmVisitAction action = new BaseIccmVisitAction.Builder(context, title).withOptional(false).withHelper(diarrheaActionHelper).withDetails(details).withBaseEntityID(baseEntityId).withFormName(Constants.JsonForm.getIccmDiarrhea()).build();
+                actionList.put(title, action);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        } else {
+            //Removing the malaria actions  the client is not a diarrhea suspect.
+            if (actionList.containsKey(context.getString(R.string.iccm_diarrhea))) {
+                actionList.remove(context.getString(R.string.iccm_diarrhea));
+            }
+        }
+
+        //Calling the callback method to preload the actions in the actionns list.
+        new AppExecutors().mainThread().execute(() -> callBack.preloadActions(actionList));
+
+        if (jsonObject != null) {
+            return jsonObject.toString();
+        }
+        return null;
+    }
+
+
+    private void refreshPhysicalExamination(Context context, boolean isMalariaSuspect) {
+        if (actionList.containsKey(context.getString(R.string.iccm_physical_examination))) {
+            BaseIccmVisitAction physicalExaminationAction = actionList.get(context.getString(R.string.iccm_physical_examination));
+            String physicalExaminationActionJsonPayload = physicalExaminationAction.getJsonPayload();
+
+            JSONObject physicalExaminationActionJsonPayloadObject;
+            try {
+                physicalExaminationActionJsonPayloadObject = new JSONObject(physicalExaminationActionJsonPayload);
+                physicalExaminationActionJsonPayloadObject.getJSONObject("global").put("is_malaria_suspect", isMalariaSuspect);
+                physicalExaminationAction.setJsonPayload(physicalExaminationActionJsonPayloadObject.toString());
+                physicalExaminationAction.evaluateStatus();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public String evaluateSubTitle() {
+        return null;
+    }
+
+    @Override
+    public BaseIccmVisitAction.Status evaluateStatusOnPayload() {
+        if (StringUtils.isBlank(medicalHistory)) return BaseIccmVisitAction.Status.PENDING;
+        else {
+            return BaseIccmVisitAction.Status.COMPLETED;
+        }
+    }
+
+    @Override
+    public void onPayloadReceived(BaseIccmVisitAction baseIccmVisitAction) {
+        //overridden
+    }
+}

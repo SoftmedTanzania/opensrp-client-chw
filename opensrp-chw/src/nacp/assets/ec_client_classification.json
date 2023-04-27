@@ -179,6 +179,13 @@
           },
           {
             "field": "eventType",
+            "field_value": "ICCM Enrollment",
+            "creates_case": [
+              "ec_iccm_enrollment"
+            ]
+          },
+          {
+            "field": "eventType",
             "field_value": "Pregnancy Outcome",
             "closes_case": [
               "ec_anc_register"
