@@ -476,4 +476,8 @@
     <string name="facility_response_label">Majibu Kutoka Kituoni</string>
 
 
+    <!--    ICCM Visit History-->
+    <string name="iccm_visit">Matembeleo ya huduma za iCCM</string>
+
+
 </resources>

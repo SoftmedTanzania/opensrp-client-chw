@@ -41,8 +41,8 @@ condition: "step1_mrdt_results.contains('Positive')"
 actions:
   - "isRelevant = true"
 ---
-name: step1_number_of_tablets_dispensed
-description: number_of_tablets_dispensed relevance
+name: step1_number_of_alu_tablets_dispensed
+description: number_of_alu_tablets_dispensed relevance
 priority: 1
 condition: "step1_mrdt_results.contains('Positive')"
 actions:

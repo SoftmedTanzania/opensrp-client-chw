@@ -109,6 +109,9 @@ public class ChwRepositoryFlv {
                 case 25:
                     upgradeToVersion25(db);
                     break;
+                case 26:
+                    upgradeToVersion26(db);
+                    break;
                 default:
                     break;
             }
@@ -325,8 +328,7 @@ public class ChwRepositoryFlv {
     private static void upgradeToVersion19(SQLiteDatabase db) {
         try {
             RepositoryUtils.addDetailsColumnToFamilySearchTable(db);
-            String addMissingColumnsQuery = "ALTER TABLE ec_family_member\n" +
-                    " ADD COLUMN primary_caregiver_name VARCHAR;\n";
+            String addMissingColumnsQuery = "ALTER TABLE ec_family_member\n" + " ADD COLUMN primary_caregiver_name VARCHAR;\n";
             db.execSQL(addMissingColumnsQuery);
         } catch (Exception e) {
             Timber.e(e, "upgradeToVersion19");
@@ -405,7 +407,23 @@ public class ChwRepositoryFlv {
             db.execSQL("ALTER TABLE ec_cdp_stock_log ADD COLUMN condom_brand TEXT NULL;");
 
         } catch (Exception e) {
-            Timber.e(e, "upgradeToVersion15");
+            Timber.e(e, "upgradeToVersion25");
+        }
+    }
+
+    private static void upgradeToVersion26(SQLiteDatabase db) {
+        // setup reporting
+        ReportingLibrary reportingLibrary = ReportingLibrary.getInstance();
+        String iccmClientReportIndicatorConfigFile = "config/iccm-monthly-report.yml";
+        String iccmDispensingSummaryReportIndicatorConfigFile = "config/iccm-dispensing-monthly-report.yml";
+        for (String configFile : Collections.unmodifiableList(Arrays.asList(iccmClientReportIndicatorConfigFile, iccmDispensingSummaryReportIndicatorConfigFile))) {
+            reportingLibrary.readConfigFile(configFile, db);
+        }
+
+        try {
+            DatabaseMigrationUtils.createAddedECTables(db, new HashSet<>(Arrays.asList("ec_iccm_enrollment", "ec_cdp_outlet_stock_count")), ChwApplication.createCommonFtsObject());
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion26");
         }
     }
 }

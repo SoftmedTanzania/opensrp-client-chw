@@ -175,6 +175,7 @@ public class Constants extends CoreConstants {
            String MOTHER_CHAMPION_REPORT = "mother_champion_report";
            String CONDOM_DISTRIBUTION_REPORT = "condom_distribution_report";
            String AGYW_REPORT = "agyw_report";
+           String ICCM_REPORT = "iccm_report";
         }
 
         public interface CDPReportKeys {
@@ -182,11 +183,18 @@ public class Constants extends CoreConstants {
             String RECEIVING_REPORTS = "receiving_reports";
         }
 
+        public interface ICCMReportKeys {
+            String CLIENTS_MONTHLY_REPORT = "iccm-clients-monthly-report";
+            String DISPENSING_SUMMARY = "iccm-dispensing-summary";
+        }
+
         public interface ReportPaths {
             String CBHS_REPORT_PATH = "cbhs-taarifa-ya-mwezi";
             String MOTHER_CHAMPION_REPORT_PATH = "mother-champion-report";
             String CONDOM_DISTRIBUTION_ISSUING_REPORT_PATH = "condom-distribution-issuing-report";
             String CONDOM_DISTRIBUTION_RECEIVING_REPORT_PATH = "condom-distribution-receiving-report";
+            String ICCM_CLIENTS_REPORT_PATH = "iccm_reports/iccm-clients-monthly-report";
+            String ICCM_DISPENSING_SUMMARY_PATH = "iccm_reports/iccm-dispensing-summary";
         }
     }
 }

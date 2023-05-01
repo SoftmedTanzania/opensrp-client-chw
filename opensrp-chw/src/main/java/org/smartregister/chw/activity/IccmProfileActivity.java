@@ -1,8 +1,8 @@
 package org.smartregister.chw.activity;
 
-import static org.smartregister.chw.anc.AncLibrary.getInstance;
 import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
 import static org.smartregister.chw.malaria.util.Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID;
+import static org.smartregister.chw.malaria.util.Constants.EVENT_TYPE.ICCM_SERVICES_VISIT;
 import static org.smartregister.chw.util.Constants.ICCM_MALARIA_REFERRAL_FORM;
 import static org.smartregister.chw.util.NotificationsUtil.handleNotificationRowClick;
 import static org.smartregister.chw.util.NotificationsUtil.handleReceivedNotifications;
@@ -21,15 +21,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.Gson;
-
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.BuildConfig;
 import org.smartregister.chw.R;
-import org.smartregister.chw.anc.domain.Visit;
-import org.smartregister.chw.anc.util.NCUtils;
 import org.smartregister.chw.application.ChwApplication;
 import org.smartregister.chw.contract.MalariaProfileContract;
 import org.smartregister.chw.core.activity.CoreFamilyProfileActivity;
@@ -43,14 +38,16 @@ import org.smartregister.chw.core.utils.ChwNotificationUtil;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.MalariaVisitUtil;
 import org.smartregister.chw.custom_view.MalariaFloatingMenu;
+import org.smartregister.chw.malaria.MalariaLibrary;
 import org.smartregister.chw.malaria.dao.IccmDao;
 import org.smartregister.chw.malaria.dao.MalariaDao;
+import org.smartregister.chw.malaria.domain.Visit;
+import org.smartregister.chw.malaria.util.VisitUtils;
 import org.smartregister.chw.model.ReferralTypeModel;
 import org.smartregister.chw.presenter.FamilyOtherMemberActivityPresenter;
 import org.smartregister.chw.presenter.IccmProfilePresenter;
 import org.smartregister.chw.util.Constants;
 import org.smartregister.chw.util.Utils;
-import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.AlertStatus;
 import org.smartregister.family.model.BaseFamilyOtherMemberProfileActivityModel;
@@ -98,9 +95,15 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
     @Override
     protected void onResume() {
         super.onResume();
+        refreshMedicalHistory(true);
         notificationListAdapter.canOpen = true;
         ChwNotificationUtil.retrieveNotifications(ChwApplication.getApplicationFlavor().hasReferrals(),
                 baseEntityId, this);
+        try {
+            VisitUtils.processVisits(memberObject.getBaseEntityId());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 
     @Override
@@ -210,17 +213,6 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
         handleNotificationRowClick(this, view, notificationListAdapter, baseEntityId);
     }
 
-    private void saveAncVisit(String eventType) {
-        try {
-            Event event = org.smartregister.chw.anc.util.JsonFormUtils.createUntaggedEvent(memberObject.getBaseEntityId(), eventType, org.smartregister.chw.anc.util.Constants.TABLES.ANC_MEMBERS);
-            Visit visit = NCUtils.eventToVisit(event, org.smartregister.chw.anc.util.JsonFormUtils.generateRandomUUIDString());
-            visit.setPreProcessedJson(new Gson().toJson(event));
-            getInstance().visitRepository().addVisit(visit);
-        } catch (JSONException e) {
-            Timber.e(e);
-        }
-    }
-
     @Override
     public void setProfileDetailThree(String s) {
         //implement
@@ -293,6 +285,30 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
 
     @Override
     public void openFamilyDueServices() {
+    }
+
+    @Override
+    public void openMedicalHistory() {
+        IccmMedicalHistoryActivity.startMe(this, IccmDao.getMember(baseEntityId));
+    }
+
+    @Override
+    public void refreshMedicalHistory(boolean hasHistory) {
+        showProgressBar(false);
+        Visit lastIccmVisit = getVisit(ICCM_SERVICES_VISIT);
+
+        if (lastIccmVisit != null) {
+            rlLastVisit.setVisibility(View.VISIBLE);
+            findViewById(R.id.view_notification_and_referral_row).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.vViewHistory)).setText(R.string.visits_history_profile_title);
+            ((TextView) findViewById(R.id.ivViewHistoryArrow)).setText(getString(R.string.view_visits_history));
+        } else {
+            rlLastVisit.setVisibility(View.GONE);
+        }
+    }
+
+    private org.smartregister.chw.malaria.domain.Visit getVisit(String eventType) {
+        return MalariaLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
     }
 
     @Override

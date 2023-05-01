@@ -49,6 +49,18 @@ public class ChwWebAppInterface {
                     return "";
             }
         }
+        if (reportType.equalsIgnoreCase(Constants.ReportConstants.ReportTypes.ICCM_REPORT)){
+            switch (key) {
+                case Constants.ReportConstants.ICCMReportKeys.CLIENTS_MONTHLY_REPORT:
+                    ReportUtils.setPrintJobName("ICCM_clients_report_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
+                    return ReportUtils.ICCMReports.computeClientsReports(ReportUtils.getReportDate());
+                case Constants.ReportConstants.ICCMReportKeys.DISPENSING_SUMMARY:
+                    ReportUtils.setPrintJobName("ICCM_dispensing_summary_ya_mwezi-" + ReportUtils.getReportPeriod() + ".pdf");
+                    return ReportUtils.ICCMReports.computeDispensingSummaryReports(ReportUtils.getReportDate());
+                default:
+                    return "";
+            }
+        }
         return "";
     }
 

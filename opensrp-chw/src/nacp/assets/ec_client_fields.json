@@ -1272,6 +1272,78 @@
           }
         },
         {
+          "column_name": "mrdt_results",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "mrdt_results"
+          }
+        },
+        {
+          "column_name": "dispensed_alu_category",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "dispensed_alu_category"
+          }
+        },
+        {
+          "column_name": "number_of_alu_tablets_dispensed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "number_of_alu_tablets_dispensed"
+          }
+        },
+        {
+          "column_name": "pneumonia_signs",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "pneumonia_signs"
+          }
+        },
+        {
+          "column_name": "number_of_amoxicillin_tablets_dispensed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "number_of_amoxicillin_tablets_dispensed"
+          }
+        },
+        {
+          "column_name": "diarrhea_signs",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "diarrhea_signs"
+          }
+        },
+        {
+          "column_name": "number_of_ors_sachets_dispensed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "number_of_ors_sachets_dispensed"
+          }
+        },
+        {
+          "column_name": "number_of_zinc_tablets_dispensed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "number_of_zinc_tablets_dispensed"
+          }
+        },
+        {
+          "column_name": "number_of_zinc_ors_co_packs_dispensed",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "number_of_zinc_ors_co_packs_dispensed"
+          }
+        },
+        {
           "column_name": "last_interacted_with",
           "type": "Event",
           "json_mapping": {

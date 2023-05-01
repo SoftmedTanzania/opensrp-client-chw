@@ -150,6 +150,24 @@
               }
             },
             {
+              "name": "sever_pneumonia",
+              "text": "Severe Pneumonia",
+              "meta_data": {
+                "openmrs_entity": "",
+                "openmrs_entity_id": "sever_pneumonia",
+                "openmrs_entity_parent": ""
+              }
+            },
+            {
+              "name": "diarrhea_with_signs_of_dehydration",
+              "text": "Diarrhea with signs of dehydration",
+              "meta_data": {
+                "openmrs_entity": "",
+                "openmrs_entity_id": "diarrhea_with_signs_of_dehydration",
+                "openmrs_entity_parent": ""
+              }
+            },
+            {
               "name": "pregnant_client",
               "text": "Pregnant Client",
               "meta_data": {
