@@ -1,5 +1,6 @@
 package org.smartregister.chw.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -17,12 +18,11 @@ import org.smartregister.chw.R;
 import org.smartregister.chw.anc.domain.Visit;
 import org.smartregister.chw.anc.domain.VisitDetail;
 import org.smartregister.chw.core.activity.DefaultAncMedicalHistoryActivityFlv;
-import org.smartregister.chw.util.Constants;
+import org.smartregister.chw.malaria.util.Constants;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +59,7 @@ public class IccmMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
                 if (x == 0) {
                     days = Days.daysBetween(new DateTime(visits.get(visits.size() - 1).getDate()), new DateTime()).getDays();
                 }
-                String[] visitParams = {"is_the_client_pregnant", "medical_history", "other_medical_history", "physical_examination", "interpretation_for_mrdt", "interpretation_for_mrdt_two", "mrdt_results", "dispensed_alu_category", "number_of_alu_tablets_dispensed", "diarrhea_signs", "diarrhea_medication_dispensed", "diarrhea_medication_dispensed_for_referred_clients",
-                        "number_of_ors_sachets_dispensed","number_of_zinc_tablets_dispensed","number_of_zinc_ors_co_packs_dispensed","reasons_for_not_dispensing_diarrhea_medication","other_reasons_for_not_dispensing_diarrhea_medication"};
+                String[] visitParams = {"is_the_client_pregnant", "medical_history", "other_medical_history", "physical_examination", "interpretation_for_mrdt", "interpretation_for_mrdt_two", "mrdt_results", "dispensed_alu_category", "number_of_alu_tablets_dispensed", "diarrhea_signs", "diarrhea_medication_dispensed", "diarrhea_medication_dispensed_for_referred_clients", "number_of_ors_sachets_dispensed", "number_of_zinc_tablets_dispensed", "number_of_zinc_ors_co_packs_dispensed", "reasons_for_not_dispensing_diarrhea_medication", "other_reasons_for_not_dispensing_diarrhea_medication"};
                 extractVisitDetails(visits, visitParams, hf_visits, x, context);
 
                 x++;
@@ -107,6 +106,7 @@ public class IccmMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
                 TextView tvTitle = view.findViewById(R.id.title);
                 TextView tvTypeOfService = view.findViewById(R.id.type_of_service);
                 LinearLayout visitDetailsLayout = view.findViewById(R.id.visit_details_layout);
+                TextView tvEdit = view.findViewById(R.id.textview_edit);
 
                 evaluateTitle(context, x, vals, tvTitle);
 
@@ -114,11 +114,21 @@ public class IccmMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
 
                 tvTypeOfService.setText(visitType + " - " + simpleDateFormat.format(visits.get(x).getDate()));
 
+                // Updating visibility of EDIT button if the visit is the last visit
+                if (x == visits.size() - 1) tvEdit.setVisibility(View.VISIBLE);
+                else tvEdit.setVisibility(View.GONE);
+
+                tvEdit.setOnClickListener(view1 -> {
+                    ((Activity) context).finish();
+                    Visit visit = visits.get(0);
+                    if (visit != null && visit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.ICCM_SERVICES_VISIT) && visit.getBaseEntityId() != null)
+                        IccmServicesActivity.startIccmServicesActivity((Activity) context, visit.getBaseEntityId(), true);
+                });
+
 
                 for (Map.Entry<String, String> entry : vals.entrySet()) {
                     TextView visitDetailTv = new TextView(context);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
-                            ((int) LinearLayout.LayoutParams.MATCH_PARENT, (int) LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) LinearLayout.LayoutParams.MATCH_PARENT, (int) LinearLayout.LayoutParams.WRAP_CONTENT);
 
                     visitDetailTv.setLayoutParams(params);
                     float scale = context.getResources().getDisplayMetrics().density;
@@ -186,11 +196,9 @@ public class IccmMedicalHistoryActivityFlv extends DefaultAncMedicalHistoryActiv
 
     private String getStringResource(Context context, String prefix, String resourceName) {
         try {
-            int resourceId = context.getResources().
-                    getIdentifier(prefix + resourceName.trim(), "string", context.getPackageName());
+            int resourceId = context.getResources().getIdentifier(prefix + resourceName.trim(), "string", context.getPackageName());
             return context.getString(resourceId);
         } catch (Exception e) {
-            Timber.e(e);
             return prefix + resourceName;
         }
     }

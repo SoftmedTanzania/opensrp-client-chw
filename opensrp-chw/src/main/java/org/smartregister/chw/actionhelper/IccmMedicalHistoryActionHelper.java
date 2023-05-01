@@ -22,10 +22,12 @@ import org.smartregister.chw.malaria.domain.VisitDetail;
 import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
 import org.smartregister.chw.referral.util.JsonFormConstants;
 import org.smartregister.chw.util.Constants;
+import org.smartregister.chw.util.IccmVisitUtils;
 import org.smartregister.chw.util.Utils;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.util.JsonFormUtils;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,7 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
 
     private final boolean isEdit;
     private final Map<String, List<VisitDetail>> details;
+    private final HashMap<String, Boolean> checkObject = new HashMap<>();
 
     public IccmMedicalHistoryActionHelper(Context context, String baseEntityId, LinkedHashMap<String, BaseIccmVisitAction> actionList, Map<String, List<VisitDetail>> details, BaseIccmVisitContract.InteractorCallBack callBack, boolean isEdit) {
         this.context = context;
@@ -91,8 +94,10 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
     @Override
     public void onPayloadReceived(String jsonPayload) {
         try {
+            checkObject.clear();
             JSONObject jsonObject = new JSONObject(jsonPayload);
             medicalHistory = CoreJsonFormUtils.getValue(jsonObject, "medical_history");
+            checkObject.put("medical_history", StringUtils.isNotBlank(medicalHistory));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -115,6 +120,11 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
         String isDiarrheaSuspect;
         try {
             jsonObject = new JSONObject(jsonPayload);
+            JSONArray fields = org.smartregister.family.util.JsonFormUtils.fields(jsonObject);
+
+            JSONObject medicalHistoryCompletionStatus = org.smartregister.family.util.JsonFormUtils.getFieldJSONObject(fields, "medical_history_completion_status");
+            assert medicalHistoryCompletionStatus != null;
+            medicalHistoryCompletionStatus.put(JsonFormConstants.VALUE, IccmVisitUtils.getActionStatus(checkObject));
             isMalariaSuspect = CoreJsonFormUtils.getValue(jsonObject, "is_malaria_suspect");
         } catch (JSONException e) {
             Timber.e(e);
@@ -129,16 +139,14 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
             try {
                 String title = context.getString(R.string.iccm_diarrhea);
                 IccmDiarrheaActionHelper diarrheaActionHelper = new IccmDiarrheaActionHelper(context, baseEntityId, isEdit);
-                BaseIccmVisitAction action = new BaseIccmVisitAction.Builder(context, title).withOptional(false).withHelper(diarrheaActionHelper).withDetails(details).withBaseEntityID(baseEntityId).withFormName(Constants.JsonForm.getIccmDiarrhea()).build();
+                BaseIccmVisitAction action = new BaseIccmVisitAction.Builder(context, title).withOptional(true).withHelper(diarrheaActionHelper).withDetails(details).withBaseEntityID(baseEntityId).withFormName(Constants.JsonForm.getIccmDiarrhea()).build();
                 actionList.put(title, action);
             } catch (Exception e) {
                 Timber.e(e);
             }
         } else {
             //Removing the malaria actions  the client is not a diarrhea suspect.
-            if (actionList.containsKey(context.getString(R.string.iccm_diarrhea))) {
-                actionList.remove(context.getString(R.string.iccm_diarrhea));
-            }
+            actionList.remove(context.getString(R.string.iccm_diarrhea));
         }
 
         //Calling the callback method to preload the actions in the actionns list.
@@ -175,10 +183,14 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
 
     @Override
     public BaseIccmVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isBlank(medicalHistory)) return BaseIccmVisitAction.Status.PENDING;
-        else {
+        String status = IccmVisitUtils.getActionStatus(checkObject);
+        if (status.equalsIgnoreCase(IccmVisitUtils.Complete)) {
             return BaseIccmVisitAction.Status.COMPLETED;
         }
+        if (status.equalsIgnoreCase(IccmVisitUtils.Ongoing)) {
+            return BaseIccmVisitAction.Status.PARTIALLY_COMPLETED;
+        }
+        return BaseIccmVisitAction.Status.PENDING;
     }
 
     @Override

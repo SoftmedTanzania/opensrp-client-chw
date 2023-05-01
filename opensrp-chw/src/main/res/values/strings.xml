@@ -475,4 +475,5 @@
     <string name="iccm_number_of_zinc_ors_co_packs_dispensed">Number of Zinc-ORS Co-packs Dispensed</string>
     <string name="iccm_reasons_for_not_dispensing_diarrhea_medication">Reasons for not dispensing Diarrhea Medication</string>
     <string name="iccm_other_reasons_for_not_dispensing_diarrhea_medication">Other reasons for not dispensing Diarrhea Medication</string>
+    <string name="visit_in_progress">%s visit still in progress</string>
 </resources>

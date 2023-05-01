@@ -22,6 +22,7 @@ import org.smartregister.chw.core.activity.CoreMalariaRegisterActivity;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.FormUtils;
 import org.smartregister.chw.fragment.IccmRegisterFragment;
+import org.smartregister.chw.util.IccmVisitUtils;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.DBConstants;
@@ -166,5 +167,15 @@ public class IccmRegisterActivity extends CoreMalariaRegisterActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            IccmVisitUtils.processVisits();
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 }

@@ -3,13 +3,16 @@ package org.smartregister.chw.actionhelper;
 import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.malaria.domain.VisitDetail;
 import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
+import org.smartregister.chw.referral.util.JsonFormConstants;
+import org.smartregister.chw.util.IccmVisitUtils;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +26,8 @@ public class IccmPneumoniaActionHelper implements BaseIccmVisitAction.IccmVisitA
     private String pneumoniaSigns;
 
     private boolean isEdit;
+
+    private final HashMap<String, Boolean> checkObject = new HashMap<>();
 
     public IccmPneumoniaActionHelper(Context context, String baseEntityId, boolean isEdit) {
         this.context = context;
@@ -50,7 +55,10 @@ public class IccmPneumoniaActionHelper implements BaseIccmVisitAction.IccmVisitA
     @Override
     public void onPayloadReceived(String jsonPayload) {
         try {
+            checkObject.clear();
             JSONObject jsonObject = new JSONObject(jsonPayload);
+            pneumoniaSigns = CoreJsonFormUtils.getValue(jsonObject, "pneumonia_signs");
+            checkObject.put("pneumonia_signs", StringUtils.isNotBlank(pneumoniaSigns));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,10 +76,21 @@ public class IccmPneumoniaActionHelper implements BaseIccmVisitAction.IccmVisitA
 
     @Override
     public String postProcess(String jsonPayload) {
+        JSONObject jsonObject = null;
         try {
-            pneumoniaSigns = CoreJsonFormUtils.getValue(new JSONObject(jsonPayload), "pneumonia_signs");
+            jsonObject = new JSONObject(jsonPayload);
+            JSONArray fields = org.smartregister.family.util.JsonFormUtils.fields(jsonObject);
+
+            JSONObject pneumoniaCompletionStatus = org.smartregister.family.util.JsonFormUtils.getFieldJSONObject(fields, "pneumonia_completion_status");
+            assert pneumoniaCompletionStatus != null;
+            pneumoniaCompletionStatus.put(JsonFormConstants.VALUE, IccmVisitUtils.getActionStatus(checkObject));
+
         } catch (Exception e) {
             Timber.e(e);
+        }
+
+        if (jsonObject != null) {
+            return jsonObject.toString();
         }
         return null;
     }
@@ -83,11 +102,14 @@ public class IccmPneumoniaActionHelper implements BaseIccmVisitAction.IccmVisitA
 
     @Override
     public BaseIccmVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isBlank(pneumoniaSigns))
-            return BaseIccmVisitAction.Status.PENDING;
-        else {
+        String status = IccmVisitUtils.getActionStatus(checkObject);
+        if (status.equalsIgnoreCase(IccmVisitUtils.Complete)) {
             return BaseIccmVisitAction.Status.COMPLETED;
         }
+        if (status.equalsIgnoreCase(IccmVisitUtils.Ongoing)) {
+            return BaseIccmVisitAction.Status.PARTIALLY_COMPLETED;
+        }
+        return BaseIccmVisitAction.Status.PENDING;
     }
 
     @Override

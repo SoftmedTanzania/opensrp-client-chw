@@ -3,6 +3,7 @@ package org.smartregister.chw.actionhelper;
 import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.R;
@@ -11,8 +12,11 @@ import org.smartregister.chw.ld.util.AppExecutors;
 import org.smartregister.chw.malaria.contract.BaseIccmVisitContract;
 import org.smartregister.chw.malaria.domain.VisitDetail;
 import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
+import org.smartregister.chw.referral.util.JsonFormConstants;
 import org.smartregister.chw.util.Constants;
+import org.smartregister.chw.util.IccmVisitUtils;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +34,9 @@ public class IccmPhysicalExaminationActionHelper implements BaseIccmVisitAction.
 
     private final boolean isEdit;
     private final Map<String, List<VisitDetail>> details;
+    private final HashMap<String, Boolean> checkObject = new HashMap<>();
 
-    public IccmPhysicalExaminationActionHelper(Context context, String baseEntityId, LinkedHashMap<String, BaseIccmVisitAction> actionList,  Map<String, List<VisitDetail>> details,BaseIccmVisitContract.InteractorCallBack callBack, boolean isEdit) {
+    public IccmPhysicalExaminationActionHelper(Context context, String baseEntityId, LinkedHashMap<String, BaseIccmVisitAction> actionList, Map<String, List<VisitDetail>> details, BaseIccmVisitContract.InteractorCallBack callBack, boolean isEdit) {
         this.context = context;
         this.baseEntityId = baseEntityId;
         this.actionList = actionList;
@@ -60,8 +65,10 @@ public class IccmPhysicalExaminationActionHelper implements BaseIccmVisitAction.
     @Override
     public void onPayloadReceived(String jsonPayload) {
         try {
+            checkObject.clear();
             JSONObject jsonObject = new JSONObject(jsonPayload);
             physicalExamination = CoreJsonFormUtils.getValue(jsonObject, "physical_examination");
+            checkObject.put("physical_examination", StringUtils.isNotBlank(physicalExamination));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,7 +90,13 @@ public class IccmPhysicalExaminationActionHelper implements BaseIccmVisitAction.
         String isMalariaSuspect = "false";
         try {
             jsonObject = new JSONObject(jsonPayload);
-            isMalariaSuspect = CoreJsonFormUtils.getValue(jsonObject, "is_malaria_suspect");
+            JSONArray fields = org.smartregister.family.util.JsonFormUtils.fields(jsonObject);
+
+            JSONObject physicalExaminationCompletionStatus = org.smartregister.family.util.JsonFormUtils.getFieldJSONObject(fields, "physical_examination_completion_status");
+            assert physicalExaminationCompletionStatus != null;
+            physicalExaminationCompletionStatus.put(JsonFormConstants.VALUE, IccmVisitUtils.getActionStatus(checkObject));
+
+            isMalariaSuspect = CoreJsonFormUtils.getValue(jsonObject, "is_malaria_suspect_after_physical_examination");
         } catch (JSONException e) {
             Timber.e(e);
         }
@@ -91,8 +104,8 @@ public class IccmPhysicalExaminationActionHelper implements BaseIccmVisitAction.
         if (isMalariaSuspect.equalsIgnoreCase("true")) {
             try {
                 String title = context.getString(R.string.iccm_malaria);
-                IccmMalariaActionHelper actionHelper = new IccmMalariaActionHelper(context, baseEntityId, actionList, isEdit);
-                BaseIccmVisitAction action = new BaseIccmVisitAction.Builder(context, title).withOptional(false).withHelper(actionHelper).withDetails(details).withBaseEntityID(baseEntityId).withFormName(Constants.JsonForm.getIccmMalaria()).build();
+                IccmMalariaActionHelper actionHelper = new IccmMalariaActionHelper(context, baseEntityId, isEdit);
+                BaseIccmVisitAction action = new BaseIccmVisitAction.Builder(context, title).withOptional(true).withHelper(actionHelper).withDetails(details).withBaseEntityID(baseEntityId).withFormName(Constants.JsonForm.getIccmMalaria()).build();
                 actionList.put(title, action);
             } catch (Exception e) {
                 Timber.e(e);
@@ -107,6 +120,9 @@ public class IccmPhysicalExaminationActionHelper implements BaseIccmVisitAction.
         //Calling the callback method to preload the actions in the actionns list.
         new AppExecutors().mainThread().execute(() -> callBack.preloadActions(actionList));
 
+        if (jsonObject != null) {
+            return jsonObject.toString();
+        }
         return null;
     }
 
@@ -117,11 +133,14 @@ public class IccmPhysicalExaminationActionHelper implements BaseIccmVisitAction.
 
     @Override
     public BaseIccmVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isBlank(physicalExamination))
-            return BaseIccmVisitAction.Status.PENDING;
-        else {
+        String status = IccmVisitUtils.getActionStatus(checkObject);
+        if (status.equalsIgnoreCase(IccmVisitUtils.Complete)) {
             return BaseIccmVisitAction.Status.COMPLETED;
         }
+        if (status.equalsIgnoreCase(IccmVisitUtils.Ongoing)) {
+            return BaseIccmVisitAction.Status.PARTIALLY_COMPLETED;
+        }
+        return BaseIccmVisitAction.Status.PENDING;
     }
 
     @Override

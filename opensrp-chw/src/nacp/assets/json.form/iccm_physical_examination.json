@@ -105,9 +105,9 @@
         }
       },
       {
-        "key": "is_malaria_suspect",
+        "key": "is_malaria_suspect_after_physical_examination",
         "type": "hidden",
-        "openmrs_entity_id": "is_malaria_suspect",
+        "openmrs_entity_id": "is_malaria_suspect_after_physical_examination",
         "openmrs_entity": "concept",
         "openmrs_entity_parent": "",
         "calculation": {
@@ -117,6 +117,14 @@
             }
           }
         }
+      },
+      {
+        "key": "physical_examination_completion_status",
+        "type": "hidden",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "physical_examination_completion_status",
+        "openmrs_entity_parent": "",
+        "value": "pending"
       }
     ]
   }

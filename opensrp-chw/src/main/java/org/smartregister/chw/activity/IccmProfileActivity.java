@@ -7,6 +7,7 @@ import static org.smartregister.chw.util.Constants.ICCM_MALARIA_REFERRAL_FORM;
 import static org.smartregister.chw.util.NotificationsUtil.handleNotificationRowClick;
 import static org.smartregister.chw.util.NotificationsUtil.handleReceivedNotifications;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,11 +18,14 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.json.JSONObject;
 import org.smartregister.chw.BuildConfig;
 import org.smartregister.chw.R;
@@ -38,15 +42,17 @@ import org.smartregister.chw.core.utils.ChwNotificationUtil;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.MalariaVisitUtil;
 import org.smartregister.chw.custom_view.MalariaFloatingMenu;
+import org.smartregister.chw.kvp.util.TimeUtils;
 import org.smartregister.chw.malaria.MalariaLibrary;
 import org.smartregister.chw.malaria.dao.IccmDao;
 import org.smartregister.chw.malaria.dao.MalariaDao;
 import org.smartregister.chw.malaria.domain.Visit;
-import org.smartregister.chw.malaria.util.VisitUtils;
+import org.smartregister.chw.malaria.util.MalariaUtil;
 import org.smartregister.chw.model.ReferralTypeModel;
 import org.smartregister.chw.presenter.FamilyOtherMemberActivityPresenter;
 import org.smartregister.chw.presenter.IccmProfilePresenter;
 import org.smartregister.chw.util.Constants;
+import org.smartregister.chw.util.IccmVisitUtils;
 import org.smartregister.chw.util.Utils;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.AlertStatus;
@@ -65,6 +71,7 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
     private List<ReferralTypeModel> referralTypeModels = new ArrayList<>();
     private FormUtils formUtils;
     private NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
+    private RelativeLayout processVisitLayout;
 
     private List<ReferralTypeModel> getReferralTypeModels() {
         return referralTypeModels;
@@ -95,15 +102,10 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
     @Override
     protected void onResume() {
         super.onResume();
+        setupViews();
         refreshMedicalHistory(true);
         notificationListAdapter.canOpen = true;
-        ChwNotificationUtil.retrieveNotifications(ChwApplication.getApplicationFlavor().hasReferrals(),
-                baseEntityId, this);
-        try {
-            VisitUtils.processVisits(memberObject.getBaseEntityId());
-        } catch (Exception e) {
-            Timber.e(e);
-        }
+        ChwNotificationUtil.retrieveNotifications(ChwApplication.getApplicationFlavor().hasReferrals(), baseEntityId, this);
     }
 
     @Override
@@ -119,31 +121,13 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
     @Override
     protected void onCreation() {
         super.onCreation();
-        org.smartregister.util.Utils.startAsyncTask(new UpdateVisitDueTask(), null);
-        this.setOnMemberTypeLoadedListener(memberType -> {
-            switch (memberType.getMemberType()) {
-                case CoreConstants.TABLE_NAME.ANC_MEMBER:
-                    AncMedicalHistoryActivity.startMe(IccmProfileActivity.this, memberType.getMemberObject());
-                    break;
-                case CoreConstants.TABLE_NAME.PNC_MEMBER:
-                    PncMedicalHistoryActivity.startMe(IccmProfileActivity.this, memberType.getMemberObject());
-                    break;
-                case CoreConstants.TABLE_NAME.CHILD:
-                    ChildMedicalHistoryActivity.startMe(IccmProfileActivity.this, memberType.getMemberObject());
-                    break;
-                default:
-                    Timber.v("Member info undefined");
-                    break;
-            }
-        });
         if (((ChwApplication) ChwApplication.getInstance()).hasReferrals()) {
             addIccmReferralTypes();
         }
     }
 
     private void addIccmReferralTypes() {
-        getReferralTypeModels().add(
-                new ReferralTypeModel(getString(R.string.suspected_malaria), ICCM_MALARIA_REFERRAL_FORM, CoreConstants.TASKS_FOCUS.SUSPECTED_MALARIA));
+        getReferralTypeModels().add(new ReferralTypeModel(getString(R.string.suspected_malaria), ICCM_MALARIA_REFERRAL_FORM, CoreConstants.TASKS_FOCUS.SUSPECTED_MALARIA));
     }
 
     @Override
@@ -172,8 +156,7 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
                 onBackPressed();
                 return true;
             case R.id.action_registration:
-                startFormForEdit(R.string.registration_info,
-                        Constants.JSON_FORM.FAMILY_MEMBER_REGISTER);
+                startFormForEdit(R.string.registration_info, Constants.JSON_FORM.FAMILY_MEMBER_REGISTER);
                 return true;
             case R.id.action_remove_member:
                 IndividualProfileRemoveActivity.startIndividualProfileActivity(IccmProfileActivity.this, getClientDetailsByBaseEntityID(memberObject.getBaseEntityId()), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyHead(), memberObject.getPrimaryCareGiver(), MalariaRegisterActivity.class.getCanonicalName());
@@ -192,10 +175,7 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
 
     @Override
     protected void removeMember() {
-        IndividualProfileRemoveActivity.startIndividualProfileActivity(this,
-                getClientDetailsByBaseEntityID(memberObject.getBaseEntityId()),
-                memberObject.getFamilyBaseEntityId(), memberObject.getFamilyHead(),
-                memberObject.getPrimaryCareGiver(), FpRegisterActivity.class.getCanonicalName());
+        IndividualProfileRemoveActivity.startIndividualProfileActivity(this, getClientDetailsByBaseEntityID(memberObject.getBaseEntityId()), memberObject.getFamilyBaseEntityId(), memberObject.getFamilyHead(), memberObject.getPrimaryCareGiver(), FpRegisterActivity.class.getCanonicalName());
     }
 
     @Override
@@ -209,6 +189,10 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
         int id = view.getId();
         if (id == R.id.textview_record_malaria) {
             IccmServicesActivity.startIccmServicesActivity(this, memberObject.getBaseEntityId(), false);
+        } else if (id == R.id.textview_edit || id == R.id.textview_undo) {
+            Visit lastVisit = getVisit(ICCM_SERVICES_VISIT);
+            if (lastVisit != null)
+                IccmServicesActivity.startIccmServicesActivity(this, memberObject.getBaseEntityId(), true);
         }
         handleNotificationRowClick(this, view, notificationListAdapter, baseEntityId);
     }
@@ -235,14 +219,9 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
         CommonPersonObjectClient client = org.smartregister.chw.core.utils.Utils.clientForEdit(memberObject.getBaseEntityId());
 
         if (formName.equals(Constants.JSON_FORM.getFamilyMemberRegister())) {
-            form = org.smartregister.chw.util.JsonFormUtils.getAutoPopulatedJsonEditMemberFormString(
-                    (title_resource != null) ? getResources().getString(title_resource) : null,
-                    Constants.JSON_FORM.getFamilyMemberRegister(),
-                    this, client,
-                    Utils.metadata().familyMemberRegister.updateEventType, memberObject.getLastName(), false);
+            form = org.smartregister.chw.util.JsonFormUtils.getAutoPopulatedJsonEditMemberFormString((title_resource != null) ? getResources().getString(title_resource) : null, Constants.JSON_FORM.getFamilyMemberRegister(), this, client, Utils.metadata().familyMemberRegister.updateEventType, memberObject.getLastName(), false);
         } else if (formName.equals(Constants.JSON_FORM.getAncRegistration())) {
-            form = org.smartregister.chw.util.JsonFormUtils.getAutoJsonEditAncFormString(
-                    memberObject.getBaseEntityId(), this, formName, Constants.EventType.UPDATE_ANC_REGISTRATION, getResources().getString(title_resource));
+            form = org.smartregister.chw.util.JsonFormUtils.getAutoJsonEditAncFormString(memberObject.getBaseEntityId(), this, formName, Constants.EventType.UPDATE_ANC_REGISTRATION, getResources().getString(title_resource));
         }
 
         try {
@@ -296,7 +275,6 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
     public void refreshMedicalHistory(boolean hasHistory) {
         showProgressBar(false);
         Visit lastIccmVisit = getVisit(ICCM_SERVICES_VISIT);
-
         if (lastIccmVisit != null) {
             rlLastVisit.setVisibility(View.VISIBLE);
             findViewById(R.id.view_notification_and_referral_row).setVisibility(View.VISIBLE);
@@ -356,8 +334,7 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
 
         ((CoreMalariaFloatingMenu) baseMalariaFloatingMenu).setFloatMenuClickListener(onClickFloatingMenu);
         baseMalariaFloatingMenu.setGravity(Gravity.BOTTOM | Gravity.END);
-        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(baseMalariaFloatingMenu, linearLayoutParams);
     }
 
@@ -388,6 +365,12 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
         super.setupViews();
         ((TextView) findViewById(R.id.toolbar_title)).setText(R.string.return_to_previous_iccm_page);
         textViewRecordMalaria.setText(R.string.record_iccm_services);
+
+        Visit lastIccmVisit = getVisit(ICCM_SERVICES_VISIT);
+        if (lastIccmVisit != null) {
+            checkVisitStatus(lastIccmVisit);
+        }
+
     }
 
     @Override
@@ -395,5 +378,56 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
         super.setProfileViewWithData();
         findViewById(R.id.family_malaria_head).setVisibility(View.GONE);
         findViewById(R.id.primary_malaria_caregiver).setVisibility(View.GONE);
+
+        String clientAge = (org.smartregister.chw.core.utils.Utils.getTranslatedDate(org.smartregister.chw.core.utils.Utils.getDuration(memberObject.getAge()), getBaseContext()));
+        textViewName.setText(String.format("%s %s %s, %s", memberObject.getFirstName(),
+                memberObject.getMiddleName(), memberObject.getLastName(), clientAge));
+    }
+
+    private void checkVisitStatus(Visit visit) {
+        processVisitLayout = findViewById(R.id.rlProcessVisitBtn);
+        processVisitLayout.setVisibility(View.GONE);
+        boolean visitDone = visit.getProcessed();
+        boolean formsCompleted = IccmVisitUtils.isIccmVisitComplete(visit);
+        if (!visitDone) {
+            showVisitInProgress();
+            if (formsCompleted) {
+                showCompleteVisit(visit);
+            }
+        } else {
+            Date updatedAtDate = new Date(visit.getDate().getTime());
+            int daysDiff = TimeUtils.getElapsedDays(updatedAtDate);
+            if (daysDiff <= 1) {
+                hideView();
+            }
+            textViewVisitDoneEdit.setVisibility(View.GONE);
+            visitStatus.setVisibility(View.GONE);
+        }
+    }
+
+    private void showVisitInProgress() {
+        textViewRecordMalaria.setVisibility(View.GONE);
+        textViewVisitDoneEdit.setVisibility(View.VISIBLE);
+        visitStatus.setVisibility(View.VISIBLE);
+        textviewNotVisitThisMonth.setText(getContext().getString(R.string.visit_in_progress, "iCCM"));
+        imageViewCross.setImageResource(R.drawable.activityrow_visit_in_progress);
+    }
+
+
+    private void showCompleteVisit(Visit visit) {
+        TextView processVisitBtn = findViewById(R.id.textview_process_visit);
+        processVisitBtn.setOnClickListener(v -> {
+            try {
+                IccmVisitUtils.manualProcessVisit(visit);
+                if (!memberObject.getBaseEntityId().isEmpty()) {
+                    memberObject = IccmDao.getMember(baseEntityId);
+                }
+                //reload views after visit is processed
+                setupViews();
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        });
+        processVisitLayout.setVisibility(View.VISIBLE);
     }
 }

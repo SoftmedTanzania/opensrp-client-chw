@@ -20,8 +20,8 @@ import org.smartregister.chw.malaria.domain.Visit;
 import org.smartregister.chw.malaria.domain.VisitDetail;
 import org.smartregister.chw.malaria.interactor.BaseIccmVisitInteractor;
 import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
-import org.smartregister.chw.malaria.util.VisitUtils;
 import org.smartregister.chw.util.Constants;
+import org.smartregister.chw.util.IccmVisitUtils;
 import org.smartregister.family.util.Utils;
 import org.smartregister.immunization.ImmunizationLibrary;
 import org.smartregister.repository.AllSharedPreferences;
@@ -61,21 +61,21 @@ public class IccmServicesActivityInteractor extends BaseIccmVisitInteractor {
             Visit lastVisit = MalariaLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), ICCM_SERVICES_VISIT);
 
             if (lastVisit != null) {
-                details = VisitUtils.getVisitGroups(MalariaLibrary.getInstance().visitDetailsRepository().getVisits(lastVisit.getVisitId()));
+                details = IccmVisitUtils.getVisitGroups(MalariaLibrary.getInstance().visitDetailsRepository().getVisits(lastVisit.getVisitId()));
             }
         }
 
         final Runnable runnable = () -> {
             // update the local database incase of manual date adjustment
             try {
-                VisitUtils.processVisits(memberObject.getBaseEntityId());
+                IccmVisitUtils.processVisits(memberObject.getBaseEntityId());
             } catch (Exception e) {
                 Timber.e(e);
             }
 
             try {
-                evaluateMedicalHistory(callBack);
                 evaluatePhysicalExamination(callBack);
+                evaluateMedicalHistory(callBack);
                 if (getAgeFromDate(IccmDao.getMember(memberObject.getBaseEntityId()).getAge()) < 6) {
                     evaluatePneumonia();
                 }
@@ -94,14 +94,13 @@ public class IccmServicesActivityInteractor extends BaseIccmVisitInteractor {
         String title = context.getString(R.string.iccm_medical_history);
         IccmMedicalHistoryActionHelper actionHelper = new IccmMedicalHistoryActionHelper(context, memberObject.getBaseEntityId(), actionList, details, callBack, isEdit);
         BaseIccmVisitAction action = getBuilder(title).withOptional(false).withHelper(actionHelper).withDetails(details).withBaseEntityID(memberObject.getBaseEntityId()).withFormName(Constants.JsonForm.getIccmMedicalHistory()).build();
-
         actionList.put(title, action);
     }
 
     private void evaluatePhysicalExamination(BaseIccmVisitContract.InteractorCallBack callBack) throws BaseIccmVisitAction.ValidationException {
         String title = context.getString(R.string.iccm_physical_examination);
         IccmPhysicalExaminationActionHelper actionHelper = new IccmPhysicalExaminationActionHelper(context, memberObject.getBaseEntityId(), actionList, details, callBack, isEdit);
-        BaseIccmVisitAction action = getBuilder(title).withOptional(false).withHelper(actionHelper).withDetails(details).withBaseEntityID(memberObject.getBaseEntityId()).withFormName(Constants.JsonForm.getIccmPhysicalExamination()).build();
+        BaseIccmVisitAction action = getBuilder(title).withOptional(true).withHelper(actionHelper).withDetails(details).withBaseEntityID(memberObject.getBaseEntityId()).withFormName(Constants.JsonForm.getIccmPhysicalExamination()).build();
 
         actionList.put(title, action);
     }
@@ -109,7 +108,7 @@ public class IccmServicesActivityInteractor extends BaseIccmVisitInteractor {
     private void evaluatePneumonia() throws BaseIccmVisitAction.ValidationException {
         String title = context.getString(R.string.iccm_pneumonia);
         IccmPneumoniaActionHelper actionHelper = new IccmPneumoniaActionHelper(context, memberObject.getBaseEntityId(), isEdit);
-        BaseIccmVisitAction action = getBuilder(title).withOptional(false).withHelper(actionHelper).withDetails(details).withBaseEntityID(memberObject.getBaseEntityId()).withFormName(Constants.JsonForm.getIccmPneumonia()).build();
+        BaseIccmVisitAction action = getBuilder(title).withOptional(true).withHelper(actionHelper).withDetails(details).withBaseEntityID(memberObject.getBaseEntityId()).withFormName(Constants.JsonForm.getIccmPneumonia()).build();
 
         actionList.put(title, action);
     }
@@ -156,7 +155,7 @@ public class IccmServicesActivityInteractor extends BaseIccmVisitInteractor {
                 JSONArray obs = visitJson.getJSONArray("obs");
 
 
-                VisitUtils.processVisits(memberObject.getBaseEntityId());
+                IccmVisitUtils.processVisits(memberObject.getBaseEntityId());
             }
         } catch (Exception e) {
             Timber.e(e);

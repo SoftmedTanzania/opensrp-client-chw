@@ -9,14 +9,18 @@ import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONObject;
 import org.smartregister.chw.R;
+import org.smartregister.chw.anc.domain.MemberObject;
 import org.smartregister.chw.interactor.IccmServicesActivityInteractor;
 import org.smartregister.chw.ld.util.Constants;
 import org.smartregister.chw.malaria.activity.BaseIccmVisitActivity;
+import org.smartregister.chw.malaria.domain.IccmMemberObject;
 import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
 import org.smartregister.chw.malaria.presenter.BaseIccmVisitPresenter;
+import org.smartregister.family.util.DBConstants;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.family.util.Utils;
 
+import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -57,22 +61,19 @@ public class IccmServicesActivity extends BaseIccmVisitActivity {
         actionList.clear();
 
         //Rearranging the actions according to a specific arrangement
-        BaseIccmVisitAction medicalHistoryAction = map.get(getString(R.string.iccm_medical_history));
-        actionList.put(getString(R.string.iccm_medical_history), medicalHistoryAction);
+        if (map.containsKey(getString(R.string.iccm_medical_history))) {
+            actionList.put(getString(R.string.iccm_medical_history), map.get(getString(R.string.iccm_medical_history)));
+        }
 
-
-        BaseIccmVisitAction physicalExaminationAction = map.get(getString(R.string.iccm_physical_examination));
-        actionList.put(getString(R.string.iccm_physical_examination), physicalExaminationAction);
-
-
+        if (map.containsKey(getString(R.string.iccm_physical_examination))) {
+            actionList.put(getString(R.string.iccm_physical_examination), map.get(getString(R.string.iccm_physical_examination)));
+        }
         if (map.containsKey(getString(R.string.iccm_malaria))) {
-            BaseIccmVisitAction malariaAction = map.get(getString(R.string.iccm_malaria));
-            actionList.put(getString(R.string.iccm_malaria), malariaAction);
+            actionList.put(getString(R.string.iccm_malaria), map.get(getString(R.string.iccm_malaria)));
         }
 
         if (map.containsKey(getString(R.string.iccm_pneumonia))) {
-            BaseIccmVisitAction pneumoniaAction = map.get(getString(R.string.iccm_pneumonia));
-            actionList.put(getString(R.string.iccm_pneumonia), pneumoniaAction);
+            actionList.put(getString(R.string.iccm_pneumonia), map.get(getString(R.string.iccm_pneumonia)));
         }
 
         //====================End of Necessary evil ====================================
@@ -93,5 +94,11 @@ public class IccmServicesActivity extends BaseIccmVisitActivity {
 
 
         super.initializeActions(map);
+    }
+
+    @Override
+    public void redrawHeader(IccmMemberObject memberObject) {
+        String clientAge = (org.smartregister.chw.core.utils.Utils.getTranslatedDate(org.smartregister.chw.core.utils.Utils.getDuration(memberObject.getAge()), getBaseContext()));
+        tvTitle.setText(MessageFormat.format("{0}, {1} \u00B7 {2}", memberObject.getFullName(), clientAge, getString(org.smartregister.malaria.R.string.iccm_visit)));
     }
 }

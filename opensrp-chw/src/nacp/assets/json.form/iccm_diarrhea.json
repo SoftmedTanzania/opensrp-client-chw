@@ -161,7 +161,8 @@
         "label_text_style": "normal",
         "text_color": "#C0C0C0",
         "exclusive": [
-          "none","zinc_ors_co_pack"
+          "none",
+          "zinc_ors_co_pack"
         ],
         "options": [
           {
@@ -212,7 +213,8 @@
         "label_text_style": "normal",
         "text_color": "#C0C0C0",
         "exclusive": [
-          "none","zinc_ors_co_pack"
+          "none",
+          "zinc_ors_co_pack"
         ],
         "options": [
           {
@@ -344,6 +346,14 @@
             "ex": "equalTo(., \"others\")"
           }
         }
+      },
+      {
+        "key": "diarrhea_completion_status",
+        "type": "hidden",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "diarrhea_completion_status",
+        "openmrs_entity_parent": "",
+        "value": "pending"
       }
     ]
   }

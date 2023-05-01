@@ -3,12 +3,16 @@ package org.smartregister.chw.actionhelper;
 import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.core.utils.CoreJsonFormUtils;
 import org.smartregister.chw.malaria.domain.VisitDetail;
 import org.smartregister.chw.malaria.model.BaseIccmVisitAction;
+import org.smartregister.chw.referral.util.JsonFormConstants;
+import org.smartregister.chw.util.IccmVisitUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +22,8 @@ public class IccmDiarrheaActionHelper implements BaseIccmVisitAction.IccmVisitAc
     private String jsonPayload;
     private String baseEntityId;
     private Context context;
-
     private String diarrheaSigns;
+    private final HashMap<String, Boolean> checkObject = new HashMap<>();
 
     private boolean isEdit;
 
@@ -49,7 +53,10 @@ public class IccmDiarrheaActionHelper implements BaseIccmVisitAction.IccmVisitAc
     @Override
     public void onPayloadReceived(String jsonPayload) {
         try {
+            checkObject.clear();
             JSONObject jsonObject = new JSONObject(jsonPayload);
+            diarrheaSigns = CoreJsonFormUtils.getValue(jsonObject, "diarrhea_signs");
+            checkObject.put("diarrhea_signs", StringUtils.isNotBlank(diarrheaSigns));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -67,10 +74,21 @@ public class IccmDiarrheaActionHelper implements BaseIccmVisitAction.IccmVisitAc
 
     @Override
     public String postProcess(String jsonPayload) {
+        JSONObject jsonObject = null;
         try {
-            diarrheaSigns = CoreJsonFormUtils.getValue(new JSONObject(jsonPayload), "diarrhea_signs");
+            jsonObject = new JSONObject(jsonPayload);
+            JSONArray fields = org.smartregister.family.util.JsonFormUtils.fields(jsonObject);
+
+            JSONObject diarrheaCompletionStatus = org.smartregister.family.util.JsonFormUtils.getFieldJSONObject(fields, "diarrhea_completion_status");
+            assert diarrheaCompletionStatus != null;
+            diarrheaCompletionStatus.put(JsonFormConstants.VALUE, IccmVisitUtils.getActionStatus(checkObject));
+
         } catch (Exception e) {
             Timber.e(e);
+        }
+
+        if (jsonObject != null) {
+            return jsonObject.toString();
         }
         return null;
     }
@@ -82,10 +100,14 @@ public class IccmDiarrheaActionHelper implements BaseIccmVisitAction.IccmVisitAc
 
     @Override
     public BaseIccmVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isBlank(diarrheaSigns)) return BaseIccmVisitAction.Status.PENDING;
-        else {
+        String status = IccmVisitUtils.getActionStatus(checkObject);
+        if (status.equalsIgnoreCase(IccmVisitUtils.Complete)) {
             return BaseIccmVisitAction.Status.COMPLETED;
         }
+        if (status.equalsIgnoreCase(IccmVisitUtils.Ongoing)) {
+            return BaseIccmVisitAction.Status.PARTIALLY_COMPLETED;
+        }
+        return BaseIccmVisitAction.Status.PENDING;
     }
 
     @Override

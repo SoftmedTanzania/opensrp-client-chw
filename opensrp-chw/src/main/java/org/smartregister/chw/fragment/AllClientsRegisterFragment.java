@@ -57,6 +57,9 @@ public class AllClientsRegisterFragment extends CoreAllClientsRegisterFragment {
                 case CoreConstants.REGISTER_TYPE.MALARIA:
                     AllClientsUtils.gotToMalariaProfile(this.getActivity(), commonPersonObjectClient);
                     break;
+                case CoreConstants.REGISTER_TYPE.ICCM:
+                    AllClientsUtils.gotToIccmProfile(this.getActivity(), commonPersonObjectClient);
+                    break;
                 case CoreConstants.REGISTER_TYPE.FAMILY_PLANNING:
                     AllClientsUtils.goToFamilyPlanningProfile(this.getActivity(), commonPersonObjectClient);
                     break;

@@ -175,8 +175,8 @@
 </body>
 <script type="text/javascript">
     function onLoad() {
-        const facilityNameElement = document.getElementById("reporting_facility");
-        facilityNameElement.innerHTML = Android.getReportingFacility();
+<!--        const facilityNameElement = document.getElementById("reporting_facility");-->
+<!--        facilityNameElement.innerHTML = Android.getReportingFacility();-->
         const dateElement = document.getElementById("report_period");
         dateElement.innerHTML = Android.getDataPeriod();
         const data = JSON.parse(Android.getData("iccm-dispensing-summary"));
