@@ -50,6 +50,14 @@ public class InAppReportsActivity extends SecuredActivity implements View.OnClic
         agywReports = findViewById(R.id.agyw_reports);
         iccmReports = findViewById(R.id.iccm_reports);
 
+        if (ChwApplication.getApplicationFlavor().hasHIV()) {
+            cbhsReportsLayout.setVisibility(View.VISIBLE);
+        }
+
+        if (ChwApplication.getApplicationFlavor().hasPmtct()) {
+            motherChampionReportsLayout.setVisibility(View.VISIBLE);
+        }
+
         if (ChwApplication.getApplicationFlavor().hasAGYW()) {
             agywReports.setVisibility(View.VISIBLE);
         }
