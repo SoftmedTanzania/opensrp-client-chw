@@ -54,7 +54,9 @@ public class AllClientsMemberProfileActivity extends CoreAllClientsMemberProfile
 
         String gender = Utils.getValue(commonPersonObject.getColumnmaps(), DBConstants.KEY.GENDER, false);
         menu.findItem(R.id.action_location_info).setVisible(true);
-        menu.findItem(R.id.action_cbhs_registration).setVisible(true);
+        if (ChwApplication.getApplicationFlavor().hasHIV()) {
+            menu.findItem(R.id.action_cbhs_registration).setVisible(true);
+        }
         menu.findItem(R.id.action_tb_registration).setVisible(false);
         menu.findItem(R.id.action_fp_initiation).setVisible(false);
 
