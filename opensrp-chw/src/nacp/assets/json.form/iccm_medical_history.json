@@ -234,6 +234,20 @@
         }
       },
       {
+        "key": "is_pneumonia_suspect",
+        "type": "hidden",
+        "openmrs_entity_id": "is_pneumonia_suspect",
+        "openmrs_entity": "concept",
+        "openmrs_entity_parent": "",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "iccm_medical_history_calculation.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "medical_history_completion_status",
         "type": "hidden",
         "openmrs_entity": "concept",

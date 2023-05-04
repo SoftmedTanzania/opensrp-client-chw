@@ -6,18 +6,20 @@ import static org.smartregister.chw.core.utils.CoreConstants.JSON_FORM.getIccmEn
 import static org.smartregister.chw.core.utils.Utils.getCommonPersonObjectClient;
 import static org.smartregister.chw.core.utils.Utils.isMemberOfReproductiveAge;
 import static org.smartregister.chw.malaria.util.Constants.EVENT_TYPE.ICCM_ENROLLMENT;
-import static org.smartregister.chw.util.Constants.ICCM_MALARIA_REFERRAL_FORM;
+import static org.smartregister.chw.util.Constants.ICCM_REFERRAL_FORM;
 import static org.smartregister.chw.util.Constants.REFERRAL_TASK_FOCUS;
 import static org.smartregister.util.JsonFormUtils.VALUE;
 
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.annotation.MenuRes;
 import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.smartregister.chw.BuildConfig;
+import org.smartregister.chw.R;
 import org.smartregister.chw.core.activity.CoreMalariaRegisterActivity;
 import org.smartregister.chw.core.utils.CoreConstants;
 import org.smartregister.chw.core.utils.FormUtils;
@@ -28,7 +30,6 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.family.util.Utils;
-import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 
 import timber.log.Timber;
@@ -44,11 +45,9 @@ public class IccmRegisterActivity extends CoreMalariaRegisterActivity {
         activity.startActivity(intent);
     }
 
-    @Override
-    protected void registerBottomNavigation() {
-        bottomNavigationHelper = new BottomNavigationHelper();
-        bottomNavigationView = findViewById(org.smartregister.R.id.bottom_navigation);
-        FamilyRegisterActivity.registerBottomNavigation(bottomNavigationHelper, bottomNavigationView, this);
+    @MenuRes
+    public int getMenuResource() {
+        return R.menu.bottom_nav_iccm_menu;
     }
 
     @Override
@@ -107,7 +106,7 @@ public class IccmRegisterActivity extends CoreMalariaRegisterActivity {
 
                         CommonPersonObjectClient commonPersonObjectClient = getCommonPersonObjectClient(baseEntityId);
 
-                        JSONObject referralFormJsonObject = (new com.vijay.jsonwizard.utils.FormUtils()).getFormJsonFromRepositoryOrAssets(this, ICCM_MALARIA_REFERRAL_FORM);
+                        JSONObject referralFormJsonObject = (new com.vijay.jsonwizard.utils.FormUtils()).getFormJsonFromRepositoryOrAssets(this, ICCM_REFERRAL_FORM);
                         referralFormJsonObject.put(REFERRAL_TASK_FOCUS, CoreConstants.TASKS_FOCUS.SUSPECTED_MALARIA);
 
                         boolean isFemaleOfReproductiveAge = isMemberOfReproductiveAge(commonPersonObjectClient, 10, 49) && org.smartregister.chw.util.Utils.getValue(commonPersonObjectClient.getColumnmaps(), DBConstants.KEY.GENDER, false).equalsIgnoreCase("Female");

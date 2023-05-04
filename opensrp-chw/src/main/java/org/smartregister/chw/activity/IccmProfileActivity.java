@@ -1,13 +1,15 @@
 package org.smartregister.chw.activity;
 
+import static org.smartregister.chw.core.utils.Utils.getCommonPersonObjectClient;
+import static org.smartregister.chw.core.utils.Utils.isMemberOfReproductiveAge;
 import static org.smartregister.chw.core.utils.Utils.passToolbarTitle;
 import static org.smartregister.chw.malaria.util.Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID;
 import static org.smartregister.chw.malaria.util.Constants.EVENT_TYPE.ICCM_SERVICES_VISIT;
-import static org.smartregister.chw.util.Constants.ICCM_MALARIA_REFERRAL_FORM;
+import static org.smartregister.chw.util.Constants.ICCM_REFERRAL_FORM;
 import static org.smartregister.chw.util.NotificationsUtil.handleNotificationRowClick;
 import static org.smartregister.chw.util.NotificationsUtil.handleReceivedNotifications;
+import static org.smartregister.util.Utils.getAgeFromDate;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,8 +26,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.smartregister.chw.BuildConfig;
 import org.smartregister.chw.R;
@@ -47,7 +48,6 @@ import org.smartregister.chw.malaria.MalariaLibrary;
 import org.smartregister.chw.malaria.dao.IccmDao;
 import org.smartregister.chw.malaria.dao.MalariaDao;
 import org.smartregister.chw.malaria.domain.Visit;
-import org.smartregister.chw.malaria.util.MalariaUtil;
 import org.smartregister.chw.model.ReferralTypeModel;
 import org.smartregister.chw.presenter.FamilyOtherMemberActivityPresenter;
 import org.smartregister.chw.presenter.IccmProfilePresenter;
@@ -57,6 +57,7 @@ import org.smartregister.chw.util.Utils;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.AlertStatus;
 import org.smartregister.family.model.BaseFamilyOtherMemberProfileActivityModel;
+import org.smartregister.family.util.DBConstants;
 import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
@@ -127,7 +128,7 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
     }
 
     private void addIccmReferralTypes() {
-        getReferralTypeModels().add(new ReferralTypeModel(getString(R.string.suspected_malaria), ICCM_MALARIA_REFERRAL_FORM, CoreConstants.TASKS_FOCUS.SUSPECTED_MALARIA));
+        getReferralTypeModels().add(new ReferralTypeModel(getString(R.string.iccm_referral), ICCM_REFERRAL_FORM, CoreConstants.TASKS_FOCUS.ICCM_REFERRAL));
     }
 
     @Override
@@ -135,8 +136,23 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
         if (getReferralTypeModels().size() == 1) {
             try {
                 if (BuildConfig.USE_UNIFIED_REFERRAL_APPROACH) {
-                    JSONObject formJson = getFormUtils().getFormJson(Constants.JSON_FORM.getMalariaReferralForm());
+                    JSONObject formJson = getFormUtils().getFormJson(ICCM_REFERRAL_FORM);
                     formJson.put(Constants.REFERRAL_TASK_FOCUS, referralTypeModels.get(0).getFocus());
+
+
+                    CommonPersonObjectClient commonPersonObjectClient = getCommonPersonObjectClient(baseEntityId);
+                    boolean isFemaleOfReproductiveAge = isMemberOfReproductiveAge(commonPersonObjectClient, 10, 49) && org.smartregister.chw.util.Utils.getValue(commonPersonObjectClient.getColumnmaps(), DBConstants.KEY.GENDER, false).equalsIgnoreCase("Female");
+
+                    JSONArray steps = formJson.getJSONArray("steps");
+                    JSONObject step = steps.getJSONObject(0);
+                    JSONArray referralFormFields = step.getJSONArray("fields");
+
+                    int age = getAgeFromDate(IccmDao.getMember(memberObject.getBaseEntityId()).getAge());
+                    boolean removePneumoniaAndDiarrheSigns = age > 5;
+                    boolean removeRectalArtesunate = age > 6;
+
+                    updateProblemsAndServicesBeforeReferral(referralFormFields, removePneumoniaAndDiarrheSigns, removeRectalArtesunate, isFemaleOfReproductiveAge);
+
                     ReferralRegistrationActivity.startGeneralReferralFormActivityForResults(this, baseEntityId, formJson, false);
                 } else {
                     startFormActivity(getFormUtils().getFormJson(getReferralTypeModels().get(0).getFormName()));
@@ -148,6 +164,52 @@ public class IccmProfileActivity extends CoreMalariaProfileActivity implements M
             Utils.launchClientReferralActivity(this, getReferralTypeModels(), baseEntityId);
         }
     }
+
+
+    private void updateProblemsAndServicesBeforeReferral(JSONArray fields, boolean removePneumoniaAndDiarrheSigns, boolean removeRectalArtesunate, boolean isFemaleOfReproductiveAge) throws Exception {
+        for (int i = 0; i < fields.length(); i++) {
+            JSONObject field = fields.getJSONObject(i);
+            if (field.getString("name").equals("problem")) {
+                JSONArray options = field.getJSONArray("options");
+                if (!isFemaleOfReproductiveAge) {
+                    options.remove(options.length() - 1);
+                }
+
+                if (removePneumoniaAndDiarrheSigns) {
+                    for (int j = options.length() - 1; j >= 0; j--) {
+                        JSONObject option = options.getJSONObject(j);
+                        if (option.getString("name").equalsIgnoreCase("sever_pneumonia") ||
+                                option.getString("name").equalsIgnoreCase("diarrhea_with_signs_of_dehydration")) {
+                            options.remove(j);
+                        }
+                    }
+                }
+
+            } else if (field.getString("name").equals("service_before_referral")) {
+                JSONArray options = field.getJSONArray("options");
+                if (removePneumoniaAndDiarrheSigns) {
+                    for (int j = options.length() - 1; j >= 0; j--) {
+                        JSONObject option = options.getJSONObject(j);
+                        if (option.getString("name").equalsIgnoreCase("ors") ||
+                                option.getString("name").equalsIgnoreCase("ors_zinc_co_pack")) {
+                            options.remove(j);
+                        }
+
+                    }
+                }
+
+                if (removeRectalArtesunate) {
+                    for (int j = options.length() - 1; j >= 0; j--) {
+                        JSONObject option = options.getJSONObject(j);
+                        if (option.getString("name").equalsIgnoreCase("rectal_artesunate")) {
+                            options.remove(j);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

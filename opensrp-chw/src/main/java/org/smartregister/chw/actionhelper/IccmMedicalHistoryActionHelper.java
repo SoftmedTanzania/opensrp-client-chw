@@ -5,6 +5,7 @@ import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
 import static org.smartregister.chw.core.utils.Utils.getCommonPersonObjectClient;
 import static org.smartregister.chw.core.utils.Utils.isMemberOfReproductiveAge;
 import static org.smartregister.opd.utils.OpdConstants.JSON_FORM_KEY.OPTIONS;
+import static org.smartregister.util.Utils.getAgeFromDate;
 
 import android.content.Context;
 
@@ -118,6 +119,7 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
         JSONObject jsonObject = null;
         String isMalariaSuspect = "false";
         String isDiarrheaSuspect;
+        String isPneumoniaSuspect;
         try {
             jsonObject = new JSONObject(jsonPayload);
             JSONArray fields = org.smartregister.family.util.JsonFormUtils.fields(jsonObject);
@@ -145,8 +147,27 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
                 Timber.e(e);
             }
         } else {
-            //Removing the malaria actions  the client is not a diarrhea suspect.
+            //Removing the diarrhea actions  the client is not a diarrhea suspect.
             actionList.remove(context.getString(R.string.iccm_diarrhea));
+        }
+
+        isPneumoniaSuspect = CoreJsonFormUtils.getValue(jsonObject, "is_pneumonia_suspect");
+        if (isPneumoniaSuspect.equalsIgnoreCase("true") && Utils.getAgeFromDate(IccmDao.getMember(baseEntityId).getAge()) < 6) {
+            try {
+                String title = context.getString(R.string.iccm_pneumonia);
+                IccmPneumoniaActionHelper pneumoniaActionHelper = new IccmPneumoniaActionHelper(context, baseEntityId, isEdit);
+                BaseIccmVisitAction action = new BaseIccmVisitAction.Builder(context, title).withOptional(true).withHelper(pneumoniaActionHelper).withDetails(details).withBaseEntityID(baseEntityId).withFormName(Constants.JsonForm.getIccmPneumonia()).build();
+                actionList.put(title, action);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        } else {
+            IccmMemberObject memberObject = IccmDao.getMember(baseEntityId);
+            int age = getAgeFromDate(IccmDao.getMember(memberObject.getBaseEntityId()).getAge());
+            if (memberObject.getRespiratoryRate() == null || ((age >= 1 || memberObject.getRespiratoryRate() <= 50) && (age < 1 || age >= 6 || memberObject.getRespiratoryRate() <= 40))) {
+                //Removing the pneumonia actions  the client is not a pneumonia suspect.
+                actionList.remove(context.getString(R.string.iccm_pneumonia));
+            }
         }
 
         //Calling the callback method to preload the actions in the actionns list.

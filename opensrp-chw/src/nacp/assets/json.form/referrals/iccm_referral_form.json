@@ -1,6 +1,6 @@
 {
-  "form": "Malaria Referral",
-  "encounter_type": "Malaria Referral",
+  "form": "ICCM Services Referral",
+  "encounter_type": "ICCM Services Referral",
   "entity_id": "",
   "relational_id": "",
   "rules_file": "rule/general_neat_referral_form_rules.yml",
@@ -54,7 +54,7 @@
   },
   "steps": [
     {
-      "title": "Malaria Referral",
+      "title": "ICCM Services Referral",
       "fields": [
         {
           "name": "problem",
@@ -240,20 +240,20 @@
               }
             },
             {
-              "name": "zinc",
-              "text": "Zinc",
+              "name": "ors_zinc_co_pack",
+              "text": "ORS Zinc Co-pack",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "zinc",
+                "openmrs_entity_id": "ors_zinc_co_pack",
                 "openmrs_entity_parent": ""
               }
             },
             {
-              "name": "other_treatment",
+              "name": "Other_treatment",
               "text": "Other treatment",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "other_treatment",
+                "openmrs_entity_id": "Other_treatment",
                 "openmrs_entity_parent": ""
               }
             },
@@ -275,7 +275,7 @@
           "type": "text_input_edit_text",
           "meta_data": {
             "openmrs_entity": "",
-            "openmrs_entity_id": "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "openmrs_entity_id": "service_before_referral_other",
             "openmrs_entity_parent": ""
           },
           "properties": {
