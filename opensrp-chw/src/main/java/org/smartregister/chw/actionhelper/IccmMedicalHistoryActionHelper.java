@@ -164,7 +164,7 @@ public class IccmMedicalHistoryActionHelper implements BaseIccmVisitAction.IccmV
         } else {
             IccmMemberObject memberObject = IccmDao.getMember(baseEntityId);
             int age = getAgeFromDate(IccmDao.getMember(memberObject.getBaseEntityId()).getAge());
-            if (memberObject.getRespiratoryRate() == null || ((age >= 1 || memberObject.getRespiratoryRate() <= 50) && (age < 1 || age >= 6 || memberObject.getRespiratoryRate() <= 40))) {
+            if (memberObject.getRespiratoryRate() == null || ((age >= 1 || memberObject.getRespiratoryRate() < 50) && (age < 1 || age >= 6 || memberObject.getRespiratoryRate() < 40))) {
                 //Removing the pneumonia actions  the client is not a pneumonia suspect.
                 actionList.remove(context.getString(R.string.iccm_pneumonia));
             }

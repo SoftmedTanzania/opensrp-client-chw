@@ -77,7 +77,7 @@ public class IccmServicesActivityInteractor extends BaseIccmVisitInteractor {
                 evaluatePhysicalExamination(callBack);
                 evaluateMedicalHistory(callBack);
                 int age = getAgeFromDate(IccmDao.getMember(memberObject.getBaseEntityId()).getAge());
-                if (memberObject.getRespiratoryRate() != null && ((age < 1 && memberObject.getRespiratoryRate() > 50) || (age >= 1 && age < 6 && memberObject.getRespiratoryRate() > 40))) {
+                if (memberObject.getRespiratoryRate() != null && ((age < 1 && memberObject.getRespiratoryRate() >= 50) || (age >= 1 && age < 6 && memberObject.getRespiratoryRate() >= 40))) {
                     evaluatePneumonia();
                 }
 
