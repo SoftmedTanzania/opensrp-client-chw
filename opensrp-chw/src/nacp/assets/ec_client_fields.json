@@ -1033,7 +1033,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "162869AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "date_chw_malaria_test"
           }
         },
         {
@@ -1057,7 +1057,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "1731AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "fever_duration"
           }
         },
         {
@@ -1073,7 +1073,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "1643AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "malaria_results"
           }
         },
         {
@@ -1089,7 +1089,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "163724AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "malaria_test_date"
           }
         },
         {
@@ -1097,7 +1097,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "163725AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "malaria"
           }
         },
         {
@@ -1774,7 +1774,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "165273AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "service_before_malaria"
           }
         },
         {
@@ -1782,7 +1782,7 @@
           "type": "Event",
           "json_mapping": {
             "field": "obs.fieldCode",
-            "concept": "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "concept": "service_before_malaria_other"
           }
         }
       ]

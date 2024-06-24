@@ -73,7 +73,7 @@
               "text": "Homa",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Fever",
                 "openmrs_entity_parent": ""
               }
             },
@@ -82,7 +82,7 @@
               "text": "Kuharisha",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Diarrhea",
                 "openmrs_entity_parent": ""
               }
             },
@@ -91,7 +91,7 @@
               "text": "Kutapika",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Vomiting",
                 "openmrs_entity_parent": ""
               }
             },
@@ -100,7 +100,7 @@
               "text": "Kichefuchefu",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Nausea",
                 "openmrs_entity_parent": ""
               }
             },
@@ -109,7 +109,7 @@
               "text": "Kutetemeka",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "158359AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Trembling",
                 "openmrs_entity_parent": ""
               }
             },
@@ -118,7 +118,7 @@
               "text": "Maumivu makali ya kichwa / kizunguzungu",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "139081AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "A_severe_headache_dizziness",
                 "openmrs_entity_parent": ""
               }
             },
@@ -127,7 +127,7 @@
               "text": "Kutoka jasho",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "140941AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Sweating",
                 "openmrs_entity_parent": ""
               }
             },
@@ -136,7 +136,7 @@
               "text": "Maumivu makali ya tumbo",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "165271AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Severe_abdominal_pain",
                 "openmrs_entity_parent": ""
               }
             },
@@ -145,7 +145,7 @@
               "text": "Maumivu ya misuli",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Muscle_pain",
                 "openmrs_entity_parent": ""
               }
             },
@@ -154,7 +154,7 @@
               "text": "Kuvimba uso na / au mikono",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "163894AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Sweling_of_the_face_and_or_hands",
                 "openmrs_entity_parent": ""
               }
             },
@@ -163,7 +163,7 @@
               "text": "Kushindwa kupumua",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "142373AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Difficult_in_breathing_fast_and_laboured_breathing",
                 "openmrs_entity_parent": ""
               }
             },
@@ -172,7 +172,7 @@
               "text": "Degedege/ Mtukutiko wa mwili",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "113054AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Convulsions",
                 "openmrs_entity_parent": ""
               }
             },
@@ -181,7 +181,7 @@
               "text": "Kulegea",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "5226AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Very_weak",
                 "openmrs_entity_parent": ""
               }
             },
@@ -190,7 +190,7 @@
               "text": "Kukereka kirahisi",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "118296AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Irritable_easily_disturbed",
                 "openmrs_entity_parent": ""
               }
             },
@@ -199,7 +199,7 @@
               "text": "Kukosa fahamu",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "123818AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Unconcious",
                 "openmrs_entity_parent": ""
               }
             },
@@ -208,7 +208,7 @@
               "text": "Kulala kusiko kwa kawaida",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "117417AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Unusually_sleepy",
                 "openmrs_entity_parent": ""
               }
             },
@@ -217,7 +217,7 @@
               "text": "Shingo kukakamaa",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "112721AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Neck_stiffness",
                 "openmrs_entity_parent": ""
               }
             },
@@ -226,7 +226,7 @@
               "text": "Kushindwa kukaa bila msaada",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "123833AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Unable_to_sit_without_support",
                 "openmrs_entity_parent": ""
               }
             },
@@ -235,7 +235,7 @@
               "text": "Kutokwa na damu au mkojo wenye damu",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Abnormal_bleeding_or_passing_of_urine_with_blood",
                 "openmrs_entity_parent": ""
               }
             },
@@ -244,7 +244,7 @@
               "text": "Upungufu mkubwa wa damu",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "162044AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Severe_anaemia_pale_palms_and_inner_eyelids",
                 "openmrs_entity_parent": ""
               }
             },
@@ -253,7 +253,7 @@
               "text": "Macho kuwa ya njano",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "136443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Yellowing_of_the_eyes_jaundice",
                 "openmrs_entity_parent": ""
               }
             },
@@ -262,7 +262,7 @@
               "text": "Utapiamlo mkali",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "163302AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Severe_malnutrition",
                 "openmrs_entity_parent": ""
               }
             },
@@ -271,7 +271,7 @@
               "text": "Tumbo kujaa",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "147132AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Bloating",
                 "openmrs_entity_parent": ""
               }
             }
@@ -301,7 +301,7 @@
               "text": "Rectal artesunate",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "71561AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Rectal_artesunate",
                 "openmrs_entity_parent": ""
               }
             },
@@ -310,7 +310,7 @@
               "text": "Panadol",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "70116AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Panadol",
                 "openmrs_entity_parent": ""
               }
             },
@@ -319,7 +319,7 @@
               "text": "ORS",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "351AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "ORS",
                 "openmrs_entity_parent": ""
               }
             },
@@ -328,7 +328,7 @@
               "text": "Matibabu mengine",
               "meta_data": {
                 "openmrs_entity": "",
-                "openmrs_entity_id": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "openmrs_entity_id": "Other_treatment",
                 "openmrs_entity_parent": ""
               }
             },
